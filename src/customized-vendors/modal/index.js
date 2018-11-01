@@ -4,25 +4,20 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import events from '../../utils/events';
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
 
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
-
 const styles = theme => ({
-    paper: {
-        position: 'absolute',
+    container:{
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height:'100vh',
+    },
+    content: {
         width: theme.spacing.unit * 50,
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
@@ -39,6 +34,12 @@ class SimpleModal extends React.Component {
         };
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+
+        //EXTRA
+        //bind custom events for external calls
+        events.on('CLICK_ON_CREATE_COST_MODEL', this.handleOpen);
+        events.on('CLICK_ON_CANCEL_COST_MODEL', this.handleClose);
+
     }
     
     handleOpen() {
@@ -53,14 +54,14 @@ class SimpleModal extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div>
+            <div >
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                     open={this.state.open}
                     onClose={this.handleClose}
-                >
-                    <div style={getModalStyle()} className={classes.paper}>
+                    className={classes.container} >
+                    <div className={classes.content}>
                         {this.props.children}
                     </div>
                 </Modal>
@@ -75,5 +76,5 @@ SimpleModal.propTypes = {
 
 // We need an intermediary variable for handling the recursive nesting.
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
-
+export {SimpleModal};
 export default SimpleModalWrapped;

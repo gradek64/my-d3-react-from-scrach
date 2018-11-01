@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
-import './assets/scss/app.scss';
- 
+import ThemedApp from './appWithTheme';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<ThemedApp />, document.getElementById('app'));

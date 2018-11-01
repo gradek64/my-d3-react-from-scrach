@@ -25,8 +25,8 @@ const config = {
     module: {
         rules: [
 
-            // babel-loader with 'env' preset
-            { test: /\.js$/, include: /src/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['env'] } } },
+            // babel-loader with 'env' preset 
+            { test: /\.js$/,include: /src/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['env'] } } },
             // html-loader
             { test: /\.html$/, use: ['html-loader'] },
             // sass-loader with sourceMap activated
