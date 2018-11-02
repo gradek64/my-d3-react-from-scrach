@@ -1,7 +1,11 @@
 import React from 'react';
+import TableComponent from '../../components/Table';
 
 const  CostModel = () => (
-    <h1>this is mock CostModel</h1>
+    <div>
+        <h1>this is mock CostModel</h1>
+        <TableComponent />
+    </div>
 );
 
 export default CostModel;

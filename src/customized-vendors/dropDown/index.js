@@ -42,8 +42,7 @@ const  MenuListComposition = (props) => {
                                 {...TransitionProps}
                                 id="menu-list-grow"
                             >
-                                <Paper>
-                                                        
+                                <Paper>                     
                                     <MenuList>
                                         {
                                             list.map(({el,icon,iconColor,handler},key)=>{

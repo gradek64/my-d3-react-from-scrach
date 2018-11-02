@@ -8,6 +8,7 @@ import './assets/scss/app.scss';
 /*
   *@assign new Primary color to Material-ui purple
   *@first U need to import that color
+  *@AMAZINGLLY U can also add your own rules in the theme object;
 */
 const theme = createMuiTheme({
     palette: {
@@ -18,8 +19,11 @@ const theme = createMuiTheme({
         },
         typography: {
             useNextVariants: true,
-        },
+        }
     },
+    typography:{
+        fontWeightSuperLight:200,
+    }
 });
 const ThemedApp = () => ( 
     <MuiThemeProvider theme={theme}>
