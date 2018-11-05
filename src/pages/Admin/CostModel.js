@@ -1,11 +1,28 @@
 import React from 'react';
-import TableComponent from '../../components/Table';
+import SimpleTable from '../../components/SimpleTable';
+import costModelService from '../../services/cost-model-mock'
 
-const  CostModel = () => (
-    <div>
-        <h1>this is mock CostModel</h1>
-        <TableComponent />
-    </div>
-);
 
+class CostModel extends React.Component {
+state = {
+  data:null
+}
+async componentDidMount(){
+   const dataResponsone = await costModelService.getAll();
+   const data = dataResponsone.data;
+   this.setState(() => ({ data }));
+}
+
+render(){
+  if(this.state.data){
+    return (
+      <SimpleTable data={this.state.data} />
+    )
+  }else {
+   return '....preloading'
+  }
+}
+   
+    
+};
 export default CostModel;

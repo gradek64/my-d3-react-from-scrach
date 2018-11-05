@@ -1292,4 +1292,4 @@ All three are, at heart, just regular function application, spiced up a little.
         flattenDeep: flattenDeep,
     };
 };
-misc();
+export default misc();

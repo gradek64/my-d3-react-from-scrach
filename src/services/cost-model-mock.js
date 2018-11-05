@@ -1,4 +1,4 @@
-import costModels from './mock/costModels';
+import costModels from './mocks/costModels';
 import _ from '../utils/misc';
 'use strict';
 
