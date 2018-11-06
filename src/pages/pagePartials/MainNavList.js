@@ -1,9 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
 
 
 function HomeIcon(props) {
@@ -13,8 +12,6 @@ function HomeIcon(props) {
         </SvgIcon>
     );
 }
-
-console.log('Typography',Typography);
 
 const styles = theme => ({
     root: {

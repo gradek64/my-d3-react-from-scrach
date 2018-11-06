@@ -10,6 +10,7 @@ import './assets/scss/app.scss';
   *@first U need to import that color
   *@AMAZINGLLY U can also add your own rules in the theme object;
 */
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 const theme = createMuiTheme({
     palette: {
         type: 'light', //or 'dark'
@@ -17,19 +18,18 @@ const theme = createMuiTheme({
         secondary: {
             main: '#f44336',
         },
-        typography: {
+        /*typography: {
             useNextVariants: true,
-            suppressDeprecationWarnings: true,
-        }
+        }*/ //window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; this work only
     },
     typography:{
         fontWeightSuperLight:200,
     }
 });
 const ThemedApp = () => ( 
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>*/
         <AppRouter />
-    </MuiThemeProvider>
+   </MuiThemeProvider>
 );
 
 export default ThemedApp;

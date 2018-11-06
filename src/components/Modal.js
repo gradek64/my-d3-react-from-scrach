@@ -29,10 +29,14 @@ const withEventsBound = () =>(BaseComponent)=> {
 
     const bindEvents = ({opts}) => {
 
+        console.log('modalVendor',modalVendor);
+
         const onOpen = (fn)=>()=>{ fn(); };
         const onClose = ()=>{  };
         const openForced = () => onOpen;
         const closeForced = () => onClose;
+
+        console.log(onOpen);
 
         //bindStringOrArray(opts.hideOn, closeForced);
         //bindStringOrArray(opts.shownOn, openForced);
