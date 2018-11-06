@@ -1,5 +1,5 @@
 import React from 'react';
-import VendorModal, {SimpleModal} from '../customized-vendors/modal/';
+import modalVendor, {SimpleModal} from '../customized-vendors/modalVendor/';
 import events from '../utils/events';
 import {CONST_EVENTS as EVENTS } from '../utils/constants';
 
@@ -29,14 +29,10 @@ const withEventsBound = () =>(BaseComponent)=> {
 
     const bindEvents = ({opts}) => {
 
-        console.log('VendorModal',VendorModal);
-
         const onOpen = (fn)=>()=>{ fn(); };
         const onClose = ()=>{  };
         const openForced = () => onOpen;
         const closeForced = () => onClose;
-
-        console.log(onOpen);
 
         //bindStringOrArray(opts.hideOn, closeForced);
         //bindStringOrArray(opts.shownOn, openForced);
@@ -62,6 +58,6 @@ const withEventsBound = () =>(BaseComponent)=> {
         return <BaseComponent {...props} listeners={events}/>;
     };
 };
-const customModal = withEventsBound()(VendorModal);
+const customModal = withEventsBound()(modalVendor);
 
 export default customModal;
