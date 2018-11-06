@@ -20,7 +20,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
 //custom imports
-import DropDownList from '../../components/DropDownList';
+import DropDownListContainer from '../../components/DropDownListContainer';
 
 
 console.log('blueGrey',blueGrey);
@@ -212,13 +212,14 @@ class PrimarySearchAppBar extends React.Component {
                                     <NotificationsIcon />
                                 </Badge>
                             </IconButton>
-                            <DropDownList list={[
-                                {el:'Greg', handler:()=>{console.log('Iam Greg');}},
-                                {el:'Greg', icon:'add_circle', handler:()=>{console.log('Iam Greg');}},
-                                {el:'Mariola',icon:'add_circle', iconColor:'secondary',handler:()=>{console.log('Iam Mariola');}},
-                                {el:'Libby',icon:'add_circle', handler:()=>{console.log('Iam Libby');}},
+                            <DropDownListContainer 
+                            list={[
+                                {el:'Greg', icon:'whatshot', handler:()=>{console.log('Iam Greg');}},
+                                {el:'Mariola',icon:'mood', iconColor:'secondary',handler:()=>{console.log('Iam Mariola');}},
+                                {el:'Libby',icon:'public', handler:()=>{console.log('Iam Libby');}},
                             ]}
-                            verticalPlacement={'right'}>
+                            direction={'right'}
+                            placement={'bottom-end'}>
                                 <IconButton
                                     aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                     aria-haspopup="true"
@@ -226,7 +227,7 @@ class PrimarySearchAppBar extends React.Component {
                                 >
                                     <AccountCircle />
                                 </IconButton>
-                            </DropDownList>
+                            </DropDownListContainer>
 
                         </div>
                         <div className={classes.sectionMobile}>

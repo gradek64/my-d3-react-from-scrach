@@ -14,9 +14,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
 
+
 const styles = theme => ({
     root: {
         display: 'flex',
+    },
+    fixIndex:{
+      zIndex:100,
+    },
+    paddingFix:{
+      paddingLeft:'0 !important',
     },
     icon: {
         margin: theme.spacing.unit - 10,
@@ -25,18 +32,15 @@ const styles = theme => ({
         marginRight: theme.spacing.unit * 2,
     },
 });
-//                                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center top' }}
 
 const  MenuListComposition = (props) => {
-    const { classes, list, clickAwayHandler ,open , verticalPlacement  } = props;
-    //HACK for placement
-    const placement = verticalPlacement==='left' ? {} : {right:'10px'};
+    const { classes, list, clickAwayHandler ,open , placement , anchor , direction } = props;
 
     return (
         <div className={classes.root}>
             <ClickAwayListener onClickAway={ clickAwayHandler }>
                 <div>
-                    <Popper open={open} style={Object.assign(placement,{position:'absolute'})} transition disablePortal placement='left-end'>
+                    <Popper open={open} anchorEl= {anchor} transition disablePortal placement={placement} className={classes.fixIndex} >
                         {({ TransitionProps ,placement}) => (
                             <Grow
                                 {...TransitionProps}
@@ -46,22 +50,24 @@ const  MenuListComposition = (props) => {
                                     <MenuList>
                                         {
                                             list.map(({el,icon,iconColor,handler},key)=>{
-                                              
                                                 if(icon){
                                                     return (
-                                                        <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ handler }>
+                                                        <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
+                                                            {direction=='right'? <ListItemText primary={el} />:null}
                                                             <ListItemIcon className={classes.icon}>
-                                                                <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>
-                                                                                      add_circle
+                                                                <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
+                                                                {icon}                
                                                                 </Icon>
                                                             </ListItemIcon>
-                                                            <ListItemText classes={{ primary: classes.primary }} inset primary={placement} />
+                                                             {direction=='left'? <ListItemText primary={el} />:null}
+                                                              
                                                         </MenuItem>
                                                     );
                                                 }
-                                                return (<MenuItem key={`drop${key}`} onClick={ handler }>{el}</MenuItem>);
+                                                return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
                                             })
                                         } 
+
                                     </MenuList>
                                 </Paper>
                             </Grow>

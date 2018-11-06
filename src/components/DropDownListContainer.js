@@ -1,7 +1,7 @@
 import React from 'react';
-import VendorDropDown from '../customized-vendors/dropDown';
+import VendorDropDown from '../customized-vendors/dropDownVendor';
 
-class myDropDown extends React.Component {
+class DropDownListProps extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -34,7 +34,7 @@ class myDropDown extends React.Component {
     }
 
     render() {
-        const {list , verticalPlacement } = this.props;
+        const {list , placement , direction } = this.props;
         const  { open } = this.state;
 
         return(
@@ -46,11 +46,13 @@ class myDropDown extends React.Component {
                     list={list} 
                     clickAwayHandler={ this.handleClose }
                     open={open}
-                    verticalPlacement={verticalPlacement}
+                    anchor = {this.anchorEl.current}
+                    placement={placement}
+                    direction={direction}
                 />
             </div>
         );
     }
 }
 
-export default myDropDown;
+export default DropDownListProps;

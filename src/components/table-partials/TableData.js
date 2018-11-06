@@ -5,11 +5,25 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SimpleMenu from '../../customized-vendors/slideDown'
+import DropDownListContainer from '../../components/DropDownListContainer'
 
 
 const TableData = (props) => { 
   const { classes } = props
+
+
+const onDelete = () => console.log('onDelete');
+const onEdit = () => console.log('onEdit');
+const onInspect = () => console.log('onInspect');
+const getActions = (type) => {
+  const system =  [
+     {el:'edit', icon:'whatshot', handler:()=>{console.log('Iam Greg');}},
+     {el:'inspect',icon:'mood', iconColor:'secondary',handler:()=>{console.log('Iam Mariola');}},
+    
+  ]
+  const user =    system.concat([ {el:'delete',icon:'public', handler:()=>{console.log('Iam Libby');}}]);
+  return type==='USER'? user : system;
+}
 
 return (
   <Table className={classes.table}>
@@ -31,9 +45,12 @@ return (
                      </TableCell>
                      <TableCell >{type}</TableCell>
                      <TableCell>
-                     <SimpleMenu>
+                     <DropDownListContainer 
+                     list={getActions(type)}
+                     direction={'left'}
+                     placement={'top-end'}>
                         <MoreVertIcon />
-                       </SimpleMenu>
+                       </DropDownListContainer>
                      </TableCell>  
                    </TableRow>
                  );
