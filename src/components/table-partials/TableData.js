@@ -5,23 +5,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownListContainer from '../../components/DropDownListContainer'
-import TablePagination from '@material-ui/core/TablePagination';
-import TablePaginationActions from './TablePaginationSet'
+
+//custom
+import TablePagControllers from './TablePagControllers';
 
 
-const handleChangePage = (event, page) => {
-
-  //this.setState({ page });
-  console.log(event);
-  console.log(page);
-};
-
-const handleChangeRowsPerPage = event => {
-  console.log(event);
-  //this.setState({ rowsPerPage: event.target.value });
-};
 
 const TableData = (props) => { 
   const { classes } = props
@@ -40,9 +31,6 @@ const getActions = (type) => {
   return type==='USER'? user : system;
 }
 
-const page = 0;
-const rowsPerPage = 5;
-
 return (
   <Table className={classes.table}>
     <TableHead>
@@ -54,8 +42,7 @@ return (
       </TableRow>
     </TableHead>
     <TableBody>
-     {props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).
-                  map(({name,type,createdBy,creationDate,iconColor},id) => {
+     {props.data.map(({name,type,createdBy,creationDate,iconColor},id) => {
                  return (
                    <TableRow key={`table${id}`}>
                       <TableCell numeric>{id+1}</TableCell>
@@ -75,19 +62,21 @@ return (
                  );
                })}
     </TableBody>
-    <TableFooter>
-      <TableRow>
-        <TablePagination
-          colSpan={3}
-          count={props.data.length}
-          rowsPerPage={5}
-          page={0}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActions}
-        />
-      </TableRow>
-    </TableFooter>
+    {   props.rowsPerPage ? (
+        <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={props.colSpan}
+                count={props.count}
+                rowsPerPage={props.rowsPerPageUpdate}
+                page={props.pageUpdate}
+                onChangePage={props.handleChangePage}
+                onChangeRowsPerPage={props.handleChangeRowsPerPage}
+                ActionsComponent={TablePagControllers}
+              />
+            </TableRow>
+          </TableFooter>) : null
+    }
   </Table>
   );
 }

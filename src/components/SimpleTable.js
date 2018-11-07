@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 
 //custom 
 import TableDataCostModel from './table-partials/TableData';
+import DataTableWithPagination from './table-partials/DataTableWithPagination';
+
 
 const styles = theme => ({
   root: {
@@ -42,11 +44,52 @@ const rows = [
 
 */
 
+const pagination = {
+  startPage:0,
+  rowsPerPage:5,
+  updatePage:function(page){
+   let updated = page ?  page : this.startPage;
+   return props.data.slice(updated * this.rowsPerPage, 
+    updated * this.rowsPerPage + this.rowsPerPage);
+  }
+}
+
+/*
+<DataTableWithPagination 
+data={data} 
+classes={classes}
+colSpan={3}
+count={data.length}
+rowsPerPage={5}
+startPage={0}
+/>
+*/
+// <TableDataCostModel data={data} classes={classes}/>
+/*
+<DataTableWithPagination 
+            initialData={data} 
+            classes={classes}
+            colSpan={3}
+            count={data.length}
+            rowsPerPage={5}
+            startPage={0}
+            />
+*/
 function SimpleTable(props) {
   const { classes, data } = props;
   return (
     <Paper className={classes.root}>
-        <TableDataCostModel data={data} classes={classes}/>
+            {/* table with no pagination needs below
+              <TableDataCostModel data={data} classes={classes} />
+            */}
+            <DataTableWithPagination 
+            initialData={data} 
+            classes={classes}
+            colSpan={3}
+            count={data.length}
+            rowsPerPage={5}
+            startPage={0}
+            />
     </Paper>
   );
 }
