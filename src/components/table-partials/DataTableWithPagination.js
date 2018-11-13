@@ -4,12 +4,12 @@ import TableData from './TableData';
 
 
 const fnExtensionClass = BaseComponent => 
-      class DataTableWithPagination extends React.Component {
+  class DataTableWithPagination extends React.Component {
         state = {
-            data:this.props.initialData,
-            page:this.props.startPage,
-            rowsPerPage:this.props.rowsPerPage,
-           }
+          data:this.props.initialData,
+          page:this.props.startPage,
+          rowsPerPage:this.props.rowsPerPage,
+        }
 
         handleChangePage = (event, page) => {
           this.setState({page});
@@ -23,14 +23,14 @@ const fnExtensionClass = BaseComponent =>
         };
 
         updatedData = (page,rows) => {
-            let updatedPage = page ? page : this.props.startPage;
-            let updatedRows = rows ? rows : this.props.rowsPerPage;
-            console.log('updatedRows', updatedRows);
+          let updatedPage = page ? page : this.props.startPage;
+          let updatedRows = rows ? rows : this.props.rowsPerPage;
+          console.log('updatedRows', updatedRows);
 
-            this.setState((state) => {
+          this.setState((state) => {
             return {data: this.props.initialData.slice(updatedPage * updatedRows, 
               updatedPage * updatedRows + updatedRows)};
-            });
+          });
       
         }
 
@@ -40,13 +40,13 @@ const fnExtensionClass = BaseComponent =>
 
         render() {
           return <BaseComponent {...this.props} 
-          data={this.state.data}
-          pageUpdate = {this.state.page}
-          rowsPerPageUpdate = {this.state.rowsPerPage}
-          handleChangePage={this.handleChangePage} 
-          handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-          />
+            data={this.state.data}
+            pageUpdate = {this.state.page}
+            rowsPerPageUpdate = {this.state.rowsPerPage}
+            handleChangePage={this.handleChangePage} 
+            handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />;
         }
-}
+  };
 
 export default fnExtensionClass(TableData);

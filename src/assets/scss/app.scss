@@ -2,4 +2,9 @@
 body {
   background: $bgcolor;
   color: $color;
+  a {
+    text-decoration: none;
+  }
 }
+
+

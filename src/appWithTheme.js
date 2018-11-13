@@ -12,24 +12,24 @@ import './assets/scss/app.scss';
 */
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 const theme = createMuiTheme({
-    palette: {
-        type: 'light', //or 'dark'
-        primary: purple,
-        secondary: {
-            main: '#f44336',
-        },
-        /*typography: {
+  palette: {
+    type: 'light', //or 'dark'
+    primary: purple,
+    secondary: {
+      main: '#f44336',
+    },
+    /*typography: {
             useNextVariants: true,
         }*/ //window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; this work only
-    },
-    typography:{
-        fontWeightSuperLight:200,
-    }
+  },
+  typography:{
+    fontWeightSuperLight:200,
+  }
 });
 const ThemedApp = () => ( 
-    <MuiThemeProvider theme={theme}>*/
-        <AppRouter />
-   </MuiThemeProvider>
+  <MuiThemeProvider theme={theme}>*/
+    <AppRouter />
+  </MuiThemeProvider>
 );
 
 export default ThemedApp;

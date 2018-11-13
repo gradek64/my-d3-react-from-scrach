@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow'
+import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import Paper from '@material-ui/core/Paper';
 
@@ -48,11 +48,11 @@ const pagination = {
   startPage:0,
   rowsPerPage:5,
   updatePage:function(page){
-   let updated = page ?  page : this.startPage;
-   return props.data.slice(updated * this.rowsPerPage, 
-    updated * this.rowsPerPage + this.rowsPerPage);
+    let updated = page ?  page : this.startPage;
+    return props.data.slice(updated * this.rowsPerPage, 
+      updated * this.rowsPerPage + this.rowsPerPage);
   }
-}
+};
 
 /*
 <DataTableWithPagination 
@@ -79,17 +79,17 @@ function SimpleTable(props) {
   const { classes, data } = props;
   return (
     <Paper className={classes.root}>
-            {/* table with no pagination needs below
+      {/* table with no pagination needs below
               <TableDataCostModel data={data} classes={classes} />
             */}
-            <DataTableWithPagination 
-            initialData={data} 
-            classes={classes}
-            colSpan={3}
-            count={data.length}
-            rowsPerPage={5}
-            startPage={0}
-            />
+      <DataTableWithPagination 
+        initialData={data} 
+        classes={classes}
+        colSpan={3}
+        count={data.length}
+        rowsPerPage={5}
+        startPage={0}
+      />
     </Paper>
   );
 }

@@ -1,0 +1,43 @@
+/**
+ * Created by Sergiu Ghenciu on 09/01/2018
+ */
+
+.costpots {
+  .graph {
+    .row {
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .col {
+      position: relative;
+    }
+  }
+
+  .costpot {
+    width: 33.3333333%;
+    max-width: 200px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .costpot {
+    //min-height: 100px;
+  }
+
+  .level-name {
+    display: none;
+  }
+
+  .domain-3 {
+    &.level-name {
+      display: block;
+      width: 100%;
+    }
+  }
+  .content {
+    h1.stretch {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
