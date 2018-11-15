@@ -11,6 +11,8 @@ import { AuthRoute } from './AuthRoute';
 
 export const ProtectedRoutes = (props) => {
 
+  console.log('start route......');
+
   const { params, url} = props.match;
 
   console.log('url',url);
@@ -40,12 +42,12 @@ const AppRouter = () => (
       <Header />
       <MainNavBar />
       <Switch>
-        <Route path="/" component={HomePage} exact />
-        <AuthRoute path="/admin/edit/:auth" exact component={ProtectedRoutes}/>
+        <Route path="/" component={HomePage} exact={true} />
+        <AuthRoute path="/admin/edit/:auth" component={ProtectedRoutes}/>
         <AuthRoute path="/admin/cost-models" exact component={ProtectedRoutes}/>
         <AuthRoute path="/admin/cost-models/:costPotId/costpots" exact component={ProtectedRoutes}/>
-        <Route path="/login" component={Login} />
-        <Route render={() => (<div> Sorry, this page does not exist. </div>)} />
+        {<Route path="/login" component={Login} />}
+        <Route component={NotFoundPage} />
       </Switch>
     </div>
   </BrowserRouter>

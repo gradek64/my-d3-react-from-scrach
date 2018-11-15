@@ -8,6 +8,8 @@ const AuthRoute = ({ component:Component, ...rest }) => {
 
   console.log('fakeAuth.isAuthenticated',fakeAuth.isAuthenticated);
 
+  console.log('path',rest);
+
   return (
     <Route
       {...rest}

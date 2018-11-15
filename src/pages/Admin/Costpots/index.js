@@ -2,7 +2,7 @@ import React from 'react';
 import resourceTypeMockService from '../../../services/resource-types-mock';
 import levelsMockService from '../../../services/levels-mock';
 import _ from '../../../utils/misc';
-//import './costpots.scss';
+import './scss/costpots.scss';
 
 const buildResourceTypeItem = (e) => {
   return {

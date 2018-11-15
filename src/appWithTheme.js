@@ -20,14 +20,14 @@ const theme = createMuiTheme({
     },
     /*typography: {
             useNextVariants: true,
-        }*/ //window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; this work only
+        }*/ //window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true; this works only
   },
   typography:{
     fontWeightSuperLight:200,
   }
 });
 const ThemedApp = () => ( 
-  <MuiThemeProvider theme={theme}>*/
+  <MuiThemeProvider theme={theme}>
     <AppRouter />
   </MuiThemeProvider>
 );
