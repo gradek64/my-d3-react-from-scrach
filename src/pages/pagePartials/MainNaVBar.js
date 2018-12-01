@@ -12,36 +12,36 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import MainNaVList from './MainNaVList';
 
 const styles = (theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    icon: {
-        margin: theme.spacing.unit * 2,
-    },
-    grow: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
-    },
+  root: {
+    flexGrow: 1,
+  },
+  icon: {
+    margin: theme.spacing.unit * 2,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 });
 
 function ButtonAppBar(props) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <MainNaVList />
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <MainNaVList />
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
 ButtonAppBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ButtonAppBar);

@@ -3,6 +3,11 @@ import { NavLink } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import DropDownMenu from '../../components/dropDownMenu';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 
 function HomeIcon(props) {
@@ -37,8 +42,8 @@ const styles = theme => ({
 
 
 const MainNavList = (props) => (
-  <header>
-    <NavLink to="/"  className={props.classes.inLine} activeClassName="is-active" exact={true}>
+  <div>
+    <NavLink to="/"  className={props.classes.inLine}  exact={true}>
       <div className={props.classes.root} >
         <HomeIcon  color="secondary" />
         <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
@@ -46,7 +51,7 @@ const MainNavList = (props) => (
         </Typography>
       </div>
     </NavLink>
-    <NavLink to="/admin/cost-models/" className={props.classes.inLine} activeClassName="is-active">
+    <NavLink to="/admin/cost-models/" className={props.classes.inLine}>
       <div className={props.classes.root} >
         <HomeIcon  color="secondary" />
         <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
@@ -54,7 +59,7 @@ const MainNavList = (props) => (
         </Typography>
       </div>
     </NavLink>
-    <NavLink to="/admin/edit/76" className={props.classes.inLine} activeClassName="is-active">
+    <NavLink to="/admin/edit/76" className={props.classes.inLine}>
       <div className={props.classes.root} >
         <HomeIcon  color="secondary" />
         <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
@@ -62,7 +67,42 @@ const MainNavList = (props) => (
         </Typography>
       </div>
     </NavLink>
-  </header>
+    <div className={props.classes.inLine} onMouseEnter={()=>{console.log('onMouseEnter');}}>
+      <DropDownMenu >
+        <div className={props.classes.root}>
+          <HomeIcon  color="secondary" />
+          <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+             Dropdown
+          </Typography>
+        </div>
+        <div>
+          <Card>
+            <CardContent>
+              <Typography  color="textSecondary" gutterBottom>
+                  Word of the Day
+              </Typography>
+              <Typography variant="h5" component="h2">
+                  be
+                dfwfw
+                  lent
+              </Typography>
+              <Typography  color="textSecondary">
+                  adjective
+              </Typography>
+              <Typography component="p">
+                  well meaning and kindly.
+                <br />
+                {'"a benevolent smile"'}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Learn More</Button>
+            </CardActions>
+          </Card>
+        </div>
+      </DropDownMenu>
+    </div>
+  </div>
 );
 
 export default withStyles(styles)(MainNavList);

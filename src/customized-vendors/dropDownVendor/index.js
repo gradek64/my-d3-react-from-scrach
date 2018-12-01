@@ -16,67 +16,67 @@ import Icon from '@material-ui/core/Icon';
 
 
 const styles = theme => ({
-    root: {
-        display: 'flex',
-    },
-    fixIndex:{
-      zIndex:100,
-    },
-    paddingFix:{
-      paddingLeft:'0 !important',
-    },
-    icon: {
-        margin: theme.spacing.unit - 10,
-    },
-    paper: {
-        marginRight: theme.spacing.unit * 2,
-    },
+  root: {
+    display: 'flex',
+  },
+  fixIndex:{
+    zIndex:100,
+  },
+  paddingFix:{
+    paddingLeft:'0 !important',
+  },
+  icon: {
+    margin: theme.spacing.unit - 10,
+  },
+  paper: {
+    marginRight: theme.spacing.unit * 2,
+  },
 });
 
 const  MenuListComposition = (props) => {
-    const { classes, list, clickAwayHandler ,open , placement , anchor , direction } = props;
+  const { classes, list, clickAwayHandler ,open , placement , anchor , direction } = props;
 
-    return (
-        <div className={classes.root}>
-            <ClickAwayListener onClickAway={ clickAwayHandler }>
-                <div>
-                    <Popper open={open} anchorEl= {anchor} transition disablePortal placement={placement} className={classes.fixIndex} >
-                        {({ TransitionProps ,placement}) => (
-                            <Grow
-                                {...TransitionProps}
-                                id="menu-list-grow"
-                            >
-                                <Paper>                     
-                                    <MenuList>
-                                        {
-                                            list.map(({el,icon,iconColor,handler},key)=>{
-                                                if(icon){
-                                                    return (
-                                                        <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
-                                                            {direction=='right'? <ListItemText primary={el} />:null}
-                                                            <ListItemIcon className={classes.icon}>
-                                                                <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
-                                                                {icon}                
-                                                                </Icon>
-                                                            </ListItemIcon>
-                                                             {direction=='left'? <ListItemText primary={el} />:null}
+  return (
+    <div className={classes.root}>
+      <ClickAwayListener onClickAway={ clickAwayHandler }>
+        <div>
+          <Popper open={open} anchorEl= {anchor} transition disablePortal placement={placement} className={classes.fixIndex} >
+            {({ TransitionProps ,placement}) => (
+              <Grow
+                {...TransitionProps}
+                id="menu-list-grow"
+              >
+                <Paper>                     
+                  <MenuList>
+                    {
+                      list.map(({el,icon,iconColor,handler},key)=>{
+                        if(icon){
+                          return (
+                            <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
+                              {direction=='right'? <ListItemText primary={el} />:null}
+                              <ListItemIcon className={classes.icon}>
+                                <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
+                                  {icon}                
+                                </Icon>
+                              </ListItemIcon>
+                              {direction=='left'? <ListItemText primary={el} />:null}
                                                               
-                                                        </MenuItem>
-                                                    );
-                                                }
-                                                return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
-                                            })
-                                        } 
+                            </MenuItem>
+                          );
+                        }
+                        return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
+                      })
+                    } 
 
-                                    </MenuList>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper>
-                </div>
-            </ClickAwayListener>
+                  </MenuList>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </div>
-    );
+      </ClickAwayListener>
+    </div>
+  );
 };
 
 
