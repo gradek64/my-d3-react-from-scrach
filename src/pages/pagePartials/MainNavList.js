@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import './mainNavList.scss';
 
 
 function HomeIcon(props) {
@@ -24,10 +25,6 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems:'center',
   },
-  inLine: {
-    display:'inline-block',
-    marginRight:'15px',
-  },
   icon: {
     margin: theme.spacing.unit - 10,
   },
@@ -43,65 +40,75 @@ const styles = theme => ({
 
 const MainNavList = (props) => (
   <div>
-    <NavLink to="/"  className={props.classes.inLine}  exact={true}>
-      <div className={props.classes.root} >
-        <HomeIcon  color="secondary" />
-        <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+    <ul className={'MainNavList'}>
+      <li className={'menuItem'} >
+        <NavLink to="/"   exact={true}>
+          <div className={props.classes.root} >
+            <HomeIcon  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
               News
-        </Typography>
-      </div>
-    </NavLink>
-    <NavLink to="/admin/cost-models/" className={props.classes.inLine}>
-      <div className={props.classes.root} >
-        <HomeIcon  color="secondary" />
-        <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+            </Typography>
+          </div>
+        </NavLink>
+      </li>
+      <li className={'menuItem'} >
+        <NavLink to="/admin/cost-models/">
+          <div className={props.classes.root} >
+            <HomeIcon  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
                News
-        </Typography>
-      </div>
-    </NavLink>
-    <NavLink to="/admin/edit/76" className={props.classes.inLine}>
-      <div className={props.classes.root} >
-        <HomeIcon  color="secondary" />
-        <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+            </Typography>
+          </div>
+        </NavLink>
+      </li>
+      <li className={'menuItem'} >
+        <NavLink to="/admin/edit/76">
+          <div className={props.classes.root} >
+            <HomeIcon  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              News
-        </Typography>
-      </div>
-    </NavLink>
-    <div className={props.classes.inLine} onMouseEnter={()=>{console.log('onMouseEnter');}}>
-      <DropDownMenu >
-        <div className={props.classes.root}>
-          <HomeIcon  color="secondary" />
-          <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown
-          </Typography>
-        </div>
+            </Typography>
+          </div>
+        </NavLink>
+      </li>
+      <li className={'menuItem'} >
         <div>
-          <Card>
-            <CardContent>
-              <Typography  color="textSecondary" gutterBottom>
-                  Word of the Day
+          <DropDownMenu >
+            <div className={props.classes.root}>
+              <HomeIcon  color="secondary" />
+              <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+             Dropdown
               </Typography>
-              <Typography variant="h5" component="h2">
+            </div>
+            <div>
+              <Card>
+                <CardContent>
+                  <Typography  color="textSecondary" gutterBottom>
+                  Word of the Day
+                  </Typography>
+                  <Typography variant="h5" component="h2">
                   be
                 dfwfw
                   lent
-              </Typography>
-              <Typography  color="textSecondary">
+                  </Typography>
+                  <Typography  color="textSecondary">
                   adjective
-              </Typography>
-              <Typography component="p">
+                  </Typography>
+                  <Typography component="p">
                   well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
+                    <br />
+                    {'"a benevolent smile"'}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
+            </div>
+          </DropDownMenu>
         </div>
-      </DropDownMenu>
-    </div>
+      </li>
+    </ul>
   </div>
 );
 

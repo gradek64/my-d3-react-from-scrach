@@ -19,6 +19,10 @@ class DropDownMenu extends React.Component {
 
   hideDropDown = () => {
     this.setState({ showDropDownMenu: false });
+  };
+
+  toggleMenuOpen = (showDropDownMenuState) => {
+    this.setState({ showDropDownMenu: !showDropDownMenuState });
   }
 
   handleClose = () => {
@@ -30,15 +34,12 @@ class DropDownMenu extends React.Component {
     const { showDropDownMenu } = this.state;
 
     return (
-      <div >
+      <div  onMouseEnter={this.showDropDown}
+        onMouseLeave={this.hideDropDown}>
         {React.Children.map(children, (child, i) => {
 
-          /* first child is alway a trigger */
-          if (i == 0) return <div 
-            onMouseEnter={this.showDropDown}
-            onMouseLeave={this.hideDropDown}>
-            {child}
-          </div>;
+          /* first child is alway a trigger for mobile Click*/
+          if (i == 0)return <div onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}> {child}</div>;
           
           /* second child is DropDownMenu Content */
           if(i==1 && showDropDownMenu) {
@@ -50,23 +51,6 @@ class DropDownMenu extends React.Component {
             </div>;
           }
         })}
-        {/*<Button
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          Open Menu
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-        </Menu>*/}
       </div>
     );
   }
