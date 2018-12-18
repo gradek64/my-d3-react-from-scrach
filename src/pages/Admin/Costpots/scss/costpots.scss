@@ -3,41 +3,49 @@
  */
 
 .costpots {
-  .graph {
-    .row {
-      border-bottom: 1px solid #ccc;
+    .graph {
+        .row {
+            .levelCostPots {
+                border-bottom: 1px solid #ccc;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                padding: 25px 0 25px 0;
+            }
+        }
+
+        .col {
+            position: relative;
+        }
     }
 
-    .col {
-      position: relative;
+    .costpot {
+        width: 33.3333333%;
+        max-width: 200px;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
     }
-  }
 
-  .costpot {
-    width: 33.3333333%;
-    max-width: 200px;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
+    .costpot {
+        //min-height: 100px;
 
-  .costpot {
-    //min-height: 100px;
-  }
-
-  .level-name {
-    display: none;
-  }
-
-  .domain-3 {
-    &.level-name {
-      display: block;
-      width: 100%;
     }
-  }
-  .content {
-    h1.stretch {
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+    .level-name {
+        display: none;
     }
-  }
+
+    .domain-3 {
+        &.level-name {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .content {
+        h1.stretch {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
 }
