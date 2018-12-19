@@ -25,6 +25,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems:'center',
+    justifyContent:'center',
   },
   icon: {
     margin: theme.spacing.unit - 10,
