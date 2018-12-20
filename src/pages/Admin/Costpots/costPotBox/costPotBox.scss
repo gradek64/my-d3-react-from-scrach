@@ -1,0 +1,19 @@
+.customStyleBox {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+
+    h1,
+    h2,
+    span,
+    div.icons {
+        margin: 0 auto;
+        padding: 10px;
+        cursor: pointer;
+
+        span {
+            padding: 0;
+        }
+    }
+}

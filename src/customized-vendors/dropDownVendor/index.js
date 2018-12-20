@@ -14,6 +14,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
 
+/*
+  *@list of Icons can be found here : https://material.io/tools/icons/?icon=assignment_turned_in&style=baseline
+  *@
+*/
+
+
 
 const styles = theme => ({
   root: {

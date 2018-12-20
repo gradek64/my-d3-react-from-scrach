@@ -3,9 +3,14 @@ import { withRouter } from 'react-router-dom';
 import resourceTypeMockService from '../../../services/resource-types-mock';
 import levelsMockService from '../../../services/levels-mock';
 import costpotsMockService from '../../../services/costpots-mock';
-import _ from '../../../utils/misc';
-import './scss/costpots.scss';
 import CostPotBox from './costPotBox';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ModalCustom from '../../../components/modal';
+import _ from '../../../utils/misc';
+import events from '../../../utils/events';
+
+import './scss/costpots.scss';
 
 const buildResourceTypeItem = (e) => {
   return {
@@ -25,11 +30,15 @@ const buildInfrastructureLevelItem = (e) => {
 };
 
 class CostPots extends React.Component {
+/*
+  *@state could be empty object
+  *@react will understand any changes to its properties as undefined
+*/
 state = {
-  allLevels:null
+/*  allLevels:null,*/
 }
+
 async componentDidMount(){
-  console.log(this);
 
   const allResourceTypes = await resourceTypeMockService.getAll();
   const resourceTypeItems = allResourceTypes.data.map(buildResourceTypeItem);
@@ -44,63 +53,40 @@ async componentDidMount(){
 
   //get costposts
   const allCostPosts = await costpotsMockService.getAll(this.props.costPotId);
-
-  console.log('allCostPosts',allCostPosts);
-
   //update state;
   this.setState(() => ({ 
     allLevels,
-    allCostPosts :allCostPosts.data
+    allCostPosts :allCostPosts.data,
   }));
 
 }
 
-  //res.data.map(buildResourceTypeItem);
-/*
+deleteCostPot(costPotName){
+  this.setState({costPotToDelete:costPotName});
+  events.emit('CLICK_ON_CREATE_COST_MODEL');
+}
 
-<div class="section graph">
-  <div class="row" ng-repeat="level in allLevels track by $index">
-    <div class="col s12 flex hspace-evenly domain-{{level.domainId}}">
-      <h6 class="level-name">{{level.name}}</h6>
-      <costpot ng-repeat="item in allCostpots | filter:{levelId: level.id}:true | filter:{parentId: null} | filter:{parentId: undefined} track by $index"
-      opts="{
-                                  name: item.name,
-                                  icon: getSvgIcon(item, level),
-                                  hideAdd: level.domainId !== 3,
-                                  hideFile: false,
-                                  hideFilter: item.name !== 'IT Functional Breakdown',
-                                  hideDelete: level.domainId !== 3,
-                              }" callback="costpotCallbackFactory(item)"></costpot>
-    </div>
-  </div>
-
-  */
-
-
-  /*
-    
-          /* <costpot ng-repeat="item in allCostpots | filter:{levelId: level.id}:true | filter:{parentId: null} | filter:{parentId: undefined} track by $index"
-    opts="{
-                                name: item.name,
-                                icon: getSvgIcon(item, level),
-                                hideAdd: level.domainId !== 3,
-                                hideFile: false,
-                                hideFilter: item.name !== 'IT Functional Breakdown',
-                                hideDelete: level.domainId !== 3,
-                            }" callback="costpotCallbackFactory(item)"></costpot>
-
-
-  */
-  /*
-    if(levelProps.id === attrs.levelId){
-       return (
-        <h6 className={`level-name domain-${levelProps.domainId}`} >{levelProps.name}</h6>
-        )
-     }
-
-  */
 render(){
   const {allLevels, allCostPosts} = this.state;
+
+  //list of hero icons here temporary before U make some configuration file
+  const heroIcons = {
+    36:'code',
+    37:'backup',
+    38:'backup',
+    39:'backup',
+    40:'backup',
+    41:'backup',
+    42:'backup',
+    43:'backup',
+    44:'backup',
+    45:'backup',
+    46:'build',
+    47:'backup',
+    48:'card_travel',
+   
+  };
+
   if(this.state.allLevels){
     return (
       <div className='costpots'>
@@ -113,12 +99,19 @@ render(){
                   <div className={'levelCostPots'} key={`costpot${id}`}>
                     { 
                       allCostPosts.map((attrs,id)=> {
-
                         if(levelProps.id === attrs.levelId){
                           return (
-                            <CostPotBox  
+                            <CostPotBox 
+                              key={`costpotBox${id}`}
                               name={attrs.name}
+                              heroIcon={heroIcons[36+id]}
+                              actionIcons={{
+                                delete:{icon:'delete',action:()=>{ this.deleteCostPot(attrs.name);}},
+                                android:{icon:'androidIcon',action:null},
+                                assignment_turned_in:{icon:'assignment_turned_inIcon',action:null}
+                              }}
                               hideDelete = {levelProps.domainId !== 3}
+                              hideAndroid = {levelProps.domainId !== 3}
                             />
                           );
                         } else {
@@ -135,6 +128,19 @@ render(){
           }
          
          
+        </div>
+        {/*deleteCostPot Modal*/}
+        <div>
+          <ModalCustom isOpen={false} opts={{
+            shownOn:'CLICK_ON_CREATE_COST_MODEL',
+            hideOn:'CLICK_ON_CANCEL_COST_MODEL' 
+          }}>
+            <Typography component="h2" variant="h2" gutterBottom>
+                  are you sure U want to delete {this.state.costPotToDelete}
+            </Typography>
+            <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
+            <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
+          </ModalCustom>
         </div>
       </div>
     );

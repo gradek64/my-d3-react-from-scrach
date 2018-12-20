@@ -20,11 +20,11 @@ export const ProtectedRoutes = (props) => {
   const arr = Object.keys(params).map(i => params[i]);
   const lastParam = arr[allParams-1];
 
-  //cost Models
+  //*cost Models
   if(/admin\/cost-models\/?$/.test(url)){
     return <CostModel />;
   }
-  //costPostRoutes
+  //*costPostRoutes
   if(/admin\/cost-models\/\d+\/costpots\/?$/.test(url)){
     return <CostPots costPotId={params.costPotId}/>;
   }
@@ -41,14 +41,33 @@ const AppRouter = () => (
     <div>
       <Header />
       <MainNavBar />
+      
+      {/*pages content*/}
       <Switch>
         <Route path="/" component={HomePage} exact={true} />
+        {/*edit routes */}
         <AuthRoute path="/admin/edit/:auth" component={ProtectedRoutes}/>
+        {/*cost Models*/}
         <AuthRoute path="/admin/cost-models" exact component={ProtectedRoutes}/>
+        {/*costPost Routes*/}
         <AuthRoute path="/admin/cost-models/:costPotId/costpots" exact component={ProtectedRoutes}/>
+        {/*fallback to login */}
         {<Route path="/login" component={Login} />}
         <Route component={NotFoundPage} />
       </Switch>
+      {/*pages content*/}
+       
+      <div style={{
+        position:'absolute',
+        bottom:'0',
+        margin:'0',
+        padding:'0',
+        textAlign:'center',
+        backgroundColor:'grey',
+        width:'100%'
+      }}>
+        {'this is footer'}
+      </div> 
     </div>
   </BrowserRouter>
 );

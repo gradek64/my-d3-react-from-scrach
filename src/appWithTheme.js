@@ -1,7 +1,7 @@
 import React from 'react';
 import AppRouter from './routers/AppRouter';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import {purple} from '@material-ui/core/colors';
+import {purple, orange} from '@material-ui/core/colors';
 
 import './assets/scss/app.scss';
  
@@ -10,13 +10,15 @@ import './assets/scss/app.scss';
   *@first U need to import that color
   *@AMAZINGLLY U can also add your own rules in the theme object;
 */
+
+console.log('orange', orange);
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 const theme = createMuiTheme({
   palette: {
     type: 'light', //or 'dark'
     primary: purple,
     secondary: {
-      main: '#f44336',
+      main: orange[300],
     },
     /*typography: {
             useNextVariants: true,
@@ -27,7 +29,7 @@ const theme = createMuiTheme({
   }
 });
 const ThemedApp = () => ( 
-  <MuiThemeProvider theme={theme}>
+  <MuiThemeProvider theme={theme}  style={{position:'relative'}}> 
     <AppRouter />
   </MuiThemeProvider>
 );
