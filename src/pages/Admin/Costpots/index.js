@@ -40,6 +40,8 @@ state = {
 
 async componentDidMount(){
 
+  const { costModelId } = this.props;
+
   const allResourceTypes = await resourceTypeMockService.getAll();
   const resourceTypeItems = allResourceTypes.data.map(buildResourceTypeItem);
   const levelsRespond = await levelsMockService.getAll();
@@ -52,7 +54,7 @@ async componentDidMount(){
 
 
   //get costposts
-  const allCostPosts = await costpotsMockService.getAll(this.props.costPotId);
+  const allCostPosts = await costpotsMockService.getAll(costModelId);
   //update state;
   this.setState(() => ({ 
     allLevels,
@@ -100,15 +102,21 @@ render(){
                     { 
                       allCostPosts.map((attrs,id)=> {
                         if(levelProps.id === attrs.levelId){
+                          const {configurationId:costModelId, id:costPotId} = attrs;
+                          console.log(attrs);
                           return (
                             <CostPotBox 
                               key={`costpotBox${id}`}
                               name={attrs.name}
                               heroIcon={heroIcons[36+id]}
                               actionIcons={{
-                                delete:{icon:'delete',action:()=>{ this.deleteCostPot(attrs.name);}},
-                                android:{icon:'androidIcon',action:null},
-                                assignment_turned_in:{icon:'assignment_turned_inIcon',action:null}
+                                delete:{icon:'delete',action:()=>{ this.deleteCostPot(attrs.name);},linkParams:null},
+                                android:{icon:'androidIcon',action:null, linkParams:null},
+                                assignment_turned_in:{
+                                  icon:'assignment_turned_inIcon',
+                                  action:null,
+                                  linkParams:{costModelId,costPotId}
+                                }
                               }}
                               hideDelete = {levelProps.domainId !== 3}
                               hideAndroid = {levelProps.domainId !== 3}

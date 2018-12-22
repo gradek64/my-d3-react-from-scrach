@@ -178,8 +178,7 @@ class PrimarySearchAppBar extends React.Component {
     );
 
     return (
-      <div className={classes.root}  >
-        {JSON.stringify(classes.bgColor)}
+      <div className={classes.root}>
         <AppBar position="static" className={classes.bgColor}>
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">

@@ -4,11 +4,12 @@ import HomePage from '../pages';
 import Login from '../pages/Login';
 import CostModel from '../pages/Admin/CostModels/';
 import CostPots from '../pages/Admin/Costpots/';
+import FileManagementCostPot from '../pages/Admin/FileManagement/';
 import NotFoundPage from '../pages/NotFoundPage/';
 import Header from '../pages/pagePartials/Header';
 import MainNavBar from '../pages/pagePartials/MainNavBar';
 import { AuthRoute } from './AuthRoute';
-
+import '../main.scss';
 export const ProtectedRoutes = (props) => {
 
   console.log('start route......');
@@ -26,7 +27,11 @@ export const ProtectedRoutes = (props) => {
   }
   //*costPostRoutes
   if(/admin\/cost-models\/\d+\/costpots\/?$/.test(url)){
-    return <CostPots costPotId={params.costPotId}/>;
+    return <CostPots costModelId={params.costModelId}/>;
+  }
+  //*file-management Routes
+  if(/admin\/cost-models\/\d+\/costpots\/\d+\/file-management\/?$/.test(url)){
+    return <FileManagementCostPot costModelId={params.costModelId} costPotId={params.costPotId}/>;
   }
 
   if(url.includes('edit')){
@@ -37,37 +42,32 @@ export const ProtectedRoutes = (props) => {
 };
 
 const AppRouter = () => (
+
   <BrowserRouter>
-    <div>
-      <Header />
-      <MainNavBar />
+    <div className="containerFlex">
+      <header>
+        <Header />
+        <MainNavBar />
+      </header>
       
-      {/*pages content*/}
-      <Switch>
-        <Route path="/" component={HomePage} exact={true} />
-        {/*edit routes */}
-        <AuthRoute path="/admin/edit/:auth" component={ProtectedRoutes}/>
-        {/*cost Models*/}
-        <AuthRoute path="/admin/cost-models" exact component={ProtectedRoutes}/>
-        {/*costPost Routes*/}
-        <AuthRoute path="/admin/cost-models/:costPotId/costpots" exact component={ProtectedRoutes}/>
-        {/*fallback to login */}
-        {<Route path="/login" component={Login} />}
-        <Route component={NotFoundPage} />
-      </Switch>
-      {/*pages content*/}
+      <div className="content"> 
+        <Switch>
+          <Route path="/" component={HomePage} exact={true} />
+          {/*edit routes */}
+          <AuthRoute path="/admin/edit/:auth" component={ProtectedRoutes}/>
+          {/*cost Models*/}
+          <AuthRoute path="/admin/cost-models" exact component={ProtectedRoutes}/>
+          {/*costPost Routes*/}
+          <AuthRoute path="/admin/cost-models/:costModelId/costpots" exact component={ProtectedRoutes}/> 
+          {/*file-manangement Routes*/}
+          <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/file-management" exact component={ProtectedRoutes}/>
+          {/*fallback to login */}
+          {<Route path="/login" component={Login} />}
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
        
-      <div style={{
-        position:'absolute',
-        bottom:'0',
-        margin:'0',
-        padding:'0',
-        textAlign:'center',
-        backgroundColor:'grey',
-        width:'100%'
-      }}>
-        {'this is footer'}
-      </div> 
+      <footer>this is footer fixed bottom footer</footer>
     </div>
   </BrowserRouter>
 );
