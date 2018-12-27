@@ -16,9 +16,9 @@ import TablePagControllers from './TablePagControllers';
 
 
 const TableData = (props) => { 
-  const { classes } = props;
+  const { classes ,pageUpdate, rowsPerPageUpdate } = props;
 
-  console.log(props.data);
+  console.log('props table',props);
 
 
   const onDelete = () => console.log('onDelete');
@@ -51,7 +51,7 @@ const TableData = (props) => {
         {props.data.map(({name,type,createdBy,creationDate,iconColor,id:costPotId},id) => {
           return (
             <TableRow key={`table${id}`}>
-              <TableCell numeric>{id+1}</TableCell>
+              <TableCell numeric>{(id+1)+pageUpdate*rowsPerPageUpdate}</TableCell>
               <TableCell component="th" scope="row">
                 {name}
               </TableCell>

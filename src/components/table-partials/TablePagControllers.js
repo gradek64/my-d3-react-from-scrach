@@ -22,22 +22,22 @@ const actionsStyles = theme => ({
 
 class TablePaginationActions extends React.Component {
   state = {
-      page:this.props.page
+    page:this.props.page
   }
 
   handleFirstPageButtonClick = event => {
-    this.setState({page:0})
+    this.setState({page:0});
     this.props.onChangePage(event, 0);
   };
 
   handleBackButtonClick = event => {
-    this.setState({page:this.state.page -1 })
+    this.setState({page:this.state.page -1 });
     this.props.onChangePage(event, this.state.page - 1);
 
   };
 
   handleNextButtonClick = event => {
-    this.setState({page:this.state.page +1 })
+    this.setState({page:this.state.page +1 });
     this.props.onChangePage(event, this.state.page + 1);
 
 
@@ -49,13 +49,13 @@ class TablePaginationActions extends React.Component {
       *@therefore U wont imidiate update after setState(prop:update);
     */
 
-    this.setState({page: Math.max(this.state.page, Math.ceil(this.props.count / this.props.rowsPerPage) - 1) })
+    this.setState({page: Math.max(this.state.page, Math.ceil(this.props.count / this.props.rowsPerPage) - 1) });
     this.props.onChangePage(
       event,
       Math.max(this.state.page, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
     );
 
-     console.warn(`proof of state delay this.state.page: ${this.state.page} 
+    console.warn(`proof of state delay this.state.page: ${this.state.page} 
             but should be ${Math.max(this.state.page, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)}`);
   };
 
