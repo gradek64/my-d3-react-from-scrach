@@ -1,6 +1,7 @@
 import React from 'react';
 //custom
 import TableData from './TableData';
+import FileManagementTableData from './TableData';
 
 
 const fnExtensionClass = BaseComponent => 
@@ -39,7 +40,7 @@ const fnExtensionClass = BaseComponent =>
         }
 
         render() {
-          return <BaseComponent {...this.props} 
+          return <FileManagementTableData {...this.props} 
             data={this.state.data}
             pageUpdate = {this.state.page}
             rowsPerPageUpdate = {this.state.rowsPerPage}
