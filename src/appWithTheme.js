@@ -29,7 +29,7 @@ const theme = createMuiTheme({
   }
 });
 const ThemedApp = () => ( 
-  <MuiThemeProvider theme={theme}  style={{position:'relative'}}> 
+  <MuiThemeProvider theme={theme}> 
     <AppRouter />
   </MuiThemeProvider>
 );
