@@ -16,7 +16,7 @@ async componentDidMount(){
 render(){
   if(this.state.data){
     return (
-      <SimpleTable data={this.state.data} />
+      <SimpleTable data={this.state.data} pageTableOn={'costModels'}/>
     );
   }else {
     return '....preloading';

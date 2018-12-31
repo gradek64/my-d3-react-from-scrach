@@ -8,10 +8,10 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router-dom';
-import DropDownListContainer from '../../components/DropDownListContainer';
+import DropDownListContainer from '../../../components/DropDownListContainer';
 
 //custom
-import TablePagControllers from './TablePagControllers';
+import TablePagControllers from '../TablePagControllers';
 
 
 
@@ -42,23 +42,37 @@ const TableData = (props) => {
       <TableHead>
         <TableRow>
           <TableCell numeric>ID</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell >type</TableCell>
-          <TableCell >action</TableCell>
+          <TableCell>File Type</TableCell>
+          <TableCell>Title</TableCell>
+          <TableCell >Status</TableCell>
+          <TableCell >Active</TableCell>
+          <TableCell >Author</TableCell>
+          <TableCell >Actions</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {props.data.map(({name,type,createdBy,creationDate,iconColor,id:costPotId},id) => {
+        {props.data.map(({fileType,fileName,active,createdBy,creationDate,id:costPotId},order) => {
           return (
-            <TableRow key={`table${id}`}>
-              <TableCell numeric>{(id+1)+pageUpdate*rowsPerPageUpdate}</TableCell>
+            <TableRow key={`table${order}`}>
+              <TableCell numeric>{(order+1)+pageUpdate*rowsPerPageUpdate}</TableCell>
               <TableCell component="th" scope="row">
-                {name}
+                {fileType}
               </TableCell>
-              <TableCell >{type}</TableCell>
-              <TableCell>
+              <TableCell component="th" scope="row">
+                {fileName}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {active.toString()}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {createdBy}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {creationDate}
+              </TableCell>
+              <TableCell component="th" scope="row">
                 <DropDownListContainer 
-                  list={getActions({type,costPotId})}
+                  list={getActions({costPotId})}
                   direction={'left'}
                   placement={'top-end'}>
                   <MoreVertIcon />

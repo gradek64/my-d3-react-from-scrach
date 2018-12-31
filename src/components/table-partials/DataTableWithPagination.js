@@ -1,11 +1,11 @@
 import React from 'react';
 //custom
-import TableData from './TableData';
-import FileManagementTableData from './TableData';
+import CostModelsTableData from './dataStructure/costModelsTableData';
+import FileManagementTableData from './dataStructure/fileManagementTableData';
 
 
-const fnExtensionClass = BaseComponent => 
-  class DataTableWithPagination extends React.Component {
+//const fnExtensionClass = BaseComponent => no need to extend now;
+class DataTableWithPagination extends React.Component {
         state = {
           data:this.props.initialData,
           page:this.props.startPage,
@@ -40,14 +40,32 @@ const fnExtensionClass = BaseComponent =>
         }
 
         render() {
-          return <FileManagementTableData {...this.props} 
-            data={this.state.data}
-            pageUpdate = {this.state.page}
-            rowsPerPageUpdate = {this.state.rowsPerPage}
-            handleChangePage={this.handleChangePage} 
-            handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-          />;
-        }
-  };
 
-export default fnExtensionClass(TableData);
+          switch (this.props.pageTableOn){
+          case 'fileManagement':
+            return <FileManagementTableData {...this.props} 
+              data={this.state.data}
+              pageUpdate = {this.state.page}
+              rowsPerPageUpdate = {this.state.rowsPerPage}
+              handleChangePage={this.handleChangePage} 
+              handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+            />;
+          case 'costModels':
+            return <CostModelsTableData {...this.props} 
+              data={this.state.data}
+              pageUpdate = {this.state.page}
+              rowsPerPageUpdate = {this.state.rowsPerPage}
+              handleChangePage={this.handleChangePage} 
+              handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+            />;
+          default:
+            return 'this.props.pageTableOn is not defined in props in DataTableWithPagination.js!';
+
+          }
+
+         
+        }
+}
+
+//export default fnExtensionClass(TableData);
+export default DataTableWithPagination;
