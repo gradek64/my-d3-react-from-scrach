@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import { fakeAuth } from '../services/fakeAuth';
 import Tabs from '../components/tabs';
 import Card from '../components/card';
@@ -16,11 +16,12 @@ class Login extends React.Component {
   login = () => {
     fakeAuth.authenticate(() => {
       this.setState({ redirectToReferrer: true });
+      localStorage.setItem('authenticated','true');
     });
   };
 
   render() {
-    let { from } = this.props.location.state || { from: { pathname: "/" } };
+    let { from } = this.props.location.state || { from: { pathname: '/' } };
     let { redirectToReferrer } = this.state;
     const value = 0;
     if (redirectToReferrer) return <Redirect to={from} />;
@@ -29,50 +30,50 @@ class Login extends React.Component {
       <div>
         <Card maxWidth={350} center>
           <Tabs value={0} tabs={[
-               {label:'Login', href:'login'},
-               {label:'Register', href:'register'},
-            ]} style={{backgroundColor:'white'}}>
-              {/*tabs children below*/}
-              {<div style={{flexDirection:'column',display:'flex'}}>
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Login"
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Password"
-                    margin="normal"
-                    variant="outlined"
-                  />
-                  <Button variant="contained" color="primary" onClick={this.login}>
+            {label:'Login', href:'login'},
+            {label:'Register', href:'register'},
+          ]} style={{backgroundColor:'white'}}>
+            {/*tabs children below*/}
+            {<div style={{flexDirection:'column',display:'flex'}}>
+              <TextField
+                required
+                id="outlined-required"
+                label="Login"
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="Password"
+                margin="normal"
+                variant="outlined"
+              />
+              <Button variant="contained" color="primary" onClick={this.login}>
                     Login
-                  </Button>
-              </div>}
-              {<div style={{flexDirection:'column',display:'flex'}}>
+              </Button>
+            </div>}
+            {<div style={{flexDirection:'column',display:'flex'}}>
 
-                    <TextField
-                      required
-                      id="outlined-required"
-                      label="UserName"
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    <TextField
-                      required
-                      id="outlined-required"
-                      label="Password"
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    <Button variant="contained" color="primary">
+              <TextField
+                required
+                id="outlined-required"
+                label="UserName"
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="Password"
+                margin="normal"
+                variant="outlined"
+              />
+              <Button variant="contained" color="primary">
                     Register
-                    </Button>
-                </div>}
-            </Tabs>
+              </Button>
+            </div>}
+          </Tabs>
         </Card>
       </div>
     );

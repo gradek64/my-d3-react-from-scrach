@@ -16,7 +16,7 @@ const AuthRoute = ({ component:Component, ...rest }) => {
       render={
         (props) => {
           console.log('this is not proccessed if route doenst match /admin/:any',props);
-          return fakeAuth.isAuthenticated ? (
+          return fakeAuth.isAuthenticated || localStorage.getItem('authenticated') ? (
             <Component {...props} />
           ) : (
             <Redirect
