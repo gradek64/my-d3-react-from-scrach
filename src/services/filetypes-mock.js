@@ -57,9 +57,6 @@ const fileTypesMockService =  () => {
 
   const getAll = (resourceId) => {
     return new Promise((resolve) => {
-      console.log('resourceId', resourceId);
-      const set = prepare(items, resourceId);
-      console.log('set', set);
       setTimeout(() => {
         resolve({
           data: prepare(items, resourceId),

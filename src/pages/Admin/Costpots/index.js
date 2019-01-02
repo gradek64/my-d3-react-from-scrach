@@ -6,7 +6,9 @@ import costpotsMockService from '../../../services/costpots-mock';
 import CostPotBox from './costPotBox';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ModalCustom from '../../../components/modal';
+//import ModalCustom from '../../../components/modal';
+import ModalCustom from '../../../customized-vendors/modalVendor';
+
 import _ from '../../../utils/misc';
 import events from '../../../utils/events';
 
@@ -65,7 +67,7 @@ async componentDidMount(){
 
 deleteCostPot(costPotName){
   this.setState({costPotToDelete:costPotName});
-  events.emit('CLICK_ON_CREATE_COST_MODEL');
+  events.emit('OPEN_MODAL');
 }
 
 render(){
@@ -139,15 +141,12 @@ render(){
         </div>
         {/*deleteCostPot Modal*/}
         <div>
-          <ModalCustom isOpen={false} opts={{
-            shownOn:'CLICK_ON_CREATE_COST_MODEL',
-            hideOn:'CLICK_ON_CANCEL_COST_MODEL' 
-          }}>
-            <Typography component="h2" variant="h2" gutterBottom>
-                  are you sure U want to delete {this.state.costPotToDelete}
+          <ModalCustom isOpen={false} >
+            <Typography component="h3" variant="h3" gutterBottom style={{textAlign:'center'}}>
+                  are you sure U want to delete {this.state.costPotToDelete}?
             </Typography>
-            <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
-            <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
+            <Button variant="contained" color="primary" className='buttonConfirm' onClick={()=>{events.emit('CLOSE_MODAL');}}>Delete</Button>
+            <Button variant="contained" color="primary" className='buttonCancel' onClick={()=>{events.emit('CLOSE_MODAL');}}>Cancel</Button>
           </ModalCustom>
         </div>
       </div>

@@ -60,11 +60,7 @@ class TablePaginationActions extends React.Component {
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
-
-
-    console.log('TablePaginationControllers', this.props);
-
+    const { classes, count, rowsPerPage, theme } = this.props;
     return (
       <div className={classes.root}>
         <IconButton

@@ -65,8 +65,6 @@ const filesService = () => {
   };
 
   const concat = (res) => {
-    console.log('res.map((e) => e.data)', res);
-
     const files = res.reduce((a,e,i)=>{
       a[i] = e.data;
       return a;
@@ -95,8 +93,6 @@ const filesService = () => {
   };
 
   const addFileTypeNameByID = (fileTypes) => (res) => {
-    console.log('file response', res);
-    console.log('fileTypes', fileTypes);
     /* res.data.forEach((file) => {
           // prettier-ignore
           const fileType = fileTypes
@@ -107,9 +103,6 @@ const filesService = () => {
   };
 
   const getAll = (fileTypes, params, costpotId) => {
-    console.log('fileTypes', fileTypes);
-    console.log('params', params);
-    console.log('costpotId', costpotId);
     costpotId = undefined;
     if (_.def(costpotId)) {
       return api

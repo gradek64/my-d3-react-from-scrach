@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import costModelService from '../../../services/cost-model-mock';
 import events from '../../../utils/events';
 import Typography from '@material-ui/core/Typography';
-import ModalCustom from '../../../components/modal';
+import ModalCustom from '../../../customized-vendors/modalVendor';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMockService from '../../../services/files-mock';
@@ -89,24 +89,47 @@ render(){
         <Typography component="h2" variant="h2" gutterBottom>
                   File Management for {costPotName?costPotName:'...loading'}
         </Typography>
-        <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CREATE_COST_MODEL');}}>Upload File</Button>
+        <Button variant="contained" color="primary" onClick={()=>{events.emit('OPEN_MODAL');}} >Upload file</Button>
       </div>
   
-      {/*files table data*/}
       {data?<SimpleTable data={data} pageTableOn={'fileManagement'} />:'....preloading' }
       {/*end of files  table data*/}
       
       {/*upload File Modal*/}
       <div>
-        <ModalCustom isOpen={false} opts={{
-          shownOn:'CLICK_ON_CREATE_COST_MODEL',
-          hideOn:'CLICK_ON_CANCEL_COST_MODEL' 
-        }}>
-          <Typography component="h2" variant="h2" gutterBottom>
-                  are you sure U want to delete {this.state.costPotToDelete}
-          </Typography>
-          <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
-          <Button variant="contained" color="primary" onClick={()=>{events.emit('CLICK_ON_CANCEL_COST_MODEL');}}>Cancel Modal</Button>
+        <ModalCustom isOpen={false} >
+          <form name="form1" ng-submit="onSubmit(formObj1,'upload'); $event.preventDefault();">
+            <div className="modal-content">
+              <h4>Upload File</h4>
+              <div data-ng-show="error" className="card-panel red lighten-2 z-depth-0">
+                <span className="white-text">error</span>
+              </div>
+              <div className="f-body">
+                <div className="input-field">
+                  <dropdown-select text="Please select" label="File Type" name="fileType" ng-model="formObj1.fileType"
+                    class-name="{invalid: (form1.$submitted && !formObj1.fileType),
+                                                    valid: (form1.$submitted && formObj1.fileType)}"
+                    items="fileTypeItems" reset-factory="dropdownResetFactory('resetTemplate')"></dropdown-select>
+                </div>
+                <div className="file-field input-field" ng-model="formObj1.files">
+                  <div className="btn">
+                    <span>File</span>
+                    <input type="file" id="file-input" name="fileInput6180" />
+                  </div>
+                  <div className="file-path-wrapper">
+                    <input className="file-path" type="text" name="fileName" ng-model="formObj1.fileName"
+                      ng-class="{invalid: (form1.$submitted && !formObj1.fileName),
+                                            valid: (form1.$submitted && formObj1.fileName)}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="submit" className="create btn waves-effect waves-light">Upload</button>
+              <a href="#!" ng-click="emit('CLOSE_MODAL'); $event.preventDefault();"
+                className="cancel btn-flat waves-effect waves-red">Cancel</a>
+            </div>
+          </form>
         </ModalCustom>
       </div>
       {/*end of upload File Modal*/}

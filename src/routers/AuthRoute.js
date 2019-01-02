@@ -6,9 +6,8 @@ import HomePage from '../pages';
 
 const AuthRoute = ({ component:Component, ...rest }) => {
 
-  console.log('fakeAuth.isAuthenticated',fakeAuth.isAuthenticated);
-
-  console.log('path',rest);
+  /*console.log('fakeAuth.isAuthenticated',fakeAuth.isAuthenticated);
+  console.log('path',rest);*/
 
   return (
     <Route
