@@ -113,7 +113,11 @@ render(){
                               heroIcon={heroIcons[36+id]}
                               actionIcons={{
                                 delete:{icon:'delete',action:()=>{ this.deleteCostPot(attrs.name);},linkParams:null},
-                                android:{icon:'androidIcon',action:null, linkParams:null},
+                                android:{
+                                  icon:'androidIcon',
+                                  action:null, 
+                                  linkParams:{costModelId,costPotId}
+                                },
                                 assignment_turned_in:{
                                   icon:'assignment_turned_inIcon',
                                   action:null,

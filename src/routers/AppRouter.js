@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import CostModel from '../pages/Admin/CostModels/';
 import CostPots from '../pages/Admin/Costpots/';
 import FileManagementCostPot from '../pages/Admin/FileManagement/';
+import DataSetFilterstCostPot from '../pages/Admin/DataSetFilters/';
 import NotFoundPage from '../pages/NotFoundPage/';
 import Header from '../pages/pagePartials/Header';
 import MainNavBar from '../pages/pagePartials/MainNavBar';
@@ -32,6 +33,10 @@ export const ProtectedRoutes = (props) => {
   //*file-management Routes
   if(/admin\/cost-models\/\d+\/costpots\/\d+\/file-management\/?$/.test(url)){
     return <FileManagementCostPot costModelId={params.costModelId} costPotId={params.costPotId}/>;
+  }
+  //*dataset-filters Routes
+  if(/admin\/cost-models\/\d+\/costpots\/\d+\/dataset-filters\/?$/.test(url)){
+    return <DataSetFilterstCostPot costModelId={params.costModelId} costPotId={params.costPotId}/>;
   }
 
   if(url.includes('edit')){
@@ -61,6 +66,8 @@ const AppRouter = () => (
           <AuthRoute path="/admin/cost-models/:costModelId/costpots" exact component={ProtectedRoutes}/> 
           {/*file-manangement Routes*/}
           <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/file-management" exact component={ProtectedRoutes}/>
+          {/*dataset-filters Routes*/}
+          <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/dataset-filters" exact component={ProtectedRoutes}/>
           {/*fallback to login */}
           {<Route path="/login" component={Login} />}
           <Route component={NotFoundPage} />

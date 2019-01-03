@@ -48,6 +48,7 @@ class ControlledOpenSelect extends React.Component {
           onClose={this.handleClose}
           onOpen={this.handleOpen}
           value={this.state.age}
+          error
           onChange={this.handleChange}
           inputProps={{
             name: 'age',

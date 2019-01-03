@@ -18,8 +18,11 @@ const styles = theme => ({
     height:'100vh',
   },
   content: {
-    minWidth: theme.spacing.unit * 50,
     maxWidth: theme.spacing.unit * 100,
+    minWidth: theme.spacing.unit * 50,
+    [theme.breakpoints.up('md')]: {
+      minWidth: theme.spacing.unit * 100,
+    },
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,

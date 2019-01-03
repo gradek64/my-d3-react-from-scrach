@@ -1,20 +1,20 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import SimpleTable from '../../../components/SimpleTable';
 import { withRouter } from 'react-router-dom';
 import costModelService from '../../../services/cost-model-mock';
-import events from '../../../utils/events';
 import Typography from '@material-ui/core/Typography';
 import ModalCustom from '../../../customized-vendors/modalVendor';
+import DataSetFiltersCreateForm  from './dataSetFiltersCreateForm';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
+import filesMappingMockService from '../../../services/filesMapping-mock';
 import filesMockService from '../../../services/files-mock';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import DropDownSelect from '../../../components/selectDropdown';
-import {emit} from '../../../utils/events';
+import events from '../../../utils/events';
 
-import './fileManagement.scss';
+
+import './dataSetFilters.scss';
+import './dataSetFiltersCreateForm.scss';
 
 class CostModel extends React.Component {
 
@@ -44,10 +44,11 @@ async componentDidMount(){
               '/costpots/' +
               costPotId +
               '/file-management',
-      label: 'File Management',
+      label: 'DataSet Filters',
     },
   ];
 
+  //display filters in the table;
   const currentCostPot = await costpotsMockService.getAll(costModelId)
     .then((res)=>res.data)
     .then((costPots)=>costPots.find(
@@ -64,6 +65,41 @@ async componentDidMount(){
   //get files fro current Costpot
   const files = await filesMockService.getAll(fileTypes).then((res) => res.data);
   this.setState(() => ({data:files}));
+
+  //get file Mapping; 
+  const fileMapping = await filesMappingMockService.getAll('common').then((res) => res.data);
+
+  //get ration files
+  const getRatioFiles = (costpot) => {
+    fileTypesMockService
+      .getAll(costpot.resourceTypeId)
+      .then(
+        (res) => res.data.filter((fileType) => fileType.code === 'RATIO'))
+      .then((ratioTypes) =>
+        filesMockService.getAll(ratioTypes).then((res) => res.data)
+      )
+      .then((files) =>
+        files.filter((e) => e.active && e.status === 'CONFIGURED')
+      )
+      .then((files) => {
+        $scope.ratioItems = files.map(buildRatiofiles);
+
+        console.log('$scope.ratioItems', $scope.ratioItems);
+      });
+  };
+  const buildRatiofiles = (e) => {
+    return {
+      label: e.fileName,
+      value: {fileId: e.id},
+    };
+  };
+  const fileTypeRatio = fileTypes.filter((fileType) => fileType.code === 'RATIO' );
+  const filesRatio = await filesMockService.getAll(fileTypeRatio);
+  const filesRatioConfiguredActive = filesRatio.data.filter((e) => e.active && e.status === 'CONFIGURED');
+  const ratioItems = filesRatioConfiguredActive.map(buildRatiofiles);
+
+
+
 }
 
 /*if(this.state.data){
@@ -92,61 +128,17 @@ render(){
       </div>
       <div className='pageTop'>
         <Typography component="h2" variant="h2" gutterBottom>
-                  File Management for {costPotName?costPotName:'...loading'}
+                  DataSet Filters for {costPotName?costPotName:'...loading'}
         </Typography>
-        <Button variant="contained" color="primary" onClick={()=>{events.emit('OPEN_MODAL');}} >Upload file</Button>
+        <Button variant="contained" color="primary" onClick={()=>{events.emit('OPEN_MODAL');}} >Create New</Button>
       </div>
       {data?<SimpleTable data={data} pageTableOn={'fileManagement'} />:'....preloading' }
       {/*end of files  table data*/}
       
-      {/*upload File Modal*/}
+      {/*create dataset filter Modal*/}
       <div>
         <ModalCustom isOpen={false} >
-          <form name="form1" ng-submit="onSubmit(formObj1,'upload'); $event.preventDefault();">
-            <div className="modal-content">
-              <Typography component="h2" variant="h2" gutterBottom>
-                  Upload File
-              </Typography>
-              <div data-ng-show="error" className="card-panel red lighten-2 z-depth-0">
-                <span className="white-text">error</span>
-              </div>
-              <div className="f-body">
-                <div className="input-field">
-                  <DropDownSelect 
-                    label={'File type'}
-                    options = {[
-                      {value:10,optionName:'Greg'},
-                      {value:20,optionName:'Libby'},
-                      {value:30,optionName:'Katarzyna'},
-                    ]}
-                  />
-                </div>
-                <div>
-                  <input
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button variant="contained" component="span" color={'primary'}>
-                            Upload
-                      <CloudUploadIcon style={{marginLeft:'10px'}}/>
-                    </Button>
-                  </label>
-                  <TextField
-                    id="filled-bare"
-                    margin="normal"
-                  />
-                </div>
-               
-              </div>
-            </div>
-            <div className="modal-footer">
-              <Button variant="contained" color="primary" onClick={()=>{events.emit('CLOSE_MODAL');}}>Cancel Modal</Button>
-              <Button variant="contained" color="primary" onClick={()=>{emit('OPEN_MODAL');}} >open Modals</Button>
-            </div>
-          </form>
+          <DataSetFiltersCreateForm  costPot={costPotName}/>
         </ModalCustom>
       </div>
       {/*end of upload File Modal*/}

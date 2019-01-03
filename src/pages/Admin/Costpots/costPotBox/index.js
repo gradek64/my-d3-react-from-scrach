@@ -56,9 +56,11 @@ const CostPtoBox = (props) => {
           </Icon>:null
         }
         {
-          !hideAndroid? <NavLink to='/admin/cost-models/'><Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
-            {actionIcons.android.icon}                
-          </Icon></NavLink>:null
+          !hideAndroid? <NavLink 
+            to={`/admin/cost-models/${linkParams.costModelId}/costpots/${linkParams.costPotId}/dataset-filters/`}>
+            <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
+              {actionIcons.android.icon}                
+            </Icon></NavLink>:null
         }
         <NavLink to={`/admin/cost-models/${linkParams.costModelId}/costpots/${linkParams.costPotId}/file-management/`}>
           <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
