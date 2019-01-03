@@ -4,8 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import Schema from 'validate';
+const user = new Schema({
+  username: {
+    required: true
+  }
+});
 
 const styles = theme => ({
   button: {
@@ -23,10 +30,21 @@ class ControlledOpenSelect extends React.Component {
   state = {
     age: '',
     open: false,
+    hasError:false
   };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    let obj = {username:event.target.value};
+    const errors = user.validate(obj);
+
+    if(errors.length>0){
+      this.setState({hasError:true});
+    }else {
+      this.setState({hasError:false});
+    }
+
+
   };
 
   handleClose = () => {
@@ -47,8 +65,8 @@ class ControlledOpenSelect extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           onOpen={this.handleOpen}
+          error={this.state.hasError}
           value={this.state.age}
-          error
           onChange={this.handleChange}
           inputProps={{
             name: 'age',
@@ -65,6 +83,7 @@ class ControlledOpenSelect extends React.Component {
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>*/}
         </Select>
+        {this.state.hasError?<FormHelperText error>You can display an error</FormHelperText>:null}
       </FormControl>
     );
   }
