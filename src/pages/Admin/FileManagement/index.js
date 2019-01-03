@@ -9,6 +9,7 @@ import ModalCustom from '../../../customized-vendors/modalVendor';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMockService from '../../../services/files-mock';
+import DropDownSelect from '../../../components/selectDropdown';
 import './fileManagement.scss';
 
 class CostModel extends React.Component {
@@ -91,7 +92,6 @@ render(){
         </Typography>
         <Button variant="contained" color="primary" onClick={()=>{events.emit('OPEN_MODAL');}} >Upload file</Button>
       </div>
-  
       {data?<SimpleTable data={data} pageTableOn={'fileManagement'} />:'....preloading' }
       {/*end of files  table data*/}
       
@@ -100,16 +100,26 @@ render(){
         <ModalCustom isOpen={false} >
           <form name="form1" ng-submit="onSubmit(formObj1,'upload'); $event.preventDefault();">
             <div className="modal-content">
-              <h4>Upload File</h4>
+              <Typography component="h2" variant="h2" gutterBottom>
+                  Upload File
+              </Typography>
               <div data-ng-show="error" className="card-panel red lighten-2 z-depth-0">
                 <span className="white-text">error</span>
               </div>
               <div className="f-body">
                 <div className="input-field">
-                  <dropdown-select text="Please select" label="File Type" name="fileType" ng-model="formObj1.fileType"
+                  <DropDownSelect 
+                    label={'File type'}
+                    options = {[
+                      {value:10,optionName:'Greg'},
+                      {value:20,optionName:'Libby'},
+                      {value:30,optionName:'Katarzyna'},
+                    ]}
+                  />
+                  {/*<dropdown-select text="Please select" label="File Type" name="fileType" ng-model="formObj1.fileType"
                     class-name="{invalid: (form1.$submitted && !formObj1.fileType),
                                                     valid: (form1.$submitted && formObj1.fileType)}"
-                    items="fileTypeItems" reset-factory="dropdownResetFactory('resetTemplate')"></dropdown-select>
+                    items="fileTypeItems" reset-factory="dropdownResetFactory('resetTemplate')"></dropdown-select>*/}
                 </div>
                 <div className="file-field input-field" ng-model="formObj1.files">
                   <div className="btn">
