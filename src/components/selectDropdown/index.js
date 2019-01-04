@@ -28,21 +28,23 @@ const styles = theme => ({
 
 class ControlledOpenSelect extends React.Component {
   state = {
-    age: '',
+    select: '',
     open: false,
     hasError:false
   };
 
   handleChange = event => {
+    console.log('event.target.name',event.target.name);
+    console.log('event.target.value',event.target.value);
     this.setState({ [event.target.name]: event.target.value });
-    let obj = {username:event.target.value};
+    /*let obj = {username:event.target.value};
     const errors = user.validate(obj);
 
     if(errors.length>0){
       this.setState({hasError:true});
     }else {
       this.setState({hasError:false});
-    }
+    }*/
 
 
   };
@@ -56,22 +58,27 @@ class ControlledOpenSelect extends React.Component {
   };
 
   render() {
-    const { label, options, classes } = this.props;
-
+    const { label, options, validate, error } = this.props;
+    {/*inputProps={{
+            name: 'age',
+            id: 'demo-controlled-open-select',
+          }}*/}
     return (
-      <FormControl className={classes.formControl}>
+      <FormControl className='textfield'>
         <InputLabel htmlFor="demo-controlled-open-select">{label}</InputLabel>
         <Select
           open={this.state.open}
           onClose={this.handleClose}
           onOpen={this.handleOpen}
-          error={this.state.hasError}
-          value={this.state.age}
-          onChange={this.handleChange}
+          error={error!==''}
+          value={this.state.select}
+          name='select'
+          onChange={(e)=>{this.handleChange(e); validate(e);}}
           inputProps={{
-            name: 'age',
+            name: 'select',
             id: 'demo-controlled-open-select',
           }}
+          
         >
           <MenuItem value="">
             <em>None</em>
@@ -83,7 +90,7 @@ class ControlledOpenSelect extends React.Component {
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem>*/}
         </Select>
-        {this.state.hasError?<FormHelperText error>You can display an error</FormHelperText>:null}
+        {error?<FormHelperText error>({error})</FormHelperText>:null}
       </FormControl>
     );
   }
