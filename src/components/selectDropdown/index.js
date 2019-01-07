@@ -7,12 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import Schema from 'validate';
-const user = new Schema({
-  username: {
-    required: true
-  }
-});
+
 
 const styles = theme => ({
   button: {
@@ -34,19 +29,7 @@ class ControlledOpenSelect extends React.Component {
   };
 
   handleChange = event => {
-    console.log('event.target.name',event.target.name);
-    console.log('event.target.value',event.target.value);
     this.setState({ [event.target.name]: event.target.value });
-    /*let obj = {username:event.target.value};
-    const errors = user.validate(obj);
-
-    if(errors.length>0){
-      this.setState({hasError:true});
-    }else {
-      this.setState({hasError:false});
-    }*/
-
-
   };
 
   handleClose = () => {
@@ -59,10 +42,7 @@ class ControlledOpenSelect extends React.Component {
 
   render() {
     const { label, options, validate, error } = this.props;
-    {/*inputProps={{
-            name: 'age',
-            id: 'demo-controlled-open-select',
-          }}*/}
+
     return (
       <FormControl className='textfield'>
         <InputLabel htmlFor="demo-controlled-open-select">{label}</InputLabel>
@@ -70,7 +50,7 @@ class ControlledOpenSelect extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           onOpen={this.handleOpen}
-          error={error!==''}
+          error={Boolean(error)}
           value={this.state.select}
           name='select'
           onChange={(e)=>{this.handleChange(e); validate(e);}}

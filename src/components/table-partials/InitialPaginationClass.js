@@ -11,9 +11,9 @@ class InitialPaginationClass extends React.Component {
  
 
  state = {
-    page: this.props.startPage,
-    rowsPerPage: this.props.rowsPerPage,
-   }
+   page: this.props.startPage,
+   rowsPerPage: this.props.rowsPerPage,
+ }
 
 handleChangePage = (event, page) => {
   this.setState({ page:this.state.page+1 });
@@ -24,29 +24,29 @@ handleChangePage = (event, page) => {
 };
 
  handleChangeRowsPerPage = event => {
-  console.log(event);
-  this.setState({ rowsPerPage: event.target.value });
-};
+   console.log(event);
+   this.setState({ rowsPerPage: event.target.value });
+ };
 
 
-  render() {
-    const { pages } = this.props
-    return (
-      <TableFooter>
-        <TableRow>
-          <TablePagination
-            colSpan={3}
-            count={pages}
-            rowsPerPage={this.state.rowsPerPage}
-            page={this.state.page}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            ActionsComponent={TablePagControllers}
-          />
-        </TableRow>
-      </TableFooter>
-      )
-  }
+ render() {
+   const { pages } = this.props;
+   return (
+     <TableFooter>
+       <TableRow>
+         <TablePagination
+           colSpan={3}
+           count={pages}
+           rowsPerPage={this.state.rowsPerPage}
+           page={this.state.page}
+           onChangePage={this.handleChangePage}
+           onChangeRowsPerPage={this.handleChangeRowsPerPage}
+           ActionsComponent={TablePagControllers}
+         />
+       </TableRow>
+     </TableFooter>
+   );
+ }
 }
 
 export default InitialPaginationClass;
