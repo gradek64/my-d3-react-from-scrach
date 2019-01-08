@@ -11,6 +11,7 @@ import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMockService from '../../../services/files-mock';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AppBar from '@material-ui/core/AppBar';
 import DropDownSelect from '../../../components/selectDropdown';
 import UploadFileForm from './fileUploadForm/uploadFileForm';
 import {emit} from '../../../utils/events';
@@ -80,19 +81,23 @@ render(){
 
   return (
     <div className='fileManagement'>
-      
-      <div className='breadcrumbsLinks'>
-        {
-          this.breadcrumbsLinks.map(({href, label},id)=>
-            (
-              <a href={href} key={`bread${id}`} >{label} 
-                {(id!==this.breadcrumbsLinks.length-1) ?'>':null}</a>
-            )
-          )
-        }
-      </div>
+      <AppBar position="static" color="default" className='breadcrumbsLinks'>
+
+        <div >
+          <Typography component="h6" variant="subtitle1" gutterBottom>
+            {
+              this.breadcrumbsLinks.map(({href, label},id)=>
+                (
+                  <a href={href} key={`bread${id}`}> {label} 
+                    {(id!==this.breadcrumbsLinks.length-1) ?' > ':null}</a>
+                )
+              )
+            }
+          </Typography>
+        </div>
+      </AppBar>
       <div className='pageTop'>
-        <Typography component="h2" variant="h2" gutterBottom>
+        <Typography component="h4" variant="h4" gutterBottom>
                   File Management for {costPotName?costPotName:'...loading'}
         </Typography>
         <Button variant="contained" color="primary" onClick={()=>{events.emit('OPEN_MODAL');}} >Upload file</Button>
@@ -107,6 +112,7 @@ render(){
         </ModalCustom>
       </div>
       {/*end of upload File Modal*/}
+      
     </div>
   );
 }

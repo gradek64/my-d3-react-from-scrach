@@ -112,7 +112,7 @@ render(){
   const {costPotName, data } = this.state;
 
   return (
-    <div className='fileManagement'>
+    <div className='dataset-filters'>
       
       <div className='breadcrumbsLinks'>
         {

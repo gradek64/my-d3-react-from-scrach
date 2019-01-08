@@ -16,7 +16,7 @@ import DataTableWithPagination from './table-partials/DataTableWithPagination';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    margin: `${theme.spacing.unit * 3}px auto`,
     overflowX: 'auto',
   },
   table: {

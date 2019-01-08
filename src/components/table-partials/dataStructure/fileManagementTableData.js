@@ -79,7 +79,7 @@ const TableData = (props) => {
           );
         })}
       </TableBody>
-      {   props.rowsPerPage ? (
+      {   props.data.length > props.rowsPerPage ? (
         <TableFooter>
           <TableRow>
             <TablePagination

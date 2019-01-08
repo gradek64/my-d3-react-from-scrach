@@ -1,3 +1,6 @@
+//css vars
+@import './css_vars';
+
 body {
     margin: 0;
 }
@@ -18,4 +21,26 @@ footer {
     background-color: green;
     text-align: center;
     color: white;
+}
+
+/*
+    breadcrumbsLinks nav bar
+*/
+
+.breadcrumbsLinks {
+    height: $import-breadcrumsBarHeight;
+    display: flex;
+    justify-content: center;
+
+    * {
+        margin: 0 !important;
+    }
+
+    a {
+        color: inherit;
+
+        &:last-child {
+            color: green;
+        }
+    }
 }
