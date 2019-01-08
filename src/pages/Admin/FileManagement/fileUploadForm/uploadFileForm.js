@@ -3,15 +3,15 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import DropDownSelect from '../../../components/selectDropdown';
+import DropDownSelect from '../../../../components/selectDropdown';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import events from '../../../utils/events';
+import events from '../../../../utils/events';
 import {validationRules} from './fileManagementFormValidationRules.js';
 
-import './dataSetFiltersCreateForm.scss';
+import './fileUploadFormRules.scss';
 
 
 class uploadForm extends React.Component {

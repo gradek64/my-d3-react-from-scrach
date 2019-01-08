@@ -4,12 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import RadioButtonsGroup from './radioButtonsGroup';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import DropDownSelect from '../../../components/selectDropdown';
+import DropDownSelect from '../../../../components/selectDropdown';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import events from '../../../utils/events';
+import events from '../../../../utils/events';
 import {validationRules} from './dataSetFiltersFormValidationRules.js';
 
 
@@ -109,17 +109,17 @@ class DataSetFilterForm extends React.Component {
           <Typography component="h4" variant="h4" gutterBottom>
                 Create Dataset Filter for {costPot}
           </Typography>
-          <FormControl  aria-describedby="component-error-text" className='textfield'>
+          <FormControl  aria-describedby="component-error-text" className='row'>
             <InputLabel htmlFor="component-error">File Name</InputLabel>
             <Input id="component-error" name="filename" error={submitted && Boolean(errorsSet.filename)}  onChange={this.handleChange} />
             {submitted && errorsSet.filename?<FormHelperText id="component-error-text" error >({submitted && errorsSet.filename})</FormHelperText>:null}
           </FormControl>
-          <FormControl  aria-describedby="component-error-text" className='textfield'>
+          <FormControl  aria-describedby="component-error-text" className='row'>
             <InputLabel htmlFor="component-error">user Name</InputLabel>
             <Input id="component-error" name="username" error={submitted && Boolean(errorsSet.username)} onChange={this.handleChange} />
             {submitted && errorsSet.username?<FormHelperText id="component-error-text" error >({submitted && errorsSet.username})</FormHelperText>:null}
           </FormControl>
-          <FormControl  aria-describedby="component-error-text" className='textfield'>
+          <FormControl  aria-describedby="component-error-text" className='row'>
             <InputLabel htmlFor="component-error">email</InputLabel>
             <Input id="component-error" name="email" error={submitted && Boolean(errorsSet.email)} onChange={this.handleChange} />
             {submitted && errorsSet.email?<FormHelperText id="component-error-text" error >({submitted && errorsSet.email})</FormHelperText>:null}

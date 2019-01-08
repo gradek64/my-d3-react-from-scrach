@@ -12,7 +12,7 @@ import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMockService from '../../../services/files-mock';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DropDownSelect from '../../../components/selectDropdown';
-import UploadFileForm from './uploadFileForm';
+import UploadFileForm from './fileUploadForm/uploadFileForm';
 import {emit} from '../../../utils/events';
 
 import './fileManagement.scss';

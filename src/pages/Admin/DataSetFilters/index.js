@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import costModelService from '../../../services/cost-model-mock';
 import Typography from '@material-ui/core/Typography';
 import ModalCustom from '../../../customized-vendors/modalVendor';
-import DataSetFiltersCreateForm  from './dataSetFiltersCreateForm';
+import DataSetFiltersCreateForm  from './createDataSetFilForm/dataSetFiltersCreateForm';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMappingMockService from '../../../services/filesMapping-mock';
@@ -14,14 +14,12 @@ import events from '../../../utils/events';
 
 
 import './dataSetFilters.scss';
-import './dataSetFiltersCreateForm.scss';
 
 class CostModel extends React.Component {
 
 breadcrumbsLinks = [];
 state = {
   data:null
-
 }
 
 async componentDidMount(){
@@ -138,7 +136,7 @@ render(){
       {/*create dataset filter Modal*/}
       <div>
         <ModalCustom isOpen={false} >
-          <DataSetFiltersCreateForm  costPot={costPotName}/>
+          <DataSetFiltersCreateForm costPot={costPotName}/>
         </ModalCustom>
       </div>
       {/*end of upload File Modal*/}

@@ -44,7 +44,7 @@ class ControlledOpenSelect extends React.Component {
     const { label, options, validate, error } = this.props;
 
     return (
-      <FormControl className='textfield'>
+      <FormControl className='row'>
         <InputLabel htmlFor="demo-controlled-open-select">{label}</InputLabel>
         <Select
           open={this.state.open}
