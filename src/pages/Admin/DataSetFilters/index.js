@@ -6,6 +6,8 @@ import costModelService from '../../../services/cost-model-mock';
 import Typography from '@material-ui/core/Typography';
 import ModalCustom from '../../../customized-vendors/modalVendor';
 import DataSetFiltersCreateForm  from './createDataSetFilForm/dataSetFiltersCreateForm';
+import AppBar from '@material-ui/core/AppBar';
+import { NavLink } from 'react-router-dom';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMappingMockService from '../../../services/filesMapping-mock';
@@ -25,6 +27,7 @@ state = {
 async componentDidMount(){
 
   const { costModelId, costPotId } = this.props;
+
 
   this.breadcrumbsLinks = [
     {
@@ -113,17 +116,24 @@ render(){
 
   return (
     <div className='dataset-filters'>
-      
-      <div className='breadcrumbsLinks'>
-        {
-          this.breadcrumbsLinks.map(({href, label},id)=>
-            (
-              <a href={href} key={`bread${id}`} >{label} 
-                {(id!==this.breadcrumbsLinks.length-1) ?'>':null}</a>
-            )
-          )
-        }
-      </div>
+      <AppBar position="static" color="default" className='breadcrumbsLinks'>
+
+        <div >
+          <Typography component="h6" variant="subtitle1" gutterBottom>
+            { 
+              /*avoid using <a> tags cause they reload entire page causing lag*/
+              this.breadcrumbsLinks.map(({href, label},id)=>
+                (
+                  <NavLink to={href} key={`bread${id}`}>
+                    {label} 
+                    {(id!==this.breadcrumbsLinks.length-1) ?' > ':null}
+                  </NavLink>
+                )
+              )
+            }
+          </Typography>
+        </div>
+      </AppBar>
       <div className='pageTop'>
         <Typography component="h2" variant="h2" gutterBottom>
                   DataSet Filters for {costPotName?costPotName:'...loading'}

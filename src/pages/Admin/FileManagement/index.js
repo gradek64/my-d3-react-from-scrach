@@ -5,6 +5,7 @@ import SimpleTable from '../../../components/SimpleTable';
 import { withRouter } from 'react-router-dom';
 import costModelService from '../../../services/cost-model-mock';
 import events from '../../../utils/events';
+import { NavLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import ModalCustom from '../../../customized-vendors/modalVendor';
 import costpotsMockService from '../../../services/costpots-mock';
@@ -86,10 +87,13 @@ render(){
         <div >
           <Typography component="h6" variant="subtitle1" gutterBottom>
             {
+              /*avoid using <a> tags cause they reload entire page causing lag use NavLink instead*/
               this.breadcrumbsLinks.map(({href, label},id)=>
                 (
-                  <a href={href} key={`bread${id}`}> {label} 
-                    {(id!==this.breadcrumbsLinks.length-1) ?' > ':null}</a>
+                  <NavLink to={href} key={`bread${id}`}>
+                    {label} 
+                    {(id!==this.breadcrumbsLinks.length-1) ?' > ':null}
+                  </NavLink>
                 )
               )
             }

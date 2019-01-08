@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import HomePage from '../pages';
 import Login from '../pages/Login';
 import CostModel from '../pages/Admin/CostModels/';
@@ -11,6 +12,14 @@ import Header from '../pages/pagePartials/Header';
 import MainNavBar from '../pages/pagePartials/MainNavBar';
 import { AuthRoute } from './AuthRoute';
 import '../main.scss';
+
+//make history available everywhere
+export const history = createHistory();
+const {location} = history;
+
+
+console.log('history',history);
+
 export const ProtectedRoutes = (props) => {
 
   console.log('start route......');
@@ -48,14 +57,17 @@ export const ProtectedRoutes = (props) => {
 
 const AppRouter = () => (
 
-  <BrowserRouter>
+  <Router history={history}>
     <div className="containerFlex">
       <header>
         <Header />
-        {/*<MainNavBar />*/}
+        {/*show MainNavBar only for non-admin pages*/}
+        { /^\/admin\//.test(location.pathname)?null:<MainNavBar />}
+       
       </header>
       
       <div className="content"> 
+      
         <Switch>
           <Route path="/" component={HomePage} exact={true} />
           {/*edit routes */}
@@ -76,7 +88,7 @@ const AppRouter = () => (
        
       <footer>this is footer fixed bottom footer</footer>
     </div>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;

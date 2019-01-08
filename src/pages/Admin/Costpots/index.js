@@ -1,9 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import resourceTypeMockService from '../../../services/resource-types-mock';
+import AppBar from '@material-ui/core/AppBar';
 import levelsMockService from '../../../services/levels-mock';
 import costpotsMockService from '../../../services/costpots-mock';
 import CostPotBox from './costPotBox';
+import { NavLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 //import ModalCustom from '../../../components/modal';
@@ -39,10 +41,22 @@ class CostPots extends React.Component {
 state = {
 /*  allLevels:null,*/
 }
+breadcrumbsLinks = [];
 
 async componentDidMount(){
 
   const { costModelId } = this.props;
+
+  this.breadcrumbsLinks = [
+    {
+      href: '/admin/cost-models',
+      label: 'Cost Models',
+    },
+    {
+      href: '/admin/cost-models/' + costModelId + '/costpots',
+      label: 'Model Config',
+    }
+  ];
 
   const allResourceTypes = await resourceTypeMockService.getAll();
   const resourceTypeItems = allResourceTypes.data.map(buildResourceTypeItem);
@@ -94,6 +108,25 @@ render(){
   if(this.state.allLevels){
     return (
       <div className='costpots'>
+        <AppBar position="static" color="default" className='breadcrumbsLinks'>
+
+          <div >
+            <Typography component="h6" variant="subtitle1" gutterBottom>
+              {
+                /*avoid using <a> tags cause they reload entire page causing lag use NavLink instead*/
+
+                this.breadcrumbsLinks.map(({href, label},id)=>
+                  (
+                    <NavLink to={href} key={`bread${id}`}>
+                      {label} 
+                      {(id!==this.breadcrumbsLinks.length-1) ?' > ':null}
+                    </NavLink>
+                  )
+                )
+              }
+            </Typography>
+          </div>
+        </AppBar>
         <div className="section graph">
          
           {
