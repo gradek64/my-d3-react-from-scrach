@@ -19,6 +19,8 @@ const eventsExec= () => {
       events[id] = [];
     }
     events[id].push(callback);
+
+    //console.log('inside events', events);
   };
 
   const off = function(id, callback) {

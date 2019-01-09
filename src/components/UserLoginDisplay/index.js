@@ -33,11 +33,17 @@ class UserLoginDisplay extends React.Component {
   componentDidMount() {
 
     /*
-        *@register events once ModaComponed loaded
-        *@
+        *@register events once ModaComponet is loaded
+        *@and user is not authorized yet; not great cause it doesnt keep session 
+        *@ U will need to use localStorage.getItem('something') but that is dirty 
+        *@ redux could be an answer
       */
-    events.on('SET_USER_LOGIN', this.setUserName);
-    console.log(events.events);
+    if(!fakeAuth.isAuthenticated) {
+      console.log('fakeAuth',fakeAuth);
+      events.on('SET_USER_LOGIN', this.setUserName);
+      console.log('is not authorized: ', events.events);
+    }
+      
   }
 
   componentWillUnmount() {
