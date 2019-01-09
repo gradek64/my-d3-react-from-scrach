@@ -21,6 +21,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 
 //custom imports
 import DropDownListContainer from '../../components/DropDownListContainer';
+import UserLoginDisplay from '../../components/UserLoginDisplay';
 
 
 console.log('blueGrey',blueGrey);
@@ -201,6 +202,7 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+              <UserLoginDisplay />
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />

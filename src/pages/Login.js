@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 
 
 
+
 class Login extends React.Component {
   state = { redirectToReferrer: false };
 
@@ -19,6 +20,8 @@ class Login extends React.Component {
       localStorage.setItem('authenticated','true');
     });
   };
+
+ 
 
   render() {
     let { from } = this.props.location.state || { from: { pathname: '/' } };

@@ -1,6 +1,8 @@
 const CONST_EVENTS = {
   OPEN_MODAL: 'OPEN_MODAL',
   CLOSE_MODAL: 'CLOSE_MODAL',
+  //login
+  SET_USER_LOGIN:'SET_USER_LOGIN',
 };
 
 export { CONST_EVENTS };
