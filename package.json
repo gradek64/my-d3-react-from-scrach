@@ -23,7 +23,9 @@
     "history": "^4.7.2",
     "react": "16.5.2",
     "react-dom": "16.5.2",
+    "react-redux": "^5.0.5",
     "react-router-dom": "4.1.2",
+    "redux": "^3.7.2",
     "validate": "^4.5.1"
   },
   "devDependencies": {

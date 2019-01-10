@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -65,14 +66,17 @@ class UserLoginDisplay extends React.Component {
   }
    
   render(){
-    const { userLogin }= this.state;
+    const { userLogin, expenses }= this.state;
+    const { userNameRedux } = this.props;
+
+
     return (
       <div className='loginDisplay'>
         <DropDownMenu onMouseEnter={false}>
           <div className='class'>
             <IconButton color="inherit">
               <Typography variant="subtitle1" color="inherit" noWrap>
-                {userLogin?userLogin:'not logged yet'}
+                {userNameRedux}
               </Typography>
               <AccountCircle style={{marginLeft:'5px'}}/>
             </IconButton>
@@ -105,4 +109,12 @@ class UserLoginDisplay extends React.Component {
   }
 }
 
-export default UserLoginDisplay;
+const mapStateToProps = (state) => {
+
+  console.log('store UserLoginDisplay', state);
+  return {
+    userNameRedux: state.expenses.username,
+  };
+};
+//export default UserLoginDisplay;
+export default connect(mapStateToProps)(UserLoginDisplay);

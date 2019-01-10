@@ -1,25 +1,58 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { fakeAuth } from '../services/fakeAuth';
 import Tabs from '../components/tabs';
 import Card from '../components/card';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { addExpense } from '../reduxFiles/actions/expenses';
+
 
 
 
 
 
 class Login extends React.Component {
-  state = { redirectToReferrer: false };
+  state = { 
+    redirectToReferrer: false,
+    loginForm:{
+      username:'',
+      password:'',
+    }
+  };
+  /*username = React.createRef();
+  password = React.createRef();*/
 
   login = () => {
-    fakeAuth.authenticate(() => {
+    let expense = {
+      username: 'this.state.description',
+      amount: 122,
+      createdAt: 'this.state.createdAt.valueOf()',
+      note: 'this.state.note'
+    };
+    // this.props.dispatch(addExpense(expense));
+
+    console.log(this.state);
+
+    /*fakeAuth.authenticate((UserName) => {
       this.setState({ redirectToReferrer: true });
       localStorage.setItem('authenticated','true');
-    });
+
+    });*/
   };
+
+  handleInput = (event) => {
+    const { name, value  } = event.target;
+    this.setState((state)=>{
+      return {
+        loginForm:{ 
+          ...state.loginForm,[name]:value
+        }
+      };
+    });
+  }
 
  
 
@@ -44,6 +77,9 @@ class Login extends React.Component {
                 label="Login"
                 margin="normal"
                 variant="outlined"
+                name='username'
+                onChange={this.handleInput}
+
               />
               <TextField
                 required
@@ -51,6 +87,9 @@ class Login extends React.Component {
                 label="Password"
                 margin="normal"
                 variant="outlined"
+                name='password'
+                onChange={this.handleInput}               
+
               />
               <Button variant="contained" color="primary" onClick={this.login}>
                     Login
@@ -64,9 +103,11 @@ class Login extends React.Component {
                 label="UserName"
                 margin="normal"
                 variant="outlined"
+               
               />
               <TextField
                 required
+                dos
                 id="outlined-required"
                 label="Password"
                 margin="normal"
@@ -83,4 +124,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+//export default Login;
+const mapStateToProps = (state) => {
+
+  console.log('store', state);
+  return {
+    expenses: state.expenses
+  };
+};
+//export default UserLoginDisplay;
+export default connect(mapStateToProps)(Login);
