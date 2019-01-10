@@ -44,43 +44,47 @@ const  MenuListComposition = (props) => {
 
   return (
     <div className={classes.root}>
-      <ClickAwayListener onClickAway={ clickAwayHandler }>
-        <div>
-          <Popper open={open} anchorEl= {anchor} transition disablePortal placement={placement} className={classes.fixIndex} >
-            {({ TransitionProps ,placement}) => (
-              <Grow
-                {...TransitionProps}
-                id="menu-list-grow"
-              >
-                <Paper>                     
-                  <MenuList>
-                    {
-                      list.map(({el,icon,iconColor,handler},key)=>{
-                        if(icon){
-                          return (
-                            <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
-                              {direction=='right'? <ListItemText primary={el} />:null}
-                              <ListItemIcon className={classes.icon}>
-                                <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
-                                  {icon}                
-                                </Icon>
-                              </ListItemIcon>
-                              {direction=='left'? <ListItemText primary={el} />:null}
+      {/*show ClickAwayListener only when manu is open*/}
+      { open?
+        <ClickAwayListener onClickAway={ clickAwayHandler }>
+          <div></div>
+        </ClickAwayListener>:null}
+      <div>
+        {/*show ClickAwayListener only when manu is open*/}
+        <Popper open={open} anchorEl= {anchor} transition disablePortal placement={placement} className={classes.fixIndex} >
+          {({ TransitionProps ,placement}) => (
+            <Grow
+              {...TransitionProps}
+              id="menu-list-grow"
+            >
+              <Paper>                     
+                <MenuList>
+                  {
+                    list.map(({el,icon,iconColor,handler},key)=>{
+                      if(icon){
+                        return (
+                          <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
+                            {direction=='right'? <ListItemText primary={el} />:null}
+                            <ListItemIcon className={classes.icon}>
+                              <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
+                                {icon}                
+                              </Icon>
+                            </ListItemIcon>
+                            {direction=='left'? <ListItemText primary={el} />:null}
                                                               
-                            </MenuItem>
-                          );
-                        }
-                        return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
-                      })
-                    } 
+                          </MenuItem>
+                        );
+                      }
+                      return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
+                    })
+                  } 
 
-                  </MenuList>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div>
-      </ClickAwayListener>
+                </MenuList>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </div>
     </div>
   );
 };

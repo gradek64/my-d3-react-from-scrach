@@ -20,16 +20,15 @@ class DropDownListProps extends React.Component {
   handleClose(event){
 
     /*
-      *@ClickAwayListener Class in VendorDropDown detects
-      *@element you click on , so if you click on Logo, any element
-      *@on the page it will set it as event.target
-      *@therefore if you clik our 'this.anchorEl' it will stop function from running 
-      *@by if statement if(this.anchorEl.current.contains(event.target)) checking what element clicked
+      *@ClickAwayListener Class is Material UI overlay that listenes for any click on the entire page
+      *@once any element is clicked it assigns to event.target === elementClicked
+      *@now if our element clicked is our react refference element this.anchorEl.current === event.target
+      *@which is the same as 'contaoins' then funcioned is returned in if statament so doenst go any further
+      *@by if statement if(this.anchorEl.current.contains(event.target)) checking what element is clicked
     */
     if (this.anchorEl.current.contains(event.target)) {
       return;
     }
-
     this.setState({ open: false });
   }
 
