@@ -1,22 +1,9 @@
-import uuid from 'uuid';
 
 // ADD_EXPENSE
-export const addExpense = (
-  {
-    description = '',
-    note = '',
-    amount = 0,
-    createdAt = 0
-  } = {}
+export const logUser = (username
 ) => ({
   type: 'LOG_IN',
-  expense: {
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt
-  }
+  user:{username}
 });
 
 // REMOVE_EXPENSE

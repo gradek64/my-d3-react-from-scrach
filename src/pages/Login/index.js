@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fakeAuth } from '../../services/fakeAuth';
 import Typography from '@material-ui/core/Typography';
-import { addExpense } from '../../reduxFiles/actions/expenses';
+import { logUser } from '../../reduxFiles/actions/userAuth_actions';
 import LoginForm from './LoginForm/';
 import CardCustom from '../../components/card';
 
@@ -27,19 +27,22 @@ class Login extends React.Component {
       createdAt: 'this.state.createdAt.valueOf()',
       note: 'this.state.note'
     };
-    // this.props.dispatch(addExpense(expense));
+    // this.props.dispatch(logUser(expense));
 
     const authenticateResponse = fakeAuth.authenticate(form);
     authenticateResponse.then((res)=>{
+      const {username} = res.data;
       //is approved;
-      if(res.data){
+      if(username){
         this.setState({ redirectToReferrer: true });
-        localStorage.setItem('authenticated','true');
+        localStorage.setItem('usernameAuth',username);
+        //update userdisplay name in navbar 
+        this.props.dispatch(logUser(username));
       }
       //not approved;
       else {
         this.setState({
-          authenticationCallback:'System doesnt recognize You, try again...'
+          authenticationCallback:'System doesn`t recognize You, try again...'
         });
 
       }

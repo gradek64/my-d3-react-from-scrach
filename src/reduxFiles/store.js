@@ -1,13 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 //reducers
-import expensesReducer from './reducers/expenses';
-import filtersReducer from './reducers/filters';
+import authReducer from './reducers/auth_reducer';
 
 export default () => {
   const store = createStore(
     combineReducers({
-      expenses: expensesReducer,
-      filters: filtersReducer
+      user: authReducer,
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );

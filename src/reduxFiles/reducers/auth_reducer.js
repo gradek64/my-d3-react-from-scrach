@@ -1,17 +1,20 @@
 // Expenses Reducer
 
-const expensesReducerDefaultState = {
-  username:'gregid',
-  authorized:true,
+//check if locals torage user is set and get its name;
+const localstoredUserName = localStorage.getItem('usernameAuth');
+const credentials = {
+  username:localstoredUserName?localstoredUserName:'',
 };
 
-export default (state = expensesReducerDefaultState, action) => {
+export default (state = credentials, action) => {
   switch (action.type) {
+
   case 'LOG_IN':
-    return [
+    console.log('action.username',action.user);
+    return {
       ...state,
-      action.expense
-    ];
+      ...action.user
+    };
   case 'REMOVE_EXPENSE':
     return state.filter(({ id }) => id !== action.id);
   case 'EDIT_EXPENSE':

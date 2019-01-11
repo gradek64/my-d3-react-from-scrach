@@ -1,6 +1,6 @@
 const AuthenticatedUser= {
-  username:'greg',
-  password:'greg',
+  username:'matt',
+  password:'matt',
 };
 
 
@@ -21,7 +21,7 @@ const fakeAuth = {
       else {
         this.isAuthenticated = false;
         resolve({
-          data:null,
+          data:{username:null},
         });
       }
     });

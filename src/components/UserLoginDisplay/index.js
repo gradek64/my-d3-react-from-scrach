@@ -59,7 +59,7 @@ class UserLoginDisplay extends React.Component {
 
   loggOut = () =>{
     fakeAuth.signout(() => {
-      localStorage.removeItem('authenticated');
+      localStorage.removeItem('usernameAuth');
       //U need to redirect anywhere so routes are being checked
       history.go('/anywhere');
     });
@@ -113,7 +113,7 @@ const mapStateToProps = (state) => {
 
   console.log('store UserLoginDisplay', state);
   return {
-    userNameRedux: state.expenses.username,
+    userNameRedux: state.user.username,
   };
 };
 //export default UserLoginDisplay;
