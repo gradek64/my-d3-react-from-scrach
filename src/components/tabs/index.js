@@ -24,10 +24,12 @@ class NavTabs extends React.Component {
 
   handleChange = (event, value) => {
     this.setState({ value });
+    //send it to parent for current tab
+    this.props.currentTabCallback({value});
   };
 
   render() {
-    const { classes, tabs } = this.props;
+    const { classes, tabs  } = this.props;
     const { value } = this.state;
 
     return (

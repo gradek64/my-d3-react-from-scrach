@@ -15,10 +15,7 @@ import RegisterForm from './RegisterForm/';
 class Login extends React.Component {
   state = { 
     redirectToReferrer: false,
-    loginForm:{
-      username:'',
-      password:'',
-    }
+    authenticationCallback:null,
   };
   /*username = React.createRef();
   password = React.createRef();*/
@@ -32,13 +29,28 @@ class Login extends React.Component {
     };
     // this.props.dispatch(addExpense(expense));
 
-    console.log(form);
+    const authenticateResponse = fakeAuth.authenticate(form);
+    authenticateResponse.then((res)=>{
+      //is approved;
+      if(res.data){
+        this.setState({ redirectToReferrer: true });
+        localStorage.setItem('authenticated','true');
+      }
+      //not approved;
+      else {
+        this.setState({
+          authenticationCallback:'System doesnt recognize You, try again...'
+        });
 
-    /*fakeAuth.authenticate((UserName) => {
-      this.setState({ redirectToReferrer: true });
-      localStorage.setItem('authenticated','true');
+      }
+    });
+    /*
+    (UserName) => {
+          this.setState({ redirectToReferrer: true });
+          localStorage.setItem('authenticated','true');
 
-    });*/
+        });
+    */
   };
 
   register = () => {
@@ -70,22 +82,34 @@ class Login extends React.Component {
     });
   }
 
- 
+  currentTabCallback = (tab) =>{
+    const {value} = tab;
+    if(value===1){
+      this.setState({
+        authenticationCallback:null
+      });
+    }
+  }
 
   render() {
     let { from } = this.props.location.state || { from: { pathname: '/' } };
-    let { redirectToReferrer } = this.state;
+    let { redirectToReferrer, authenticationCallback } = this.state;
     if (redirectToReferrer) return <Redirect to={from} />;
 
     return (
       <CardCustom  maxWidth={350} center>
-        <TabsCustom value={0} tabs={[
-          {label:'Login', href:'login'},
-          {label:'Register', href:'register'},
-        ]} style={{backgroundColor:'white'}}>
+        <TabsCustom 
+          value={0} 
+          tabs={[
+            {label:'Login', href:'login'},
+            {label:'Register', href:'register'},
+          ]} 
+          style={{backgroundColor:'white'}}
+          currentTabCallback={this.currentTabCallback}
+        >
           {/*tabs children below*/}
           {<div style={{flexDirection:'column',display:'flex'}}>
-            <LoginForm submitCallback={this.login} />
+            <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
           </div>}
           {/*tabs children below*/}
           {<div style={{flexDirection:'column',display:'flex'}}>

@@ -94,9 +94,14 @@ class LoginRegisterForm extends React.Component {
   render() {
 
     const { errorsSet, submitted} = this.state;
+    const { authenticationCallback } = this.props;
 
     return (
       <form name="form1" className="login-form" style={{flexDirection:'column',display:'flex'}}>
+        {authenticationCallback?<Typography className='row authentication' color="primary"  variant="subtitle1" component="h6" gutterBottom>
+          {authenticationCallback}
+        </Typography>:null
+        }
         <FormControl  aria-describedby="component-error-text" className='row'>
           <InputLabel htmlFor="component-error">user Name</InputLabel>
           <Input 
