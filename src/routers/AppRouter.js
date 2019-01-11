@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import HomePage from '../pages';
-import Login from '../pages/Login';
+import Login from '../pages/Login/';
 import CostModel from '../pages/Admin/CostModels/';
 import CostPots from '../pages/Admin/Costpots/';
 import FileManagementCostPot from '../pages/Admin/FileManagement/';

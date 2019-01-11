@@ -35,17 +35,15 @@ class NavTabs extends React.Component {
         <div>
           <AppBar position="static" color={'default'}>
             <Tabs fullWidth value={value} onChange={this.handleChange}>
-            {tabs.map(({label,href},i) => 
-              <LinkTab key={`tab${i}`}label={label} href={href} />)
-            }              
+              {tabs.map(({label,href},i) => 
+                <LinkTab key={`tab${i}`}label={label} href={href} />)
+              }              
             </Tabs>
           </AppBar>
-            {<div>
-              {React.Children.map(this.props.children, (child, i) => {
-                if (i === value) return child
-              })}
-            </div>
-            }
+          {<div>
+            {this.props.children[value]}
+          </div>
+          }
         </div>
       </NoSsr>
     );
