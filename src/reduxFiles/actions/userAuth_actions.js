@@ -1,16 +1,13 @@
 
-// ADD_EXPENSE
+// Log in user
 export const logUser = (username
 ) => ({
   type: 'LOG_IN',
   user:{username}
 });
 
-// REMOVE_EXPENSE
-export const removeExpense = ({ id } = {}) => ({
-  type: 'REMOVE_EXPENSE',
-  id
-});
+// Log out user no paylod needed;
+export const logOutUser = () => ({ type: 'LOG_OUT'});
 
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({

@@ -18,7 +18,7 @@ import TablePagControllers from '../TablePagControllers';
 const TableData = (props) => { 
   const { classes ,pageUpdate, rowsPerPageUpdate } = props;
 
-  console.log('props table',props);
+  //console.log('props table',props);
 
 
   const onDelete = () => console.log('onDelete');

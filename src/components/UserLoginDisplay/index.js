@@ -14,61 +14,32 @@ import Divider from '@material-ui/core/Divider';
 import { fakeAuth } from '../../services/fakeAuth';
 //custom imports
 import DropDownMenu from '../dropDownMenu';
-import events from '../../utils/events';
+//action for login out in redux store;
+import { logOutUser } from '../../reduxFiles/actions/userAuth_actions';
 
 
 
 
 class UserLoginDisplay extends React.Component {
 
-  state = {
-    userLogin:''
-  }
-
-  setUserName(name) {
-    this.setState({
-      userLogin:name
-    });
-  }
-
-  componentDidMount() {
-
-    /*
-        *@register events once ModaComponet is loaded
-        *@and user is not authorized yet; not great cause it doesnt keep session 
-        *@ U will need to use localStorage.getItem('something') but that is dirty 
-        *@ redux could be an answer
-      */
-    if(!fakeAuth.isAuthenticated) {
-      console.log('fakeAuth',fakeAuth);
-      events.on('SET_USER_LOGIN', this.setUserName);
-      console.log('is not authorized: ', events.events);
-    }
-      
-  }
-
-  componentWillUnmount() {
-
-    /*
-        *@remove events once ModaComponed unloaded
-        *@that way those events are only set once <Modal /> is initiated and only there;
-        *@OPEN_MODAL and CLOSE_MODAL can be used mutiple times on diffrent pages since we remove them on Unmount event
-      */
-    events.off('SET_USER_LOGIN', this.setUserName);
+  constructor(props){
+    super(props);
+    const {dispatch } = this.props;
+    this.reduxdispatch = dispatch;
   }
 
   loggOut = () =>{
     fakeAuth.signout(() => {
-      localStorage.removeItem('usernameAuth');
+      //remove cookie or local storage in store;
+      this.reduxdispatch(logOutUser());
       //U need to redirect anywhere so routes are being checked
       history.go('/anywhere');
     });
   }
    
   render(){
-    const { userLogin, expenses }= this.state;
+    console.log(this.props);
     const { userNameRedux } = this.props;
-
 
     return (
       <div className='loginDisplay'>
@@ -76,7 +47,7 @@ class UserLoginDisplay extends React.Component {
           <div className='class'>
             <IconButton color="inherit">
               <Typography variant="subtitle1" color="inherit" noWrap>
-                {userNameRedux}
+                {userNameRedux?userNameRedux:'not logged'}
               </Typography>
               <AccountCircle style={{marginLeft:'5px'}}/>
             </IconButton>
@@ -110,8 +81,6 @@ class UserLoginDisplay extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
-  console.log('store UserLoginDisplay', state);
   return {
     userNameRedux: state.user.username,
   };

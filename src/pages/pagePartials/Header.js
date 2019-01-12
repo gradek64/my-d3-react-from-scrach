@@ -24,7 +24,6 @@ import DropDownListContainer from '../../components/DropDownListContainer';
 import UserLoginDisplay from '../../components/UserLoginDisplay';
 
 
-console.log('blueGrey',blueGrey);
 const styles = theme => ({
   bgColor: {
     backgroundColor:blueGrey[900],

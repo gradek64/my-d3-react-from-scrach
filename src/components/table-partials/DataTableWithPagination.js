@@ -26,7 +26,7 @@ class DataTableWithPagination extends React.Component {
         updatedData = (page,rows) => {
           let updatedPage = page ? page : this.props.startPage;
           let updatedRows = rows ? rows : this.props.rowsPerPage;
-          console.log('updatedRows', updatedRows);
+          //console.log('updatedRows', updatedRows);
 
           this.setState((state) => {
             return {data: this.props.initialData.slice(updatedPage * updatedRows, 

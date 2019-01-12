@@ -95,7 +95,7 @@ class uploadForm extends React.Component {
     const { errorsSet,fields, submitted} = this.state;
 
     return (
-      <form name="form1" className="create-dataset-filter-form">
+      <form name="form1" className="file-upload-form">
         <div className="modal-content">
           <Typography component="h4" variant="h4" gutterBottom>
               Upload File
@@ -122,7 +122,6 @@ class uploadForm extends React.Component {
                 </Button>
               </label>
               <input
-                accept="image/*"
                 id="contained-button-file"
                 name='uploadfiled'
                 onChange={this.handleChange}

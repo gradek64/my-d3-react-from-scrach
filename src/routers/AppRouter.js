@@ -10,7 +10,7 @@ import DataSetFilterstCostPot from '../pages/Admin/DataSetFilters/';
 import NotFoundPage from '../pages/NotFoundPage/';
 import Header from '../pages/pagePartials/Header';
 import MainNavBar from '../pages/pagePartials/MainNavBar';
-import { AuthRoute } from './AuthRoute';
+import AuthRoute  from './AuthRoute';
 import '../main.scss';
 
 //make history available everywhere

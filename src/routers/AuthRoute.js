@@ -7,8 +7,8 @@ import HomePage from '../pages';
 
 const AuthRoute = ({ component:Component, ...rest }) => {
 
-  /*console.log('fakeAuth.isAuthenticated',fakeAuth.isAuthenticated);
-  console.log('path',rest);*/
+
+  const { userNameRedux } = rest;
 
   console.log('...rest',rest);
 
@@ -18,8 +18,14 @@ const AuthRoute = ({ component:Component, ...rest }) => {
       render={
         (props) => {
           console.log('this is not proccessed if route doenst match /admin/:any',props);
-          //return fakeAuth.isAuthenticated || localStorage.getItem('authenticated') ? (
-          return  localStorage.getItem('usernameAuth') ? (
+
+          /*
+            *@there 2 ways to detect if cookie/localstoragte is set 
+            *@Aproach I took is check it in redux store rather than harsly chekcig this localStorage.getItem('usernameAuth');
+            *@reason for that everting happnes in one file (authreducer) so if you want use cookies or anything you would change there in one place !
+          */
+          //return localStorage.getItem('usernameAuth') ? (
+          return  userNameRedux ? (
             <Component {...props} />
           ) : (
             <Redirect
@@ -35,14 +41,11 @@ const AuthRoute = ({ component:Component, ...rest }) => {
 };
 
 
-
-
 const mapStateToProps = (state) => {
-
-  console.log('store UserLoginDisplay AuthRoute', state);
   return {
     userNameRedux: state.user.username,
   };
 };
+//if it is conncected to redux store it needs be exported as default;
 export default connect(mapStateToProps)(AuthRoute);
-export { AuthRoute };
+//export { AuthRoute };

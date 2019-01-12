@@ -34,10 +34,10 @@ class Login extends React.Component {
       const {username} = res.data;
       //is approved;
       if(username){
-        this.setState({ redirectToReferrer: true });
         localStorage.setItem('usernameAuth',username);
         //update userdisplay name in navbar 
         this.props.dispatch(logUser(username));
+        this.setState({ redirectToReferrer: true });
       }
       //not approved;
       else {
@@ -47,31 +47,10 @@ class Login extends React.Component {
 
       }
     });
-    /*
-    (UserName) => {
-          this.setState({ redirectToReferrer: true });
-          localStorage.setItem('authenticated','true');
-
-        });
-    */
   };
 
   register = () => {
-    let expense = {
-      username: 'this.state.description',
-      amount: 122,
-      createdAt: 'this.state.createdAt.valueOf()',
-      note: 'this.state.note'
-    };
-    // this.props.dispatch(addExpense(expense));
-
-    console.log(this.state);
-
-    /*fakeAuth.authenticate((UserName) => {
-      this.setState({ redirectToReferrer: true });
-      localStorage.setItem('authenticated','true');
-
-    });*/
+    //to be done;
   };
 
   handleInput = (event) => {
