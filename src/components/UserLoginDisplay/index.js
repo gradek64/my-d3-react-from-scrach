@@ -32,10 +32,8 @@ class UserLoginDisplay extends React.Component {
     fakeAuth.signout(() => {
       //remove cookie or local storage in store;
       this.reduxdispatch(logOutUser());
-      //U need to redirect anywhere so routes are being checked
-      //history.go('/anywhere');
-      this.props.history.push('/');
-
+      //U need to redirect either for index or any authorized path;
+      history.push('/');
     });
   }
    
