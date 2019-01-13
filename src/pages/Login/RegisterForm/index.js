@@ -16,6 +16,22 @@ import './registerFormValidationRules.scss';
 
 class LoginRegisterForm extends React.Component {
 
+  componentDidMount(){
+    document.addEventListener('keypress', this.onKeyPress);
+  }
+
+  componentWillUnmount(){
+    //both remove and add needs handler outside to work;
+    document.removeEventListener('keypress',this.onKeyPress, false);
+  }
+
+    onKeyPress = (event) => {
+      //submit form also on enter key press;
+      if (event.keyCode == 13) {
+        this.submit();
+      }
+    }
+
   state = {
     submitted:false,
     fields:{

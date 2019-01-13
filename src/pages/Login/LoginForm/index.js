@@ -15,6 +15,22 @@ import './loginFormValidationRules.scss';
 
 class LoginRegisterForm extends React.Component {
 
+  componentDidMount(){
+    document.addEventListener('keypress', this.onKeyPress);
+  }
+
+  componentWillUnmount(){
+    //both remove and add needs handler outside to work;
+    document.removeEventListener('keypress',this.onKeyPress, false);
+  }
+
+  onKeyPress = (event) => {
+    //submit form also on enter key press;
+    if (event.keyCode == 13) {
+      this.submit();
+    }
+  }
+
   state = {
     submitted:false,
     fields:{
@@ -82,6 +98,7 @@ class LoginRegisterForm extends React.Component {
     });
   };
 
+
   submit = () => {
     this.setState({ submitted:true });
 
@@ -125,7 +142,7 @@ class LoginRegisterForm extends React.Component {
             <FormHelperText id="component-error-text" error >({submitted && errorsSet.password})
             </FormHelperText>:null}
         </FormControl>
-        <Button variant="contained" className='submit' color="primary" onClick={this.submit}>
+        <Button variant="contained" className='submit' color="primary" onClick={this.submit} onKeyPress={this.handleKeyPress}>
                     Login
         </Button>
       </form>

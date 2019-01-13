@@ -24,7 +24,7 @@ class UserLoginDisplay extends React.Component {
 
   constructor(props){
     super(props);
-    const {dispatch } = this.props;
+    const { dispatch } = this.props;
     this.reduxdispatch = dispatch;
   }
 
@@ -33,12 +33,13 @@ class UserLoginDisplay extends React.Component {
       //remove cookie or local storage in store;
       this.reduxdispatch(logOutUser());
       //U need to redirect anywhere so routes are being checked
-      history.go('/anywhere');
+      //history.go('/anywhere');
+      this.props.history.push('/');
+
     });
   }
    
   render(){
-    console.log(this.props);
     const { userNameRedux } = this.props;
 
     return (
