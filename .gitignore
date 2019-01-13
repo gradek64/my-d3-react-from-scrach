@@ -11,5 +11,5 @@ node_modules/
 ## public webpack generated files
 public/bundle.js
 public/bundle.js.map
-public/style.css
-public/style.css.map
+public/styles.css
+public/styles.css.map

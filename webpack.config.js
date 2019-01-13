@@ -7,7 +7,7 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = function(env){
-  const isProduction = env==='PROD';
+  const isProduction = env === 'PROD';
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   return {
