@@ -21,6 +21,8 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 
 //custom imports
 import DropDownListContainer from '../../components/DropDownListContainer';
+import DropDownMenu from '../../components/dropDownMenu';
+import Paper from '@material-ui/core/Paper';
 import UserLoginDisplay from '../../components/UserLoginDisplay';
 
 
@@ -218,7 +220,7 @@ class PrimarySearchAppBar extends React.Component {
                   {el:'Mariola',icon:'mood', iconColor:'secondary',handler:()=>{console.log('Iam Mariola');}},
                   {el:'Libby',icon:'public', handler:()=>{console.log('Iam Libby');}},
                 ]}
-                direction={'left'}
+                direction={'right'}
                 placement={'bottom-end'}>
                 <IconButton
                   aria-owns={isMenuOpen ? 'material-appbar' : undefined}
@@ -231,9 +233,49 @@ class PrimarySearchAppBar extends React.Component {
 
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
+             
+              <DropDownMenu onMouseEnter={false}>
+                <div>
+                  <IconButton
+                    aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                    aria-haspopup="true"
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </div>
+                <div className='mobile_display'>
+                  <Paper elevation={1}>
+                    <UserLoginDisplay />
+                    <IconButton color="inherit">
+                      <Badge badgeContent={4} color="secondary">
+                        <MailIcon />
+                      </Badge>
+                    </IconButton>
+                    <IconButton color="inherit">
+                      <Badge badgeContent={17} color="secondary">
+                        <NotificationsIcon />
+                      </Badge>
+                    </IconButton>
+                    <DropDownListContainer 
+                      list={[
+                        {el:'Greg', icon:'whatshot', handler:()=>{console.log('Iam Greg');}},
+                        {el:'Mariola',icon:'mood', iconColor:'secondary',handler:()=>{console.log('Iam Mariola');}},
+                        {el:'Libby',icon:'public', handler:()=>{console.log('Iam Libby');}},
+                      ]}
+                      direction={'left'}
+                      placement={'bottom-end'}>
+                      <IconButton
+                        aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                        aria-haspopup="true"
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                    </DropDownListContainer>
+                  </Paper>
+                </div>
+              </DropDownMenu>
             </div>
           </Toolbar>
         </AppBar>
