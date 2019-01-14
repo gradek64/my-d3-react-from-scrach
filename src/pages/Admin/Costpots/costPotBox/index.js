@@ -8,7 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import './CostPotBox.scss';
+import './costPotBox.scss';
 
 /*
   *@list of icons can be found on : https://material.io/tools/icons/?style=baseline
