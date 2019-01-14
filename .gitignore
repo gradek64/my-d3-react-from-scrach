@@ -4,12 +4,7 @@
 .sass-cache
 
 ## Directories
-log/
-dist/
 node_modules/
 
 ## public webpack generated files
-public/bundle.js
-public/bundle.js.map
-public/styles.css
-public/styles.css.map
+public/dist/

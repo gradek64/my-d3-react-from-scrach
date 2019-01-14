@@ -1,19 +1,19 @@
-const path = require('path');
 
 //exporting as function do you cau use webpack --env setup in package.json
 //url : https://webpack.js.org/configuration/configuration-types/#exporting-a-function
 
 //make css , scss in seperate file for optimazation;
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = function(env){
+module.exports = (env) => {
   const isProduction = env === 'PROD';
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   return {
     entry: ['babel-polyfill','./src/index.js'],
     output: {
-      path: path.join(__dirname, 'public'),
+      path: path.join(__dirname, 'public', 'dist'),
       filename: 'bundle.js'
     },
     module: {
@@ -54,8 +54,9 @@ module.exports = function(env){
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       port: 2000, // open app in localhost:2000
-      historyApiFallback: true, //fallback not existing urls to index
-      open:true,
+      historyApiFallback: true,
+      publicPath: '/dist/', //fallback not existing urls to index
+      open:true
     }
   };
 };
