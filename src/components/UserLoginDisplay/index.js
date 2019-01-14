@@ -42,7 +42,7 @@ class UserLoginDisplay extends React.Component {
 
     return (
       <div className='loginDisplay'>
-        <DropDownMenu onMouseEnter={false}>
+        <DropDownMenu onMouseEnter={false} placement='right'>
           <div className='class'>
             <IconButton color="inherit">
               <Typography variant="subtitle1" color="inherit" noWrap>

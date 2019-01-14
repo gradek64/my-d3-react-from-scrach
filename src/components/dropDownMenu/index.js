@@ -43,9 +43,11 @@ class DropDownMenu extends React.Component {
   };
 
   render() {
-    const { children} = this.props;
+    const { children, placement} = this.props;
     const { showDropDownMenu } = this.state;
 
+
+    console.log('DropDownMenu', this.props);
     return (
         
       <div 
@@ -70,6 +72,7 @@ class DropDownMenu extends React.Component {
               return <div style={{
                 position:'absolute',
                 color:'black',
+                transform: placement==='left'?'translate(-100%)':'translate(0)'
               }}>
                 {child}
               </div>;
@@ -85,6 +88,7 @@ class DropDownMenu extends React.Component {
 
 DropDownMenu.defaultProps = {
   onMouseEnter: true,
+  placement:'right'
 };
 
 export default DropDownMenu;
