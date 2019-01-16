@@ -8,6 +8,8 @@ import FileManagementTableData from './dataStructure/fileManagementTableData';
 class DataTableWithPagination extends React.Component {
         state = {
           data:this.props.initialData,
+          prevData:this.props.initialData,
+          dataChanged:false,
           page:this.props.startPage,
           rowsPerPage:this.props.rowsPerPage,
         }
@@ -28,9 +30,16 @@ class DataTableWithPagination extends React.Component {
           let updatedRows = rows ? rows : this.props.rowsPerPage;
           //console.log('updatedRows', updatedRows);
 
+          console.log('....updatedData......');
+          this.setState((state) => {
+            return {prevData: this.props.initialData};
+          });
+
           this.setState((state) => {
             return {data: this.props.initialData.slice(updatedPage * updatedRows, 
               updatedPage * updatedRows + updatedRows)};
+          },()=>{
+            //return this.state.data;
           });
       
         }
@@ -41,10 +50,21 @@ class DataTableWithPagination extends React.Component {
 
         render() {
 
+          const { data, prevData} = this.state;
+          const {initialData} = this.props;
+
+          const dataChanged = initialData.length!==prevData.length;
+          if(dataChanged){
+            this.updatedData();
+          }
+          console.log('initialData', this.state.data);
+          console.log('this.props.initialData',this.props.initialData);
+          console.log('dataChanged', dataChanged);
+
           switch (this.props.pageTableOn){
           case 'fileManagement':
             return <FileManagementTableData {...this.props} 
-              data={this.state.data}
+              data={data}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 

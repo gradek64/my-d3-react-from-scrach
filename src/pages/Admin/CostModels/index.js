@@ -35,7 +35,7 @@ async componentDidMount(){
   //costModelService.populate();
   
   const dataResponsone = await costModelService.getAll();
-  const data = dataResponsone.data;
+  const data = dataResponsone.data.filter((el,index)=>index <=6);
   const selectDropdownData = data.map(this.buildSelectItem);
 
 
@@ -56,8 +56,27 @@ onSubmit = (form) => {
   console.log(form);
 }
 
-onDelete = (costPot) => {
-  console.log(costPot);
+onDelete = (costPotID) => {
+  console.log(this.state.data);
+  console.log('costPotID',costPotID);
+  const index = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
+  //const updateData = this.state.data.splice(0, 1);
+  console.log('index',index);
+
+  this.setState((prevState) => ({
+    data: [...prevState.data.slice(0,index), ...prevState.data.slice(index+1)]
+  }));
+ 
+  console.log(this.state);
+  /*this.setState(()=> {
+    return {data:updateData};
+  }, ()=>{
+    console.log(this.state.data);
+  });*/
+
+  //close modal
+  events.emit('CLOSE_MODAL');
+
 }
 
 getCostPotName = ({name, costPotId}) => {
@@ -99,6 +118,7 @@ render(){
       </div>
 
       {/*display table here*/}
+      {this.state.data?this.state.data.length:null}
       {this.state.data?
         <div>
           <SimpleTable data={this.state.data} pageTableOn={'costModels'} />
