@@ -1,0 +1,15 @@
+.costModelPage {
+    .pageTop {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        h4 {
+            align-self: center;
+        }
+
+        a:last {
+            color: green;
+        }
+    }
+}

@@ -38,17 +38,20 @@ class SimpleModal extends React.Component {
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
-
+    //handle more that one trigger event on the page
+    const { eventToTrigger } = this.props;
+    this.eventName = eventToTrigger ? eventToTrigger : 'OPEN_MODAL';
   }
 
   componentDidMount() {
+
+
 
     /*
         *@register events once ModaComponed loaded
         *@
       */
-    events.on('OPEN_MODAL', this.handleOpen);
+    events.on(this.eventName, this.handleOpen);
     events.on('CLOSE_MODAL', this.handleClose);
   }
 
@@ -59,14 +62,16 @@ class SimpleModal extends React.Component {
         *@that way those events are only set once <Modal /> is initiated and only there;
         *@OPEN_MODAL and CLOSE_MODAL can be used mutiple times on diffrent pages since we remove them on Unmount event
       */
-    events.off('OPEN_MODAL', this.handleOpen);
+    events.off( this.eventName, this.handleOpen);
     events.off('CLOSE_MODAL', this.handleClose);
   }
     
-  handleOpen() {
+  handleOpen(payload=undefined) {
+    if(payload) this.props.receiveEventPayload(payload);
     this.setState({ open: true });
   }
 
+  //no payload on closing;
   handleClose() {  
     this.setState({ open: false });
   }

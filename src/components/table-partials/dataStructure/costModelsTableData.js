@@ -3,6 +3,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
+import Typography from '@material-ui/core/Typography';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -10,8 +11,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router-dom';
 import DropDownListContainer from '../../../components/DropDownListContainer';
 
+
 //custom
 import TablePagControllers from '../TablePagControllers';
+import events from '../../../utils/events';
 
 
 
@@ -21,19 +24,23 @@ const TableData = (props) => {
   //console.log('props table',props);
 
 
-  const onDelete = () => console.log('onDelete');
-  const onEdit = () => console.log('onEdit');
+  const onDelete = (cosPotName) => {
+    const payload = cosPotName;
+    events.emit('OPEN_MODAL_THIRD', payload);
+  };
+  const onEdit = () => {
+    events.emit('OPEN_MODAL_SECOND');
+  };
   const onView = (costPotId) => {
     props.history.push(`/admin/cost-models/${costPotId}/costpots`);
   };
   const getActions = (params) => {
-    const {costPotId,type} = params;
+    const {costPotId,type,name} = params;
     const system =  [
-      {el:'edit', icon:'whatshot', handler:()=>{console.log('Iam Greg');}},
-      {el:'view configuration',icon:'mood', iconColor:'secondary',handler:()=>{onView(costPotId);}},
-    
+      {el:'edit', icon:'whatshot', handler:onEdit},
+      {el:'view configuration',icon:'mood', iconColor:'secondary',handler:()=>{ onView(costPotId); }}  
     ];
-    const user =    system.concat([ {el:'delete',icon:'public', handler:()=>{console.log('Iam Libby');}}]);
+    const user =    system.concat([ {el:'delete',icon:'public', handler:onDelete.bind(null,{name,costPotId}) }]);
     return type==='USER'? user : system;
   };
 
@@ -58,7 +65,7 @@ const TableData = (props) => {
               <TableCell >{type}</TableCell>
               <TableCell>
                 <DropDownListContainer 
-                  list={getActions({type,costPotId})}
+                  list={getActions({type,costPotId,name})}
                   direction={'left'}
                   placement={'top-end'}>
                   <MoreVertIcon />

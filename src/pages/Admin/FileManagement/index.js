@@ -11,7 +11,6 @@ import ModalCustom from '../../../customized-vendors/modalVendor';
 import costpotsMockService from '../../../services/costpots-mock';
 import fileTypesMockService from '../../../services/filetypes-mock';
 import filesMockService from '../../../services/files-mock';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import AppBar from '@material-ui/core/AppBar';
 import DropDownSelect from '../../../components/selectDropdown';
 import UploadFileForm from './fileUploadForm/uploadFileForm';

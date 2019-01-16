@@ -42,7 +42,6 @@ class ControlledOpenSelect extends React.Component {
 
   render() {
     const { label, options, validate, error } = this.props;
-
     return (
       <FormControl className='row'>
         <InputLabel htmlFor="demo-controlled-open-select">{label}</InputLabel>

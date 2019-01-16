@@ -1,4 +1,5 @@
 import costModels from './mocks/costModels';
+import database from '../firebase/firebase';
 import _ from '../utils/misc';
 'use strict';
 
@@ -10,7 +11,12 @@ const costModelsMockService = ()=> {
       costModels.sort(_.compareFactory(params.predicate, params.reverse));
     }
   };
-
+  const populate= () => {
+    //just drop entiere array in set method for firebase db
+    database
+      .ref('costModels')
+      .set(costModels);
+  };
   const getOne = (configId, costpotId, params) =>
     getAll(configId, params).then((res) => {
       return res.data.find((e) => e.id === parseInt(configId));
@@ -31,19 +37,25 @@ const costModelsMockService = ()=> {
     return res.slice(pag.start, pag.start + pag.number);
   };
 
-  const getAll = (params) =>
-    new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: prepare(costModels, params),
-          totalItemCount: _.length(costModels),
-        });
-      }, 0);
-    });
+  const getAll = () =>
+    database.ref('costModels')
+      .once('value')
+      .then((snapshot) => {
+        const dbData = snapshot.val();
+        console.log(dbData);
+        return {
+          data: dbData,
+          totalItemCount: _.length(dbData),
+        };
+      })
+      .catch((e) => {
+        console.warn('Error fetching data', e);
+      });
 
   return {
     getAll,
     getOne,
+    populate
   };
 };
 export default costModelsMockService();
