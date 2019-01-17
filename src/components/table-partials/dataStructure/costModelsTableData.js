@@ -24,8 +24,8 @@ const TableData = (props) => {
   //console.log('props table',props);
 
 
-  const onDelete = (cosPotName) => {
-    const payload = cosPotName;
+  const onDelete = ({name, costPotId}) => {
+    const payload = {name, costPotId};
     events.emit('OPEN_MODAL_THIRD', payload);
   };
   const onEdit = () => {

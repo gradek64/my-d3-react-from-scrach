@@ -35,7 +35,8 @@ async componentDidMount(){
   //costModelService.populate();
   
   const dataResponsone = await costModelService.getAll();
-  const data = dataResponsone.data.filter((el,index)=>index <=6);
+  //const data = dataResponsone.data.filter((el,index)=>index <=6);
+  const data = dataResponsone.data;
   const selectDropdownData = data.map(this.buildSelectItem);
 
 
@@ -55,28 +56,23 @@ async componentDidMount(){
 onSubmit = (form) => {
   console.log(form);
 }
+deleteInDatabaseCall = async (data) => {
+  await costModelService.override(data);
+}
+onDelete = async (costPotID) => {
 
-onDelete = (costPotID) => {
-  console.log(this.state.data);
-  console.log('costPotID',costPotID);
-  const index = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
-  //const updateData = this.state.data.splice(0, 1);
-  console.log('index',index);
-
+  //find array index from costPots array;
+  const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
+  //update state
   this.setState((prevState) => ({
-    data: [...prevState.data.slice(0,index), ...prevState.data.slice(index+1)]
-  }));
- 
-  console.log(this.state);
-  /*this.setState(()=> {
-    return {data:updateData};
-  }, ()=>{
-    console.log(this.state.data);
-  });*/
-
+    data: [...prevState.data.slice(0,arrayIndex), ...prevState.data.slice(arrayIndex+1)]
+  }),()=>{
+    //update database with override
+    this.deleteInDatabaseCall(this.state.data);
+  });
   //close modal
   events.emit('CLOSE_MODAL');
-
+  
 }
 
 getCostPotName = ({name, costPotId}) => {

@@ -54,9 +54,9 @@ class DataTableWithPagination extends React.Component {
           const {initialData} = this.props;
 
           const dataChanged = initialData.length!==prevData.length;
-          if(dataChanged){
+          /*if(dataChanged){
             this.updatedData();
-          }
+          }*/
           console.log('initialData', this.state.data);
           console.log('this.props.initialData',this.props.initialData);
           console.log('dataChanged', dataChanged);

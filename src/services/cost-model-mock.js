@@ -22,6 +22,8 @@ const costModelsMockService = ()=> {
       return res.data.find((e) => e.id === parseInt(configId));
     });
 
+  const override = (array) =>  database.ref('costModels').set(array);
+  
   const prop = (prop, obj) => obj && obj[prop];
 
   const sortParams = (params) => prop('sort', params) || {};
@@ -55,6 +57,7 @@ const costModelsMockService = ()=> {
   return {
     getAll,
     getOne,
+    override,
     populate
   };
 };
