@@ -17,11 +17,9 @@ const costModelsMockService = ()=> {
       .ref('costModels')
       .set(costModels);
   };
-  const getOne = (configId, costpotId, params) =>
-    getAll(configId, params).then((res) => {
-      return res.data.find((e) => e.id === parseInt(configId));
-    });
+  const update = (id,item) => database.ref(`costModels/${id}`).update(item);
 
+  //this is one is insted of delete 
   const override = (array) =>  database.ref('costModels').set(array);
   
   const prop = (prop, obj) => obj && obj[prop];
@@ -56,7 +54,7 @@ const costModelsMockService = ()=> {
 
   return {
     getAll,
-    getOne,
+    update,
     override,
     populate
   };

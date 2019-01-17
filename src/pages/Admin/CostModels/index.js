@@ -16,8 +16,8 @@ import './costModelPage.scss';
 class CostModel extends React.Component {
 state = {
   data:null,
-  costPotToDelete:null,
-  costPotToDeleteID:null,
+  selectedCostPot:null,
+  selectedCostPotID:null,
   selectDropdownData:null,
   breadcrumbsLinks:[],
 }
@@ -39,8 +39,6 @@ async componentDidMount(){
   const data = dataResponsone.data;
   const selectDropdownData = data.map(this.buildSelectItem);
 
-
-
   this.setState(() => ({ data, selectDropdownData}));
 
   this.setState({
@@ -53,10 +51,7 @@ async componentDidMount(){
 
 }
 
-onSubmit = (form) => {
-  console.log(form);
-}
-deleteInDatabaseCall = async (data) => {
+overrideDataBase = async (data) => {
   await costModelService.override(data);
 }
 onDelete = async (costPotID) => {
@@ -68,23 +63,48 @@ onDelete = async (costPotID) => {
     data: [...prevState.data.slice(0,arrayIndex), ...prevState.data.slice(arrayIndex+1)]
   }),()=>{
     //update database with override
-    this.deleteInDatabaseCall(this.state.data);
+    this.overrideDataBase(this.state.data);
   });
   //close modal
   events.emit('CLOSE_MODAL');
   
 }
 
+onCreate = (item) => {
+
+
+  //update data in state; (recommeded way of update)
+  this.setState({ data: [...this.state.data, item] }
+  //callback from state
+    ,()=>{
+      this.overrideDataBase(this.state.data);
+    }); 
+  //close Modal
+  events.emit('CLOSE_MODAL');
+}
+updateDatabaseOnUpdate = async (id) => {
+  await costModelService.update(id);
+}
+onUpdate = (costPotID,update) => {
+  //find array index from costPots array;
+  const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
+  //update data in state; (recommeded way of update)
+  const item = {...this.state.data[arrayIndex],...update};
+  this.setState({ data: this.state.data[arrayIndex] }, 
+  //callback from state
+    this.updateDatabaseOnUpdate(item,this.state.data)); 
+}
+
 getCostPotName = ({name, costPotId}) => {
   this.setState(() => ({ 
-    costPotToDelete:name,
-    costPotToDeleteID:costPotId
+    selectedCostPot:name,
+    selectedCostPotID:costPotId
   })
   );
 }
 
 render(){
-  const { breadcrumbsLinks, costPotToDelete } = this.state;
+  const { breadcrumbsLinks, selectedCostPot } = this.state;
 
   return ( 
     <div className='costModelPage'>
@@ -120,16 +140,18 @@ render(){
           <SimpleTable data={this.state.data} pageTableOn={'costModels'} />
           <div>
             <ModalCustom isOpen={false} >
-              <CreateCostModel selectDropdownData={this.state.selectDropdownData} onSubmit={this.onSubmit}/>
+              <CreateCostModel selectDropdownData={this.state.selectDropdownData} onSubmit={this.onCreate}/>
             </ModalCustom>
             <ModalCustom isOpen={false} eventToTrigger={'OPEN_MODAL_SECOND'}>
-              <UpdateCostModel selectDropdownData={this.state.selectDropdownData} onSubmit={this.onSubmit}/>
+              <UpdateCostModel selectDropdownData={this.state.selectDropdownData} 
+                receiveEventPayload={this.getCostPotName} 
+                onSubmit={this.onUpdate.bind(null,this.state.selectedCostPotID)}/>
             </ModalCustom>
             <ModalCustom isOpen={false} eventToTrigger={'OPEN_MODAL_THIRD'} receiveEventPayload={this.getCostPotName}>
               <Typography component="h3" variant="h3" gutterBottom style={{textAlign:'center'}}>
-                  are you sure U want to delete { costPotToDelete }?
+                  are you sure U want to delete { selectedCostPot }?
               </Typography>
-              <Button variant="contained" color="primary" className='buttonConfirm' onClick={()=>{ this.onDelete( this.state.costPotToDeleteID);} }>Delete</Button>
+              <Button variant="contained" color="primary" className='buttonConfirm' onClick={()=>{ this.onDelete( this.state.selectedCostPotID);} }>Delete</Button>
               <Button variant="contained" color="primary" className='buttonCancel' onClick={()=>{events.emit('CLOSE_MODAL');}}>Cancel</Button>
             </ModalCustom>
 
