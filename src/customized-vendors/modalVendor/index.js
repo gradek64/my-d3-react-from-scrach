@@ -67,6 +67,7 @@ class SimpleModal extends React.Component {
   }
     
   handleOpen(payload=undefined) {
+    console.log('payload', payload);
     if(payload) this.props.receiveEventPayload(payload);
     this.setState({ open: true });
   }

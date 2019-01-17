@@ -38,7 +38,7 @@ function SimpleTable(props) {
         initialData={data} 
         classes={classes}
         colSpan={3}
-        count={data.length}
+        count={data.length?data.length:0}
         rowsPerPage={5}
         startPage={0}
       />

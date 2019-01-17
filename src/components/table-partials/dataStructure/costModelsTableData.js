@@ -28,8 +28,9 @@ const TableData = (props) => {
     const payload = {name, costPotId};
     events.emit('OPEN_MODAL_THIRD', payload);
   };
-  const onEdit = () => {
-    events.emit('OPEN_MODAL_SECOND');
+  const onEdit = ({name, costPotId}) => {
+    const payload = {name, costPotId};
+    events.emit('OPEN_MODAL_SECOND',payload);
   };
   const onView = (costPotId) => {
     props.history.push(`/admin/cost-models/${costPotId}/costpots`);
@@ -37,12 +38,15 @@ const TableData = (props) => {
   const getActions = (params) => {
     const {costPotId,type,name} = params;
     const system =  [
-      {el:'edit', icon:'whatshot', handler:onEdit},
+      {el:'edit', icon:'whatshot', handler:onEdit.bind(null,{name,costPotId})},
       {el:'view configuration',icon:'mood', iconColor:'secondary',handler:()=>{ onView(costPotId); }}  
     ];
     const user =    system.concat([ {el:'delete',icon:'public', handler:onDelete.bind(null,{name,costPotId}) }]);
     return type==='USER'? user : system;
   };
+
+
+  console.log('costModelTabaleData',props.data);
 
   return (
     <Table className={classes.table}>
@@ -55,7 +59,7 @@ const TableData = (props) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {props.data.map(({name,type,createdBy,creationDate,iconColor,id:costPotId},id) => {
+        {props.data?props.data.map(({name,type,createdBy,creationDate,iconColor,id:costPotId},id) => {
           return (
             <TableRow key={`table${id}`}>
               <TableCell numeric>{(id+1)+pageUpdate*rowsPerPageUpdate}</TableCell>
@@ -73,7 +77,7 @@ const TableData = (props) => {
               </TableCell>  
             </TableRow>
           );
-        })}
+        }):null}
       </TableBody>
       {   props.rowsPerPage ? (
         <TableFooter>

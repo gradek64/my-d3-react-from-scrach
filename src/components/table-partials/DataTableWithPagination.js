@@ -57,14 +57,14 @@ class DataTableWithPagination extends React.Component {
           /*if(dataChanged){
             this.updatedData();
           }*/
-          console.log('initialData', this.state.data);
+          console.log('.............initialData...............', this.state.data);
           console.log('this.props.initialData',this.props.initialData);
           console.log('dataChanged', dataChanged);
 
           switch (this.props.pageTableOn){
           case 'fileManagement':
             return <FileManagementTableData {...this.props} 
-              data={data}
+              data={initialData}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 
@@ -72,7 +72,7 @@ class DataTableWithPagination extends React.Component {
             />;
           case 'costModels':
             return <CostModelsTableData {...this.props} 
-              data={this.state.data}
+              data={initialData}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 

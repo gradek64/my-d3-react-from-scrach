@@ -153,7 +153,7 @@ class uploadForm extends React.Component {
           </div>
         </div>
         <div className="modal-footer">
-          <Button variant="contained" color="primary" className='buttonConfirm' onClick={this.submit} >Create</Button>
+          <Button variant="contained" color="primary" className='buttonConfirm' onClick={this.submit} >Update</Button>
           <Button variant="contained" color="primary" className='buttonCancel' onClick={()=>{events.emit('CLOSE_MODAL');}} >Cancel</Button>
         </div>
       </form>
