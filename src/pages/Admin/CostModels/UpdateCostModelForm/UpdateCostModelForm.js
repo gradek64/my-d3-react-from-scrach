@@ -9,13 +9,15 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import events from '../../../../utils/events';
 import {validationRules} from './createCostModelValidationRules.js';
 
 import './createCostModelForm.scss';
 
 
-class uploadForm extends React.Component {
+class UpdateCostModelForm extends React.Component {
 
   componentDidMount(){
     document.addEventListener('keypress', this.onKeyPress);
@@ -35,12 +37,11 @@ class uploadForm extends React.Component {
 
   state = {
     submitted:false,
+    value:'costModelNameSelected',
     fields:{
-      select:null,
       costModelName:null,
     },
     errorsSet:{
-      select:'',
       costModelName:'',
     }
   };
@@ -103,22 +104,11 @@ class uploadForm extends React.Component {
     this.setState({ submitted:true });
 
     if( this.checkEmptyFields(this.state) ){
-      const configurationNumber = Math.floor(Math.random()*100000);
-
-      const { costModelName, select:selectValue } = this.state.fields;
+      const { costModelName } = this.state.fields;
 
       const objectCreate = {
-        configurationNumber,
-        createdBy: 'joy@amalytics.co',
-        creationDate: new Date(),
-        id: configurationNumber,
         name: costModelName,
-        parentConfigurationId: selectValue,
-        type: 'USER',
-        uuid: '5bc86a0a-978c-4364-88dd-58832569113f',
-        version: 1
       };
-
       this.props.onSubmit(objectCreate);
     }
     
@@ -126,24 +116,30 @@ class uploadForm extends React.Component {
 
   render() {
 
-    const { errorsSet, submitted} = this.state;
-    const { selectDropdownData } = this.props;
+    const { errorsSet, submitted, value} = this.state;
+    const { selectDropdownDataFixed } = this.props;
+
 
     return (
       <form name="form1" className="file-upload-form">
         <div className="modal-content">
           <Typography component="h4" variant="h4" gutterBottom>
-              Update CostModel
+            {`is name ${name}`}
           </Typography>
           <div className="f-body">
             <div className="input-field row">
-              <DropDownSelect 
-                label={'file type'}
-                error={submitted && errorsSet.select}
-                //pass validate method for this component
-                validate={this.handleChange}
-                options = {selectDropdownData}
-              />
+              <FormControl  className='row'>
+                <InputLabel htmlFor="name-readonly">CostModel Name</InputLabel>
+                <Select
+                  value={value}
+                  input={<Input name="name-readonly-CM" id="name-readonly" readOnly />}
+                >
+                  <MenuItem value="fetete4t">
+                    <em>gertgret4</em>
+                  </MenuItem>
+                  <MenuItem value="costModelNameSelected">{selectDropdownDataFixed}</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <FormControl  aria-describedby="component-error-text" className='row'>
               <InputLabel htmlFor="component-error">CostModel Name</InputLabel>
@@ -162,4 +158,4 @@ class uploadForm extends React.Component {
 
 }
 
-export default uploadForm;
+export default UpdateCostModelForm;

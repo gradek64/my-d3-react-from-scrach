@@ -6,12 +6,7 @@ const validationRules = {
       required: true,
       message: 'CostModel Name is required.'
     },
-  }),
-  select: new Schema({ 
-    select: {
-      required: true,
-    }
-  }),
+  })
 };
 
 export {validationRules};

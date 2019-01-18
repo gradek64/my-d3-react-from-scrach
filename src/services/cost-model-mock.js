@@ -42,7 +42,6 @@ const costModelsMockService = ()=> {
       .once('value')
       .then((snapshot) => {
         const dbData = snapshot.val();
-        console.log(dbData);
         return {
           data: dbData,
           totalItemCount: _.length(dbData),

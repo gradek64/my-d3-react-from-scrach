@@ -22,9 +22,9 @@ state = {
   breadcrumbsLinks:[],
 }
 
-buildSelectItem = ({name, type, parentConfigurationId}) => {
+buildSelectItem = ({name, type, configurationNumber}) => {
   return {
-    value:parentConfigurationId,
+    value:configurationNumber,
     optionName:name,
     type,
   };
@@ -71,8 +71,6 @@ onDelete = async (costPotID) => {
 }
 
 onCreate = (item) => {
-
-
   //update data in state; (recommeded way of update)
   this.setState({ data: [...this.state.data, item] }
   //callback from state
@@ -82,28 +80,31 @@ onCreate = (item) => {
   //close Modal
   events.emit('CLOSE_MODAL');
 }
-updateDatabaseOnUpdate = async (id) => {
-  await costModelService.update(id);
+updateDatabaseOnUpdate = async (id,item) => {
+  await costModelService.update(id,item);
 }
 
 onUpdate = (costPotID,{name}) => {
-  const updateModelArr = this.state.data.map((costModel) =>
-    costModel.id===costPotID ? {...costModel,name}: costModel
+  let updateObject;
+  const updateModelArr = this.state.data.map((costModel) => {
+    if (costModel.id===costPotID) {
+      updateObject = {...costModel,name}; 
+      return updateObject;
+    }
+    else { return costModel; } 
+  }
   );
   this.setState(()=>{
     return {
       data:[...updateModelArr]
     };
   },()=>{
-    //console.log('update for state.....callback', this.state.data);
-    //this.updateDatabaseOnUpdate(item,this.state.data); 
+    const dataArrIndex = this.state.data.findIndex((el)=>el.id===costPotID);
+    this.updateDatabaseOnUpdate( dataArrIndex, updateObject); 
+    //close modal
+    events.emit('CLOSE_MODAL');
   });
-
-  //callback from state
-  //this.updateDatabaseOnUpdate(item,this.state.data)); 
-
-  //close modal
-  events.emit('CLOSE_MODAL');
+  
   
 }
 getCostPotName = ({name, costPotId}) => {
@@ -155,7 +156,7 @@ render(){
               <CreateCostModel selectDropdownData={this.state.selectDropdownData} onSubmit={this.onCreate}/>
             </ModalCustom>
             <ModalCustom isOpen={false} eventToTrigger={'OPEN_MODAL_SECOND'} receiveEventPayload={this.getCostPotName}>
-              <UpdateCostModel selectDropdownData={this.state.selectDropdownData} 
+              <UpdateCostModel selectDropdownDataFixed={selectedCostPot} 
                 onSubmit={this.onUpdate.bind(null,this.state.selectedCostPotID)}/>
             </ModalCustom>
             <ModalCustom isOpen={false} eventToTrigger={'OPEN_MODAL_THIRD'} receiveEventPayload={this.getCostPotName}>

@@ -45,9 +45,6 @@ const TableData = (props) => {
     return type==='USER'? user : system;
   };
 
-
-  console.log('costModelTabaleData',props.data);
-
   return (
     <Table className={classes.table}>
       <TableHead>

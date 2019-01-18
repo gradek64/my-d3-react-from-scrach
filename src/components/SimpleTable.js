@@ -26,8 +26,6 @@ const styles = theme => ({
 
 function SimpleTable(props) {
   const { classes, data , pageTableOn } = props;
-
-  console.log(' SimpleTable data',data);
   return (
     <Paper className={classes.root}>
       {/* table with no pagination needs below
