@@ -5,8 +5,8 @@ import ModalCustom from '../../../customized-vendors/modalVendor';
 import Typography from '@material-ui/core/Typography';
 import SimpleTable from '../../../components/SimpleTable';
 import costModelService from '../../../services/cost-model-mock';
-import CreateCostModel from './CreateCostModelForm/CreateCostModelForm';
-import UpdateCostModel from './UpdateCostModelForm/updateCostModelForm';
+import CreateCostModel from './CreateCostModelForm/createCostModelForm';
+import UpdateCostModel from './UpdateCostModelForm/UpdateCostModelForm';
 import DropDownSelect from '../../../components/selectDropdown';
 import events from '../../../utils/events';
 
