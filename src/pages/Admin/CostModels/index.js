@@ -48,7 +48,6 @@ async componentDidMount(){
         label: 'Cost Models',
       }
     ]});
-
 }
 
 overrideDataBase = async (data) => {
@@ -108,7 +107,6 @@ onUpdate = (costPotID,{name}) => {
   
 }
 getCostPotName = ({name, costPotId}) => {
-  console.log(name, costPotId);
   this.setState(() => ({ 
     selectedCostPot:name,
     selectedCostPotID:costPotId
