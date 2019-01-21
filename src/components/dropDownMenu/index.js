@@ -21,15 +21,21 @@ class DropDownMenu extends React.Component {
     *@absolute position children that needs to have container of position:relative somewhere
   */
   componentDidMount(){
-    const el = ReactDOM.findDOMNode(this);
+    this.DropDownMenuEl = ReactDOM.findDOMNode(this);
+    /*const el = ReactDOM.findDOMNode(this);
     el.closest('[dropdownmenuanchor=yes]') ?
       el.closest('[dropdownmenuanchor=yes]')
         .style.position = 'relative':
-      null;
+      null;*/
   }
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
+    event.currentTarget.
+      closest('[dropdownmenuanchor=yes]')
+      .setAttribute('dropdownmenuanchor', 'no');
+    console.log('gagagegtegter');
+    console.log('current', event.currentTarget.closest('[dropdownmenuanchor=yes]'));
   };
 
   showDropDown = () => {
@@ -43,6 +49,17 @@ class DropDownMenu extends React.Component {
   toggleMenuOpen = (showDropDownMenuState) => {
     console.log('is toggeling ....!');
     this.setState({ showDropDownMenu: !showDropDownMenuState });
+
+    const active = this.anchorEl.current.closest('[dropped]');
+    if(active) active.setAttribute('dropped',false);
+
+    console.log('this',this);
+    console.log('this.DropDownMenuEl', this.DropDownMenuEl);
+
+    const parentState = this.anchorEl.current.closest('[dropped=false]');
+    if(parentState) parentState.setAttribute('dropped',!showDropDownMenuState);
+
+    console.log('parentState',parentState.closest('ul'));
   }
 
   handleClose = (event) => {

@@ -53,9 +53,9 @@ const MobileNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropped='false'>
         <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={true} 
+          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
             animation={true}>
             <div className={props.classes.root}>
               <HomeIcon  color="secondary" />
@@ -79,9 +79,9 @@ const MobileNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropped='false'>
         <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={true} 
+          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
             animation={true}>
             <div className={props.classes.root}>
               <HomeIcon  color="secondary" />
@@ -104,10 +104,11 @@ const MobileNavList = (props) => (
             </Typography>
           </div>
         </NavLink>
+
       </li>
       <li className={'menuItem'} >
         <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={true} 
+          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
             animation={true}>
             <div className={props.classes.root}>
               <HomeIcon  color="secondary" />

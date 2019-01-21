@@ -7,6 +7,7 @@
     li {
         display: block;
         background-color: blue;
+        position: relative;
 
         /*change*/
         text-align: center;
@@ -26,6 +27,35 @@
             svg,
             h6 {
                 color: white;
+            }
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            right: 25px;
+            top: 18px;
+            width: 22px;
+            height: 2px;
+            margin-top: -2px;
+            background-color: #372717;
+        }
+
+        &:before {
+            transform: rotate(-90deg);
+            transition: transform 0.35s;
+        }
+
+        &[dropped='true'] {
+            &:before {
+                transform: rotate(0deg);
+            }
+        }
+
+        &[dropped='false'] {
+            &:before {
+                transform: rotate(-90deg);
             }
         }
     }
