@@ -1,0 +1,32 @@
+.mobileNavList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-height: 64px;
+
+    li {
+        display: block;
+        background-color: blue;
+
+        /*change*/
+        text-align: center;
+
+        /*min-height: 64px;*/
+        /*change*/
+
+        .MainNavList-root-140 {
+            /*min-height: 64px;*/
+            /*change*/
+        }
+
+        &:hover {
+            background-color: green;
+            cursor: pointer;
+
+            svg,
+            h6 {
+                color: white;
+            }
+        }
+    }
+}

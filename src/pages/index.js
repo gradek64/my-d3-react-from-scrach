@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import events from '../utils/events';
 import ModalCustom from '../customized-vendors/modalVendor';
+import MobileNavList from './pagePartials/MobileNavList/MobileNavList';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -9,6 +10,9 @@ const home = () => {
   const {emit} = events;
   return (
     <div>
+      
+
+
       <ModalCustom isOpen={false} >
         <Typography component="h2" variant="h2" gutterBottom>
                   Display 4
@@ -19,6 +23,9 @@ const home = () => {
         <Button variant="contained" color="primary" onClick={()=>{emit('CLOSE_MODAL');}}>Cancel Modal</Button>
       </ModalCustom>
       <Button variant="contained" color="primary" onClick={()=>{emit('OPEN_MODAL');}} >open Modals</Button>
+
+
+      <MobileNavList />
     </div>
   );
 

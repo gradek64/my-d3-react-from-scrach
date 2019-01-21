@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuItem from '@material-ui/core/MenuItem';
+import Collapse from '@material-ui/core/Collapse';
 
 class DropDownMenu extends React.Component {
   state = {
@@ -43,7 +44,13 @@ class DropDownMenu extends React.Component {
   };
 
   render() {
-    const { children, placement} = this.props;
+    const { 
+      children, 
+      placement, 
+      collapsebleAccordion,
+      multipleOpen,
+      animation
+    } = this.props;
     const { showDropDownMenu } = this.state;
 
 
@@ -53,29 +60,46 @@ class DropDownMenu extends React.Component {
       <div 
         ref={this.anchorEl}
         onMouseEnter={this.showDropDown}
-        onMouseLeave={this.hideDropDown}>
+        onMouseLeave={this.hideDropDown}
+      >
         {/*show ClickAwayListener only when manu is open*/}
-        {showDropDownMenu?
+        {!multipleOpen?
           <ClickAwayListener onClickAway={ this.handleClose }>
             <div></div>
           </ClickAwayListener>:null
         }
         {/*show ClickAwayListener only when manu is open*/}
-        <div>
+        <div style={{position:'relative'}}>
+          { /*<div style={{
+                    position:'block',
+                    color:'black',
+                    transform: placement==='left'?'translate(-100%)':'translate(0)'
+                  }}>
+                   
+                  </div>*/}
           {React.Children.map(children, (child, i) => {
 
             /* first child is alway a trigger for mobile Click*/
             if (i == 0)return <div onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}> {child}</div>;
           
-            /* second child is DropDownMenu Content */
-            if(i==1 && showDropDownMenu) {
-              return <div style={{
-                position:'absolute',
-                color:'black',
-                transform: placement==='left'?'translate(-100%)':'translate(0)'
-              }}>
-                {child}
-              </div>;
+            /* second child is DropDownMenu Content 
+            render element cause <Collapse /> will look after to show it or not
+            */
+            if(i==1 /*&& showDropDownMenu*/) {
+              return (
+                <div style={{
+                  position:collapsebleAccordion?'block':'absolute',
+                  left:0,
+                  color:'black',
+                  transform: placement==='left'?'translate(-100%)':'translate(0)'
+                }}>
+                  {animation?
+                    <Collapse in={showDropDownMenu} >
+                      {child}
+                    </Collapse>:null
+                  }
+                  {!animation && showDropDownMenu?child:null}
+                </div>);
             }
           })}
         </div>
@@ -88,6 +112,9 @@ class DropDownMenu extends React.Component {
 
 DropDownMenu.defaultProps = {
   onMouseEnter: true,
+  animation:false,
+  collapsebleAccordion: false,
+  multipleOpen: false,
   placement:'right'
 };
 
