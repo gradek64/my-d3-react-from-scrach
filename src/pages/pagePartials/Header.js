@@ -231,11 +231,11 @@ class PrimarySearchAppBar extends React.Component {
                 </IconButton>
               </DropDownListContainer>
 
-            </div>
-            <div className={classes.sectionMobile}>
+            </div> 
+            <div className={classes.sectionMobile} rel='set' id='div-02' dropdownmenuanchor='yes'>
              
-              <DropDownMenu onMouseEnter={false} placement='left'>
-                <div>
+              <DropDownMenu onMouseEnter={false} placement='left'  >
+                <div >
                   <IconButton
                     aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                     aria-haspopup="true"

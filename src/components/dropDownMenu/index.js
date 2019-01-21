@@ -1,9 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuItem from '@material-ui/core/MenuItem';
 import Collapse from '@material-ui/core/Collapse';
+
+//test
 
 class DropDownMenu extends React.Component {
   state = {
@@ -11,6 +14,19 @@ class DropDownMenu extends React.Component {
     showDropDownMenu: false,
   };
   anchorEl = React.createRef();
+
+  /*
+    *@ReactDOM.findDOMNode(this) find DOM element of this so componet <DropDownMenu>
+    *@then we need to establish its outer parent for referencing boundaries for 
+    *@absolute position children that needs to have container of position:relative somewhere
+  */
+  componentDidMount(){
+    const el = ReactDOM.findDOMNode(this);
+    el.closest('[dropdownmenuanchor=yes]') ?
+      el.closest('[dropdownmenuanchor=yes]')
+        .style.position = 'relative':
+      null;
+  }
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -69,7 +85,7 @@ class DropDownMenu extends React.Component {
           </ClickAwayListener>:null
         }
         {/*show ClickAwayListener only when manu is open*/}
-        <div style={{position:'relative'}}>
+        <div>
           { /*<div style={{
                     position:'block',
                     color:'black',

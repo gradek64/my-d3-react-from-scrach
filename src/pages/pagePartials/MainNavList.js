@@ -19,13 +19,19 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
-
+/*
+  *@relativePosition needs to be set 
+  *@cause there are element in the menu that have position absolute 
+  *@so this has to dictate boundaries of container 
+*/
 const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems:'center',
     justifyContent:'center',
+  },
+  relativePosition:{
   },
   icon: {
     margin: theme.spacing.unit - 10,
@@ -43,7 +49,7 @@ const styles = theme => ({
 const MainNavList = (props) => (
   <div>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropdownmenuanchor='yes'>
         <NavLink to="/"   exact={true}>
           <div className={props.classes.root} >
             <HomeIcon  color="secondary" />
@@ -53,7 +59,7 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropdownmenuanchor='yes'>
         <NavLink to="/admin/cost-models/">
           <div className={props.classes.root} >
             <HomeIcon  color="secondary" />
@@ -63,7 +69,7 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropdownmenuanchor='yes'>
         <NavLink to="/admin/edit/76">
           <div className={props.classes.root} >
             <HomeIcon  color="secondary" />
@@ -73,9 +79,9 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} dropdownmenuanchor='yes'>
         <div>
-          <DropDownMenu >
+          <DropDownMenu>
             <div className={props.classes.root}>
               <HomeIcon  color="secondary" />
               <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
