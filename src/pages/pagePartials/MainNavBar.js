@@ -25,13 +25,19 @@ const styles = (theme) => ({
     marginLeft: -12,
     marginRight: 20,
   },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
+  },
 });
 
 function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.sectionDesktop}>
         <Toolbar>
           <MainNaVList />
         </Toolbar>

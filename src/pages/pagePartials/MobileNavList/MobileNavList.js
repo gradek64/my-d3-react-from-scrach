@@ -9,7 +9,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import DropdownContent from '../../../components/dropDownContent/contentRandom';
+
 import './mobileNavList.scss';
+//desktop NavList
+import DesktopNavList from '../MainNavList';
 
 
 function HomeIcon(props) {
@@ -20,7 +23,7 @@ function HomeIcon(props) {
   );
 }
 
-const styles = theme => ({
+/*const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -36,94 +39,82 @@ const styles = theme => ({
   paper: {
     marginRight: theme.spacing.unit * 2,
   },
-});
+});*/
 
 
 
-const MobileNavList = (props) => (
-  <div>
-    <ul className={'mobileNavList'}>
-      <li className={'menuItem'} >
-        <NavLink to="/"   exact={true}>
-          <div className={props.classes.root} >
-            <HomeIcon  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-              News
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} dropped='false'>
-        <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
-            animation={true}>
-            <div className={props.classes.root}>
-              <HomeIcon  color="secondary" />
-              <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown mobile
-              </Typography>
-            </div>
-            <div>
-              <DropdownContent/>
-            </div>
-          </DropDownMenu>
-        </div>
-      </li>
-      <li className={'menuItem'} >
-        <NavLink to="/admin/cost-models/">
-          <div className={props.classes.root} >
-            <HomeIcon  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-               News
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} dropped='false'>
-        <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
-            animation={true}>
-            <div className={props.classes.root}>
-              <HomeIcon  color="secondary" />
-              <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown mobile 2
-              </Typography>
-            </div>
-            <div>
-              <DropdownContent/>
-            </div>
-          </DropDownMenu>
-        </div>
-      </li>
-      <li className={'menuItem'} >
-        <NavLink to="/admin/edit/76">
-          <div className={props.classes.root} >
-            <HomeIcon  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             News
-            </Typography>
-          </div>
-        </NavLink>
+const MobileNavList = (BaseComponent) => {
 
-      </li>
-      <li className={'menuItem'} >
-        <div>
-          <DropDownMenu collapsebleAccordion={true} onMouseEnter={false} multipleOpen={false} 
-            animation={true}>
-            <div className={props.classes.root}>
-              <HomeIcon  color="secondary" />
-              <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown
-              </Typography>
-            </div>
-            <div>
-              <DropdownContent/>
-            </div>
-          </DropDownMenu>
-        </div>
-      </li>
-    </ul>
-  </div>
-);
+  return class SimpleState extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { 
+        value: props.side,
+        previous:{
+          element:null,
+          open:null,
+        }, 
+        currentIsOpen:false, 
+      };
+      this.updateState = this.updateState.bind(this);
+    }
+    updateState(event) {
+      let current = event.target.closest('li');
+      let previous = this.state.previousOpen;
 
-export default withStyles(styles)(MobileNavList);
+      console.log('previousOpen',previous);
+    
+
+      this.setState(
+        (state)=>{
+          return {
+            currentIsOpen:!state.currentIsOpen
+          };},()=>{
+          console.log('.........this.state.currentIsOpen..',this.state.currentIsOpen);
+          current.setAttribute('dropped',this.state.currentIsOpen);
+        });
+
+
+      /* current.setAttribute('dropped',true);
+      if(this.state.previousOpen===current){
+        console.log('same');
+        current.setAttribute('dropped',true);
+      }*/
+
+      console.log('current', current);
+
+
+      //current becomes previous;
+      if(previous!==current&&previous!==null){
+        console.log('//////////set////////////');
+       
+        if(previous)previous.setAttribute('dropped',false);
+        current.setAttribute('dropped',false);
+      }
+
+
+      this.setState({previousOpen:current});
+
+       
+      /*this.setState(()=>{
+        return{ 
+          previousOpen:current
+        };
+      },()=>{
+        console.log(this.state.previousOpen);
+      });*/
+
+      /*const flip = this.state.value === "dark" ? "light" : "dark";
+      this.setState({ value: flip });*/
+    }
+    render() {
+      console.log('this.props', this.props.children);
+      return <BaseComponent asMobile={true} callback={this.updateState}/>;
+    }
+  };
+
+};
+  
+export default MobileNavList(DesktopNavList);
+
+//export default withStyles(styles)(MobileNavList);

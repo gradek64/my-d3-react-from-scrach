@@ -24,6 +24,8 @@ import DropDownListContainer from '../../components/DropDownListContainer';
 import DropDownMenu from '../../components/dropDownMenu';
 import Paper from '@material-ui/core/Paper';
 import UserLoginDisplay from '../../components/UserLoginDisplay';
+import MobileNavList from './MobileNavList/MobileNavList';
+
 
 
 const styles = theme => ({
@@ -105,6 +107,7 @@ class PrimarySearchAppBar extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
+      mobileMenuOpen:false,
       mobileMoreAnchorEl: null,
     };
   }
@@ -119,8 +122,8 @@ class PrimarySearchAppBar extends React.Component {
     this.handleMobileMenuClose();
   }
 
-  handleMobileMenuOpen(event){
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  handleMobileMenuOpen(openState){
+    this.setState({ mobileMenuOpen: !openState });
   }
 
   handleMobileMenuClose(){
@@ -128,7 +131,7 @@ class PrimarySearchAppBar extends React.Component {
   }
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { anchorEl, mobileMoreAnchorEl, mobileMenuOpen } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -182,10 +185,29 @@ class PrimarySearchAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.bgColor}>
+
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
+            {/* dropdownmenuanchor='no' means position absolute start from the edge or the page*/}
+            <div className={classes.sectionMobile} dropdownmenuanchor='no'>
+              <DropDownMenu 
+                onMouseEnter={false} 
+                collapsebleAccordion={false}
+                multipleOpen={false}
+                animation={false} >
+                <div className='verticalAlignment'>
+                  <IconButton  color="secondary" >
+                    <MenuIcon />
+                  </IconButton>
+                </div>
+                <div>
+                  <MobileNavList />
+                </div>
+              </DropDownMenu>
+              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer" 
+                onClick={this.handleMobileMenuOpen.bind(this,mobileMenuOpen)}>
+                <MenuIcon />
+              </IconButton>
+            </div>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Material-UI
             </Typography>
@@ -272,6 +294,7 @@ class PrimarySearchAppBar extends React.Component {
                       >
                         <AccountCircle />
                       </IconButton>
+                   
                     </DropDownListContainer>
                   </Paper>
                 </div>
@@ -281,6 +304,8 @@ class PrimarySearchAppBar extends React.Component {
         </AppBar>
         {renderMenu}
         {renderMobileMenu}
+        {}
+        {this.state.mobileMenuOpen?<MobileNavList style={{position:'fixed'}}/>:null}
       </div>
     );
   }

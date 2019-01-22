@@ -1,61 +1,85 @@
-.mobileNavList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    min-height: 64px;
+.menuMobile {
+    /*position: fixed;*/
 
-    li {
-        display: block;
-        background-color: blue;
-        position: relative;
+    /*
+  this needs to come from sass variable for hight of App nav header
+*/
+    /*margin-top: 64px;
+  z-index: 100;*/
 
-        /*change*/
-        text-align: center;
+    .MainNavList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        min-height: 64px;
 
-        /*min-height: 64px;*/
-        /*change*/
+        li {
+            display: block;
+            background-color: blue;
+            position: relative;
 
-        .MainNavList-root-140 {
+            /*change*/
+            text-align: center;
+
             /*min-height: 64px;*/
             /*change*/
-        }
 
-        &:hover {
-            background-color: green;
-            cursor: pointer;
-
-            svg,
-            h6 {
-                color: white;
+            .MainNavList-root-140 {
+                /*min-height: 64px;*/
+                /*change*/
             }
-        }
 
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            right: 25px;
-            top: 18px;
-            width: 22px;
-            height: 2px;
-            margin-top: -2px;
-            background-color: #372717;
-        }
+            &:hover {
+                background-color: green;
+                cursor: pointer;
 
-        &:before {
-            transform: rotate(-90deg);
-            transition: transform 0.35s;
-        }
-
-        &[dropped='true'] {
-            &:before {
-                transform: rotate(0deg);
+                svg,
+                h6 {
+                    color: white;
+                }
             }
-        }
 
-        &[dropped='false'] {
-            &:before {
-                transform: rotate(-90deg);
+            .tab-header {
+
+                &::before,
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 25px;
+                    top: 18px;
+                    width: 22px;
+                    height: 2px;
+                    margin-top: -2px;
+                    background-color: #ffb74d;
+                }
+
+                &:before {
+                    transform: rotate(-90deg);
+                    transition: transform 0.35s;
+                }
+            }
+
+            .verticalAlignment {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: left;
+            }
+
+            &[dropped='true'] {
+                .tab-header {
+                    &:before {
+                        transform: rotate(0deg);
+                    }
+                }
+            }
+
+            &[dropped='false'] {
+                .tab-header {
+                    &:before {
+                        transform: rotate(-90deg);
+                    }
+                }
             }
         }
     }

@@ -25,14 +25,6 @@ function HomeIcon(props) {
   *@so this has to dictate boundaries of container 
 */
 const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  relativePosition:{
-  },
   icon: {
     margin: theme.spacing.unit - 10,
   },
@@ -45,13 +37,13 @@ const styles = theme => ({
 });
 
 
-
-const MainNavList = (props) => (
-  <div>
+const MainNavList = (props) => {
+  const { asMobile } = props;
+  return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} dropdownmenuanchor='yes'>
+      <li className={'menuItem'} >
         <NavLink to="/"   exact={true}>
-          <div className={props.classes.root} >
+          <div className='verticalAlignment' >
             <HomeIcon  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
               News
@@ -59,9 +51,26 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropdownmenuanchor='yes'>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+        <DropDownMenu 
+          onMouseEnter={asMobile?false:true} 
+          collapsebleAccordion={asMobile?true:false}
+          multipleOpen={false}
+          animation={asMobile?true:false} >
+          <div className='verticalAlignment'>
+            <HomeIcon  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+             Dropdown mobile 2
+            </Typography>
+          </div>
+          <div>
+            <DropdownContent/>
+          </div>
+        </DropDownMenu>
+      </li>
+      <li className={'menuItem'} >
         <NavLink to="/admin/cost-models/">
-          <div className={props.classes.root} >
+          <div className='verticalAlignment' >
             <HomeIcon  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
                News
@@ -69,9 +78,9 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropdownmenuanchor='yes'>
+      <li className={'menuItem'}>
         <NavLink to="/admin/edit/76">
-          <div className={props.classes.root} >
+          <div className='verticalAlignment' >
             <HomeIcon  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              News
@@ -79,23 +88,25 @@ const MainNavList = (props) => (
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropdownmenuanchor='yes'>
-        <div>
-          <DropDownMenu>
-            <div className={props.classes.root}>
-              <HomeIcon  color="secondary" />
-              <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+        <DropDownMenu 
+          onMouseEnter={asMobile?false:true} 
+          collapsebleAccordion={asMobile?true:false}
+          multipleOpen={false}
+          animation={asMobile?true:false} >
+          <div className='verticalAlignment'>
+            <HomeIcon  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown
-              </Typography>
-            </div>
-            <div>
-              <DropdownContent/>
-            </div>
-          </DropDownMenu>
-        </div>
+            </Typography>
+          </div>
+          <div>
+            <DropdownContent/>
+          </div>
+        </DropDownMenu>
       </li>
     </ul>
   </div>
-);
+  );};
 
 export default withStyles(styles)(MainNavList);

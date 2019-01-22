@@ -12,6 +12,7 @@ class DropDownMenu extends React.Component {
   state = {
     anchorEl: null,
     showDropDownMenu: false,
+    previousOpen:null
   };
   anchorEl = React.createRef();
 
@@ -22,21 +23,12 @@ class DropDownMenu extends React.Component {
   */
   componentDidMount(){
     this.DropDownMenuEl = ReactDOM.findDOMNode(this);
-    /*const el = ReactDOM.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     el.closest('[dropdownmenuanchor=yes]') ?
       el.closest('[dropdownmenuanchor=yes]')
         .style.position = 'relative':
-      null;*/
+      null;
   }
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-    event.currentTarget.
-      closest('[dropdownmenuanchor=yes]')
-      .setAttribute('dropdownmenuanchor', 'no');
-    console.log('gagagegtegter');
-    console.log('current', event.currentTarget.closest('[dropdownmenuanchor=yes]'));
-  };
 
   showDropDown = () => {
     if(this.props.onMouseEnter) this.setState({ showDropDownMenu: true });
@@ -47,19 +39,8 @@ class DropDownMenu extends React.Component {
   };
 
   toggleMenuOpen = (showDropDownMenuState) => {
-    console.log('is toggeling ....!');
+    console.log('is toggling');
     this.setState({ showDropDownMenu: !showDropDownMenuState });
-
-    const active = this.anchorEl.current.closest('[dropped]');
-    if(active) active.setAttribute('dropped',false);
-
-    console.log('this',this);
-    console.log('this.DropDownMenuEl', this.DropDownMenuEl);
-
-    const parentState = this.anchorEl.current.closest('[dropped=false]');
-    if(parentState) parentState.setAttribute('dropped',!showDropDownMenuState);
-
-    console.log('parentState',parentState.closest('ul'));
   }
 
   handleClose = (event) => {
@@ -85,9 +66,6 @@ class DropDownMenu extends React.Component {
       animation
     } = this.props;
     const { showDropDownMenu } = this.state;
-
-
-    console.log('DropDownMenu', this.props);
     return (
         
       <div 
@@ -95,7 +73,7 @@ class DropDownMenu extends React.Component {
         onMouseEnter={this.showDropDown}
         onMouseLeave={this.hideDropDown}
       >
-        {/*show ClickAwayListener only when manu is open*/}
+        {/*show ClickAwayListener only when menu is not multipleOpen so close the last one*/}
         {!multipleOpen?
           <ClickAwayListener onClickAway={ this.handleClose }>
             <div></div>
@@ -103,17 +81,17 @@ class DropDownMenu extends React.Component {
         }
         {/*show ClickAwayListener only when manu is open*/}
         <div>
-          { /*<div style={{
-                    position:'block',
-                    color:'black',
-                    transform: placement==='left'?'translate(-100%)':'translate(0)'
-                  }}>
-                   
-                  </div>*/}
           {React.Children.map(children, (child, i) => {
 
-            /* first child is alway a trigger for mobile Click*/
-            if (i == 0)return <div onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}> {child}</div>;
+            /* first child is alway a trigger for mobile Click
+            all clicks needs to be set to this element 
+            */
+          
+            if (i == 0)return <div 
+              className='tab-header'
+              onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}>
+              {child}
+            </div>;
           
             /* second child is DropDownMenu Content 
             render element cause <Collapse /> will look after to show it or not

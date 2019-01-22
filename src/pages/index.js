@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import events from '../utils/events';
 import ModalCustom from '../customized-vendors/modalVendor';
-import MobileNavList from './pagePartials/MobileNavList/MobileNavList';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -24,8 +23,6 @@ const home = () => {
       </ModalCustom>
       <Button variant="contained" color="primary" onClick={()=>{emit('OPEN_MODAL');}} >open Modals</Button>
 
-
-      <MobileNavList />
     </div>
   );
 
