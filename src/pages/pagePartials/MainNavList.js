@@ -69,13 +69,13 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
+          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
             <AlarmOn  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown mobile 2
@@ -86,13 +86,13 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
+          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
             <PetsRounded  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown 3
@@ -123,13 +123,13 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
+          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
             <EjectSharp  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown
