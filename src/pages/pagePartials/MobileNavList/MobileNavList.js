@@ -22,94 +22,49 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
-
-/*const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'left',
-  },
-  icon: {
-    margin: theme.spacing.unit - 10,
-  },
-  robotoLight:{
-    fontWeight:theme.typography.fontWeightLight,
-  },
-  paper: {
-    marginRight: theme.spacing.unit * 2,
-  },
-});*/
-
-
-
+//HOC component for utilizing Deskotop Nav for mobile;
 const MobileNavList = (BaseComponent) => {
 
   return class SimpleState extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { 
+      /*this.state = { 
         value: props.side,
-        previous:{
-          element:null,
-          open:null,
-        }, 
+        previous:null,
         currentIsOpen:false, 
-      };
+      };*/
       this.updateState = this.updateState.bind(this);
     }
-    updateState(event) {
+    updateCrossMinusIcon(event) {
       let current = event.target.closest('li');
       let previous = this.state.previousOpen;
 
-      console.log('previousOpen',previous);
+      if(previous && previous!==current){
+        previous.setAttribute('dropped',false);
+        current.setAttribute('dropped',true);
+        //flip the state 
+        this.setState({currentIsOpen:true});
+        //constatly feed previous;
+        this.setState({previousOpen:current});
+        return;
+      }
     
-
       this.setState(
         (state)=>{
           return {
             currentIsOpen:!state.currentIsOpen
-          };},()=>{
-          console.log('.........this.state.currentIsOpen..',this.state.currentIsOpen);
+          };},//state callback
+        ()=>{
           current.setAttribute('dropped',this.state.currentIsOpen);
         });
 
-
-      /* current.setAttribute('dropped',true);
-      if(this.state.previousOpen===current){
-        console.log('same');
-        current.setAttribute('dropped',true);
-      }*/
-
-      console.log('current', current);
-
-
-      //current becomes previous;
-      if(previous!==current&&previous!==null){
-        console.log('//////////set////////////');
-       
-        if(previous)previous.setAttribute('dropped',false);
-        current.setAttribute('dropped',false);
-      }
-
-
+      //constatly feed previous;
       this.setState({previousOpen:current});
 
-       
-      /*this.setState(()=>{
-        return{ 
-          previousOpen:current
-        };
-      },()=>{
-        console.log(this.state.previousOpen);
-      });*/
-
-      /*const flip = this.state.value === "dark" ? "light" : "dark";
-      this.setState({ value: flip });*/
     }
+
     render() {
-      console.log('this.props', this.props.children);
-      return <BaseComponent asMobile={true} callback={this.updateState}/>;
+      return <BaseComponent asMobile={true} callback={this.updateCrossMinusIcon}/>;
     }
   };
 
