@@ -9,6 +9,24 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import DropdownContent from '../../components/dropDownContent/contentRandom';
+
+
+/*
+  *@List of icons can be found there they need to capitalized for svg use
+  *@https://material.io/tools/icons/?style=baseline
+  *@instruction what to capitalize
+  *@https://www.npmjs.com/package/@material-ui/icons
+  *@ icons can be outlined , two-tone , rounded and sharp
+*/
+
+//icons
+import Accessibility from '@material-ui/icons/Accessibility';
+import AlarmOn from '@material-ui/icons/AlarmOn';
+import PetsRounded from '@material-ui/icons/PetsRounded';
+import CameraEnhanceTwoTone from '@material-ui/icons/CameraEnhanceTwoTone';
+import FaceOutlined from '@material-ui/icons/FaceOutlined';
+import EjectSharp from '@material-ui/icons/EjectSharp';
+
 import './mainNavList.scss';
 
 
@@ -38,13 +56,13 @@ const styles = theme => ({
 
 
 const MainNavList = (props) => {
-  const { asMobile } = props;
+  const { asMobile, multipleOpenPass }= props;
   return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
       <li className={'menuItem'} >
         <NavLink to="/"   exact={true}>
           <div className='verticalAlignment' >
-            <HomeIcon  color="secondary" />
+            <Accessibility  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
               News
             </Typography>
@@ -55,12 +73,29 @@ const MainNavList = (props) => {
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
-          multipleOpen={false}
+          multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
           <div className='verticalAlignment'>
-            <HomeIcon  color="secondary" />
+            <AlarmOn  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown mobile 2
+            </Typography>
+          </div>
+          <div>
+            <DropdownContent/>
+          </div>
+        </DropDownMenu>
+      </li>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+        <DropDownMenu 
+          onMouseEnter={asMobile?false:true} 
+          collapsebleAccordion={asMobile?true:false}
+          multipleOpen={multipleOpenPass?multipleOpenPass:false}
+          animation={asMobile?true:false} >
+          <div className='verticalAlignment'>
+            <PetsRounded  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+             Dropdown 3
             </Typography>
           </div>
           <div>
@@ -71,7 +106,7 @@ const MainNavList = (props) => {
       <li className={'menuItem'} >
         <NavLink to="/admin/cost-models/">
           <div className='verticalAlignment' >
-            <HomeIcon  color="secondary" />
+            <CameraEnhanceTwoTone  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
                News
             </Typography>
@@ -81,7 +116,7 @@ const MainNavList = (props) => {
       <li className={'menuItem'}>
         <NavLink to="/admin/edit/76">
           <div className='verticalAlignment' >
-            <HomeIcon  color="secondary" />
+            <FaceOutlined  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              News
             </Typography>
@@ -92,10 +127,10 @@ const MainNavList = (props) => {
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
-          multipleOpen={false}
+          multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
           <div className='verticalAlignment'>
-            <HomeIcon  color="secondary" />
+            <EjectSharp  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown
             </Typography>

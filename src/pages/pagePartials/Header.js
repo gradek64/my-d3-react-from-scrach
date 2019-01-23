@@ -200,7 +200,7 @@ class PrimarySearchAppBar extends React.Component {
                   </IconButton>
                 </div>
                 <div>
-                  <MobileNavList />
+                  <MobileNavList multipleOpenPass={true}/>
                 </div>
               </DropDownMenu>
               <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer" 
@@ -304,8 +304,8 @@ class PrimarySearchAppBar extends React.Component {
         </AppBar>
         {renderMenu}
         {renderMobileMenu}
-        {}
-        {this.state.mobileMenuOpen?<MobileNavList style={{position:'fixed'}}/>:null}
+        {/*setting for acording which is dropdownMenu prop set here*/}
+        {this.state.mobileMenuOpen?<MobileNavList multipleOpenPass={false} />:null}
       </div>
     );
   }

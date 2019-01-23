@@ -9,46 +9,47 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import DropdownContent from '../../../components/dropDownContent/contentRandom';
-
-import './mobileNavList.scss';
 //desktop NavList
 import DesktopNavList from '../MainNavList';
 
-
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
-//HOC component for utilizing Deskotop Nav for mobile;
+import './mobileNavList.scss';
+//HOC component for utilizing Desktop Nav for mobile;
 const MobileNavList = (BaseComponent) => {
 
   return class SimpleState extends React.Component {
     constructor(props) {
       super(props);
-      /*this.state = { 
+      this.state = { 
         value: props.side,
-        previous:null,
+        previuosOpen:null,
+        previuosOpenState:false,
         currentIsOpen:false, 
-      };*/
-      this.updateState = this.updateState.bind(this);
+      };
+      this.updateCrossMinusIcon = this.updateCrossMinusIcon.bind(this);
     }
     updateCrossMinusIcon(event) {
+      const { multipleOpenPass } = this.props;
       let current = event.target.closest('li');
       let previous = this.state.previousOpen;
 
-      if(previous && previous!==current){
+      //U dont want below functionility for multiple tabs open
+      if(!multipleOpenPass && previous && previous!==current){
         previous.setAttribute('dropped',false);
         current.setAttribute('dropped',true);
         //flip the state 
         this.setState({currentIsOpen:true});
-        //constatly feed previous;
+        //constanly feed previous;
         this.setState({previousOpen:current});
         return;
       }
-    
+
+      if(multipleOpenPass && previous && previous!==current){
+        //read HTML value for every <li> clicked after previuos is set;
+        current.getAttribute('dropped')==='true'?
+          this.setState({currentIsOpen:true}):
+          this.setState({currentIsOpen:false});
+      }
+      
       this.setState(
         (state)=>{
           return {
@@ -58,13 +59,17 @@ const MobileNavList = (BaseComponent) => {
           current.setAttribute('dropped',this.state.currentIsOpen);
         });
 
-      //constatly feed previous;
+      //constanly feed previous;
       this.setState({previousOpen:current});
 
     }
 
     render() {
-      return <BaseComponent asMobile={true} callback={this.updateCrossMinusIcon}/>;
+      return <BaseComponent 
+        asMobile={true} 
+        callback={this.updateCrossMinusIcon} 
+        multipleOpenPass={this.props.multipleOpenPass}
+      />;
     }
   };
 
