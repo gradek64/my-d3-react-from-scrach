@@ -98,39 +98,34 @@ class Login extends React.Component {
    
 
     return (
-      <div>
-        <div>
-          redirectToReferrer:: {redirectToReferrer.toString()}
+      <CardCustom  /*maxWidth={350}*/ center >
+        <div style={this.customAligment()}>
+          <TabsCustom 
+            value={0} 
+            tabs={[
+              {label:'Logins', href:'login'},
+              {label:'Register', href:'register'},
+              {label:'Social Media Login', href:'social_media_login'},
+            ]} 
+            style={{backgroundColor:'pink'}}
+            currentTabCallback={this.currentTabCallback}
+          >
+            {/*tabs children below*/}
+            {<div style={{marginBottom:'70px'}}>
+              <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
+            </div>}
+            {/*tabs children below*/}
+            {<div>
+              <RegisterForm submitCallback={this.register} />
+            </div>}
+            {/*tabs children below*/}
+            {<div>
+              <div onClick={ this.props.logUserByGoogle } >log in</div>
+              <div onClick={ this.logOutByGoogle } >log out</div>
+            </div>}
+          </TabsCustom>
         </div>
-        <CardCustom  /*maxWidth={350}*/ center >
-          <div style={this.customAligment()}>
-            <TabsCustom 
-              value={0} 
-              tabs={[
-                {label:'Logins', href:'login'},
-                {label:'Register', href:'register'},
-                {label:'Social Media Login', href:'social_media_login'},
-              ]} 
-              style={{backgroundColor:'pink'}}
-              currentTabCallback={this.currentTabCallback}
-            >
-              {/*tabs children below*/}
-              {<div style={{marginBottom:'70px'}}>
-                <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
-              </div>}
-              {/*tabs children below*/}
-              {<div>
-                <RegisterForm submitCallback={this.register} />
-              </div>}
-              {/*tabs children below*/}
-              {<div>
-                <div onClick={ this.props.loginByExternal } >log in</div>
-                <div onClick={ this.logOutByGoogle } >log out</div>
-              </div>}
-            </TabsCustom>
-          </div>
-        </CardCustom>
-      </div>
+      </CardCustom>
     );
   }
 }
