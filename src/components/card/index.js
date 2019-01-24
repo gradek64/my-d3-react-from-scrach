@@ -10,13 +10,12 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   card: {
     minWidth: 275,
-   
   },
   position:{
-     display:'flex',
-     justifyContent:'center',
-     minHeight:'70vh',
-     alignItems:'center',
+    display:'flex',
+    justifyContent:'center',
+    minHeight:'70vh',
+    alignItems:'center',
   },
   bullet: {
     display: 'inline-block',
@@ -37,12 +36,12 @@ function SimpleCard(props) {
 
   return (
     <div className={props.center?classes.position:''}>
-      <Card className={classes.card}  style={{maxWidth:props.maxWidth}}>
+      <Card className={classes.card}  /*style={{maxWidth:props.maxWidth}}*/ >
         <CardContent>
-         {props.children}
+          {props.children}
         </CardContent>
       </Card>
-  </div>
+    </div>
   );
 }
 

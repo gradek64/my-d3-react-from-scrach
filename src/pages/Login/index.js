@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fakeAuth } from '../../services/fakeAuth';
 import Typography from '@material-ui/core/Typography';
-import { logUser } from '../../reduxFiles/actions/userAuth_actions';
+import { logUser, logUserByGoogle } from '../../reduxFiles/actions/userAuth_actions';
 import LoginForm from './LoginForm/';
 import CardCustom from '../../components/card';
 
@@ -73,43 +73,58 @@ class Login extends React.Component {
     }
   }
 
+  customAligment = () => {
+    return {
+      display:'flex',
+      flexDirection:'column',
+      minHeight:'300px',
+      justifyContent:'space-between'
+    };
+  }
+
+
   render() {
     let { from } = this.props.location.state || { from: { pathname: '/' } };
     let { redirectToReferrer, authenticationCallback } = this.state;
     if (redirectToReferrer) return <Redirect to={from} />;
 
+    console.log('tatata', this.props);
+
     return (
-      <CardCustom  maxWidth={350} center>
-        <TabsCustom 
-          value={0} 
-          tabs={[
-            {label:'Login', href:'login'},
-            {label:'Register', href:'register'},
-          ]} 
-          style={{backgroundColor:'white'}}
-          currentTabCallback={this.currentTabCallback}
-        >
-          {/*tabs children below*/}
-          {<div style={{flexDirection:'column',display:'flex'}}>
-            <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
-          </div>}
-          {/*tabs children below*/}
-          {<div style={{flexDirection:'column',display:'flex'}}>
-            <RegisterForm submitCallback={this.register} />
-          </div>}
-        </TabsCustom>
+      <CardCustom  /*maxWidth={350}*/ center >
+        <div style={this.customAligment()}>
+          <TabsCustom 
+            value={0} 
+            tabs={[
+              {label:'Logins', href:'login'},
+              {label:'Register', href:'register'},
+              {label:'Social Media Login', href:'social_media_login'},
+            ]} 
+            style={{backgroundColor:'pink'}}
+            currentTabCallback={this.currentTabCallback}
+          >
+            {/*tabs children below*/}
+            {<div style={{marginBottom:'70px'}}>
+              <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
+            </div>}
+            {/*tabs children below*/}
+            {<div>
+              <RegisterForm submitCallback={this.register} />
+            </div>}
+            {/*tabs children below*/}
+            {<div>
+              <div onClick={ this.props.loginByExternal } >this is social media tab</div>
+            </div>}
+          </TabsCustom>
+        </div>
       </CardCustom>
     );
   }
 }
 
 //export default Login;
-const mapStateToProps = (state) => {
-
-  console.log('store', state);
-  return {
-    expenses: state.expenses
-  };
-};
+const mapDispathToProps = (dispatch) => ({
+  loginByExternal: dispatch(logUserByGoogle())
+});
 //export default UserLoginDisplay;
-export default connect(mapStateToProps)(Login);
+export default connect(undefined,mapDispathToProps)(Login);

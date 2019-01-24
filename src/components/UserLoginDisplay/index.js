@@ -31,6 +31,7 @@ class UserLoginDisplay extends React.Component {
   loggOut = () =>{
     fakeAuth.signout(() => {
       //remove cookie or local storage in store;
+
       this.reduxdispatch(logOutUser());
       //U need to redirect either for index or any authorized path;
       history.push('/');
@@ -41,7 +42,7 @@ class UserLoginDisplay extends React.Component {
     const { userNameRedux } = this.props;
 
     return (
-      <div className='loginDisplay'>
+      <div className='loginDisplay' dropdownmenuanchor='yes'>
         <DropDownMenu onMouseEnter={false} placement='right'>
           <div className='class'>
             <IconButton color="inherit">

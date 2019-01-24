@@ -1,15 +1,15 @@
 .login-form {
+  margin-top: 10px;
+
+  .row {
+    margin-bottom: 5px;
+  }
+
+  .authentication {
+    margin: 10px 0 10px 0;
+  }
+
+  button.submit {
     margin-top: 10px;
-
-    .row {
-        margin-bottom: 5px;
-    }
-
-    .authentication {
-        margin: 10px 0 10px 0;
-    }
-
-    button.submit {
-        margin-top: 10px;
-    }
+  }
 }

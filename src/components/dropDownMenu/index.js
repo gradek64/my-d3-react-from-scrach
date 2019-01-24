@@ -67,56 +67,60 @@ class DropDownMenu extends React.Component {
     } = this.props;
     const { showDropDownMenu } = this.state;
     return (
-        
-      <div 
-        ref={this.anchorEl}
-        onMouseEnter={this.showDropDown}
-        onMouseLeave={this.hideDropDown}
-      >
-        {/*show ClickAwayListener only when menu is not multipleOpen so close the last one*/}
-        {!multipleOpen?
-          <ClickAwayListener onClickAway={ this.handleClose }>
-            <div></div>
-          </ClickAwayListener>:null
-        }
-        {/*show ClickAwayListener only when manu is open*/}
-        <div>
-          {React.Children.map(children, (child, i) => {
+      <ClickAwayListener onClickAway={ this.handleClose }>
+
+        <div 
+          
+          onMouseEnter={this.showDropDown}
+          onMouseLeave={this.hideDropDown}
+        >
+          {/*show ClickAwayListener only when menu is not multipleOpen so close the last one*/}
+          {multipleOpen?
+            <ClickAwayListener onClickAway={ this.handleClose }>
+              <div></div>
+            </ClickAwayListener>:null
+          }
+          {/*show ClickAwayListener only when manu is open*/}
+          <div onClick={this.handleClose}>
+            {React.Children.map(children, (child, i) => {
 
             /* first child is alway a trigger for mobile Click
             all clicks needs to be set to this element 
             */
           
-            if (i == 0)return <div 
-              className='tab-header'
-              onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}>
-              {child}
-            </div>;
+              if (i == 0)return <div 
+                ref={this.anchorEl}
+                className='tab-header'
+                onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}>
+                {child}
+              </div>;
           
-            /* second child is DropDownMenu Content 
+              /* second child is DropDownMenu Content 
             render element cause <Collapse /> will look after to show it or not
             */
-            if(i==1 /*&& showDropDownMenu*/) {
-              return (
-                <div style={{
-                  position:collapsebleAccordion?'block':'absolute',
-                  left:0,
-                  color:'black',
-                  transform: placement==='left'?'translate(-100%)':'translate(0)'
-                }}>
-                  {animation?
-                    <Collapse in={showDropDownMenu} >
-                      {child}
-                    </Collapse>:null
-                  }
-                  {!animation && showDropDownMenu?child:null}
-                </div>);
-            }
-          })}
+              if(i==1 /*&& showDropDownMenu*/) {
+                return (
+                  <div style={{
+                    position:collapsebleAccordion?'block':'absolute',
+                    left:0,
+                    color:'black',
+                    zIndex:'100',
+                    transform: placement==='left'?'translate(-100%)':'translate(0)'
+                  }}
+                  >
+                    {animation?
+                      <Collapse in={showDropDownMenu} >
+                        {child}
+                      </Collapse>:null
+                    }
+                    {!animation && showDropDownMenu?child:null}
+                  </div>);
+              }
+            })}
+          </div>
         </div>
-        
-      </div>
-       
+      </ClickAwayListener>
+
     );
   }
 }

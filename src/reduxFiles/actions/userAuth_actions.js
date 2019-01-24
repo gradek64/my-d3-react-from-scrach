@@ -1,3 +1,4 @@
+import {firebase, googleAuthProvider } from '../../firebase/firebase';
 
 // Log in user
 export const logUser = (username
@@ -9,9 +10,9 @@ export const logUser = (username
 // Log out user no paylod needed;
 export const logOutUser = () => ({ type: 'LOG_OUT'});
 
-// EDIT_EXPENSE
-export const editExpense = (id, updates) => ({
-  type: 'EDIT_EXPENSE',
-  id,
-  updates
-});
+// autohoriztion by gmail google
+//this needs to return a function so it needs thunk middleware fore redux store
+export const logUserByGoogle = () => 
+  ()=>{
+    return firebase.auth().signInWithPopup(googleAuthProvider);
+  };

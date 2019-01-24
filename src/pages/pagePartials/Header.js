@@ -16,6 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
+import { history } from '../../routers/AppRouter';
 //change Menu color
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
@@ -110,6 +111,11 @@ class PrimarySearchAppBar extends React.Component {
       mobileMenuOpen:false,
       mobileMoreAnchorEl: null,
     };
+
+    //listen for routes changes; it takes (location, action) if needed
+    history.listen(() => {
+      this.setState({ mobileMenuOpen: false});
+    });
   }
   
 
@@ -187,8 +193,16 @@ class PrimarySearchAppBar extends React.Component {
         <AppBar position="static" className={classes.bgColor}>
 
           <Toolbar>
+            <div className={classes.sectionMobile}>
+              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer" 
+                onClick={this.handleMobileMenuOpen.bind(this,mobileMenuOpen)}>
+                <MenuIcon />
+              </IconButton>
+            </div>
             {/* dropdownmenuanchor='no' means position absolute start from the edge or the page*/}
-            <div className={classes.sectionMobile} dropdownmenuanchor='no'>
+            {/* dropDownMenu component should be used for mobile menu casuse have other r
+            dropdown inside that messes up Clickaway handler and anchor element */}
+            {/*<div className={classes.sectionMobile} dropdownmenuanchor='no'>
               <DropDownMenu 
                 onMouseEnter={false} 
                 collapsebleAccordion={false}
@@ -203,11 +217,9 @@ class PrimarySearchAppBar extends React.Component {
                   <MobileNavList multipleOpenPass={true}/>
                 </div>
               </DropDownMenu>
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer" 
-                onClick={this.handleMobileMenuOpen.bind(this,mobileMenuOpen)}>
-                <MenuIcon />
-              </IconButton>
-            </div>
+            </div>*/}
+              
+            
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Material-UI
             </Typography>

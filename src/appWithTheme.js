@@ -4,6 +4,7 @@ import configureStore from './reduxFiles/store';
 import AppRouter from './routers/AppRouter';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {purple, orange} from '@material-ui/core/colors';
+import {firebase} from './firebase/firebase';
 
 import './assets/scss/app.scss';
 
@@ -32,6 +33,16 @@ const theme = createMuiTheme({
     fontWeightSuperLight:200,
   }
 });
+
+//listen for the log in and out from social media;
+firebase.auth().onAuthStateChanged((user)=>{
+  if(user){
+    console.log('log in');
+  }else {
+    console.log('log out');
+  }
+});
+
 const ThemedApp = () => ( 
   <MuiThemeProvider theme={theme}> 
     <Provider store={store}>

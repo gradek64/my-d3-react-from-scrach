@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
+import { connect } from 'react-redux';
 import HomePage from '../pages';
 import Login from '../pages/Login/';
 import CostModel from '../pages/Admin/CostModels/';
@@ -17,19 +18,24 @@ import '../main.scss';
 export const history = createHistory();
 const {location} = history;
 
+// Listen to history changes.
+// You can unlisten by calling the constant (`unlisten()`).
+/*
+  history.listen((location, action) => {
 
-console.log('history',history);
+    console.log('routes changes,,,,,');
+    console.log('props........', this.props);
+    console.log(action, location.pathname, location.state);
+  });
+*/
 
 export const ProtectedRoutes = (props) => {
 
-  console.log('start route......');
 
   const { params, url} = props.match;
 
-  console.log('url',url);
   const allParams = Object.keys(params).length;
   const arr = Object.keys(params).map(i => params[i]);
-  const lastParam = arr[allParams-1];
 
   //*cost Models
   if(/admin\/cost-models\/?$/.test(url)){

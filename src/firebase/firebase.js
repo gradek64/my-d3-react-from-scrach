@@ -1,6 +1,7 @@
 
 var firebase = require('firebase/app');
 require('firebase/database');
+require('firebase/auth');
 
 // Initialize Firebase
 const config = {
@@ -15,8 +16,11 @@ firebase.initializeApp(config);
 
 // Get a reference to the database service
 const database = firebase.database();
+//authorization by google gmail account
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export {firebase, database as default};
+
+export {firebase, googleAuthProvider, database as default};
 
 
 /*

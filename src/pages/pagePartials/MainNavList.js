@@ -59,7 +59,7 @@ const MainNavList = (props) => {
   const { asMobile, multipleOpenPass }= props;
   return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
         <NavLink to="/"   exact={true}>
           <div className='verticalAlignment' >
             <Accessibility  color="secondary" />
@@ -69,13 +69,13 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
+          <div className='verticalAlignment'>
             <AlarmOn  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown mobile 2
@@ -86,13 +86,13 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
+          <div className='verticalAlignment'>
             <PetsRounded  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown 3
@@ -103,7 +103,7 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} >
+      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
         <NavLink to="/admin/cost-models/">
           <div className='verticalAlignment' >
             <CameraEnhanceTwoTone  color="secondary" />
@@ -113,7 +113,7 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'}>
+      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
         <NavLink to="/admin/edit/76">
           <div className='verticalAlignment' >
             <FaceOutlined  color="secondary" />
@@ -123,13 +123,13 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' >
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
           multipleOpen={multipleOpenPass?multipleOpenPass:false}
           animation={asMobile?true:false} >
-          <div className='verticalAlignment' onClick={(e)=>{props.callback(e);}}>
+          <div className='verticalAlignment'>
             <EjectSharp  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              Dropdown

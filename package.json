@@ -33,8 +33,10 @@
     "react-redux": "5.0.5",
     "react-router-dom": "4.1.2",
     "redux": "3.7.2",
+    "redux-thunk": "^2.3.0",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
+    "thunk": "0.0.1",
     "uni": "0.0.6",
     "validate": "4.5.1",
     "webpack": "3.1.0"
