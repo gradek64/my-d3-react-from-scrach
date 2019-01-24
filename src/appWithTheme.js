@@ -37,7 +37,7 @@ const theme = createMuiTheme({
 //listen for the log in and out from social media;
 firebase.auth().onAuthStateChanged((user)=>{
   if(user){
-    console.log('log in');
+    console.log('user logged in',user);
   }else {
     console.log('log out');
   }

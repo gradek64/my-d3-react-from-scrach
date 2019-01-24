@@ -11,6 +11,7 @@ export default (state = credentials, action) => {
   switch (action.type) {
 
   case 'LOG_IN':
+    console.log('LOG_IN', action.user);
     return {
       ...state,
       ...action.user

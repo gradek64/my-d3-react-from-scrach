@@ -59,7 +59,7 @@ const MainNavList = (props) => {
   const { asMobile, multipleOpenPass }= props;
   return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} onClick={(e)=>{props.callback?props.callback(e):null;}}>
         <NavLink to="/"   exact={true}>
           <div className='verticalAlignment' >
             <Accessibility  color="secondary" />
@@ -69,7 +69,7 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
@@ -86,7 +86,7 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
@@ -103,7 +103,7 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} onClick={(e)=>{props.callback?props.callback(e):null;}}>
         <NavLink to="/admin/cost-models/">
           <div className='verticalAlignment' >
             <CameraEnhanceTwoTone  color="secondary" />
@@ -123,7 +123,7 @@ const MainNavList = (props) => {
           </div>
         </NavLink>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback(e);}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}
@@ -143,5 +143,6 @@ const MainNavList = (props) => {
     </ul>
   </div>
   );};
+
 
 export default withStyles(styles)(MainNavList);

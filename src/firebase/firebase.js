@@ -19,7 +19,6 @@ const database = firebase.database();
 //authorization by google gmail account
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-
 export {firebase, googleAuthProvider, database as default};
 
 

@@ -16,3 +16,9 @@ export const logUserByGoogle = () =>
   ()=>{
     return firebase.auth().signInWithPopup(googleAuthProvider);
   };
+
+//this needs to return a function so it needs thunk middleware fore redux store
+export const logOutByGoogle = () => 
+  ()=>{
+    return firebase.auth().signOut();
+  };

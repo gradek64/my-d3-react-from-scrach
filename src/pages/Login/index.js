@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fakeAuth } from '../../services/fakeAuth';
 import Typography from '@material-ui/core/Typography';
-import { logUser, logUserByGoogle } from '../../reduxFiles/actions/userAuth_actions';
+import { logUser, logUserByGoogle, logOutByGoogle } from '../../reduxFiles/actions/userAuth_actions';
 import LoginForm from './LoginForm/';
 import CardCustom from '../../components/card';
 
@@ -20,7 +20,7 @@ class Login extends React.Component {
   /*username = React.createRef();
   password = React.createRef();*/
 
-  login = (form) => {
+  login = (form,authProvider='google') => {
     let expense = {
       username: 'this.state.description',
       amount: 122,
@@ -36,8 +36,9 @@ class Login extends React.Component {
       if(username){
         localStorage.setItem('usernameAuth',username);
         //update userdisplay name in navbar 
-        this.props.dispatch(logUser(username));
+        this.props.loginUser(username);
         this.setState({ redirectToReferrer: true });
+        console.log('here');
       }
       //not approved;
       else {
@@ -48,6 +49,10 @@ class Login extends React.Component {
       }
     });
   };
+
+  logOutByGoogle = () => {
+    this.props.logOutByGoogle();
+  }
 
   register = () => {
     //to be done;
@@ -86,45 +91,56 @@ class Login extends React.Component {
   render() {
     let { from } = this.props.location.state || { from: { pathname: '/' } };
     let { redirectToReferrer, authenticationCallback } = this.state;
+
+    console.log('from route', from );
     if (redirectToReferrer) return <Redirect to={from} />;
 
-    console.log('tatata', this.props);
+   
 
     return (
-      <CardCustom  /*maxWidth={350}*/ center >
-        <div style={this.customAligment()}>
-          <TabsCustom 
-            value={0} 
-            tabs={[
-              {label:'Logins', href:'login'},
-              {label:'Register', href:'register'},
-              {label:'Social Media Login', href:'social_media_login'},
-            ]} 
-            style={{backgroundColor:'pink'}}
-            currentTabCallback={this.currentTabCallback}
-          >
-            {/*tabs children below*/}
-            {<div style={{marginBottom:'70px'}}>
-              <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
-            </div>}
-            {/*tabs children below*/}
-            {<div>
-              <RegisterForm submitCallback={this.register} />
-            </div>}
-            {/*tabs children below*/}
-            {<div>
-              <div onClick={ this.props.loginByExternal } >this is social media tab</div>
-            </div>}
-          </TabsCustom>
+      <div>
+        <div>
+          redirectToReferrer:: {redirectToReferrer.toString()}
         </div>
-      </CardCustom>
+        <CardCustom  /*maxWidth={350}*/ center >
+          <div style={this.customAligment()}>
+            <TabsCustom 
+              value={0} 
+              tabs={[
+                {label:'Logins', href:'login'},
+                {label:'Register', href:'register'},
+                {label:'Social Media Login', href:'social_media_login'},
+              ]} 
+              style={{backgroundColor:'pink'}}
+              currentTabCallback={this.currentTabCallback}
+            >
+              {/*tabs children below*/}
+              {<div style={{marginBottom:'70px'}}>
+                <LoginForm submitCallback={this.login} authenticationCallback={authenticationCallback}/>
+              </div>}
+              {/*tabs children below*/}
+              {<div>
+                <RegisterForm submitCallback={this.register} />
+              </div>}
+              {/*tabs children below*/}
+              {<div>
+                <div onClick={ this.props.loginByExternal } >log in</div>
+                <div onClick={ this.logOutByGoogle } >log out</div>
+              </div>}
+            </TabsCustom>
+          </div>
+        </CardCustom>
+      </div>
     );
   }
 }
 
 //export default Login;
 const mapDispathToProps = (dispatch) => ({
-  loginByExternal: dispatch(logUserByGoogle())
+  //this needs double function since it is jsut assigment
+  loginUser: (username)=>dispatch(logUser(username)),
+  logUserByGoogle: ()=>dispatch(logUserByGoogle()),
+  logOutByGoogle: ()=>dispatch(logOutByGoogle())
 });
 //export default UserLoginDisplay;
 export default connect(undefined,mapDispathToProps)(Login);
