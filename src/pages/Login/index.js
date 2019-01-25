@@ -20,7 +20,7 @@ class Login extends React.Component {
   /*username = React.createRef();
   password = React.createRef();*/
 
-  login = (form,authProvider='google') => {
+  login = (form,authProvider='internal') => {
     let expense = {
       username: 'this.state.description',
       amount: 122,
@@ -29,7 +29,7 @@ class Login extends React.Component {
     };
     // this.props.dispatch(logUser(expense));
 
-    const authenticateResponse = fakeAuth.authenticate(form);
+    const authenticateResponse = fakeAuth.authenticate(form, authProvider);
     authenticateResponse.then((res)=>{
       const {username} = res.data;
       //is approved;
@@ -120,7 +120,7 @@ class Login extends React.Component {
             </div>}
             {/*tabs children below*/}
             {<div>
-              <div onClick={ this.props.logUserByGoogle } >log in</div>
+              <div onClick={ ()=>{this.login(undefined,'gmail'); }} >log in</div>
               <div onClick={ this.logOutByGoogle } >log out</div>
             </div>}
           </TabsCustom>
