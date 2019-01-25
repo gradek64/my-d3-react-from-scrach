@@ -1,4 +1,4 @@
-import {firebase, googleAuthProvider } from '../firebase/firebase';
+import {firebase, googleAuthProvider, facebookAuthProvider } from '../firebase/firebase';
 
 
 const AuthenticatedUser= {
@@ -38,6 +38,18 @@ const fakeAuth = {
     case 'gmail':
       return firebase.auth().signInWithPopup(googleAuthProvider).then((user)=>{
         const { displayName } = user.user;
+        return {
+          data: {
+            username:displayName,
+            byProvider}
+        };
+      });
+    case 'facebook':
+      return firebase.auth().signInWithPopup(facebookAuthProvider).then((user)=>{
+        const { displayName } = user.user;
+
+        console.log('facebook response',user);
+        return {data:{username:null}};
         return {
           data: {
             username:displayName,

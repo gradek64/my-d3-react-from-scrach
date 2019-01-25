@@ -122,7 +122,8 @@ class Login extends React.Component {
             </div>}
             {/*tabs children below*/}
             {<div>
-              <div onClick={ ()=>{this.login({empty:'empty'},'gmail'); }} >log in</div>
+              <div onClick={ ()=>{this.login({empty:'empty'},'gmail'); }} >log in google</div>
+              <div onClick={ ()=>{this.login({empty:'empty'},'facebook');} } >log in facebook</div>
               <div onClick={ this.logOutByGoogle } >log out</div>
             </div>}
           </TabsCustom>
