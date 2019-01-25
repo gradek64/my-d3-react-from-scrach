@@ -31,12 +31,14 @@ class Login extends React.Component {
 
     const authenticateResponse = fakeAuth.authenticate(form, authProvider);
     authenticateResponse.then((res)=>{
-      const {username} = res.data;
+      const {username,byProvider} = res.data;
       //is approved;
       if(username){
         localStorage.setItem('usernameAuth',username);
         //update userdisplay name in navbar 
-        this.props.loginUser(username);
+        console.log(typeof username);
+        console.log('byProvider',byProvider);
+        this.props.loginUser(username, byProvider);
         this.setState({ redirectToReferrer: true });
         console.log('here');
       }
@@ -120,7 +122,7 @@ class Login extends React.Component {
             </div>}
             {/*tabs children below*/}
             {<div>
-              <div onClick={ ()=>{this.login(undefined,'gmail'); }} >log in</div>
+              <div onClick={ ()=>{this.login({empty:'empty'},'gmail'); }} >log in</div>
               <div onClick={ this.logOutByGoogle } >log out</div>
             </div>}
           </TabsCustom>
@@ -133,7 +135,7 @@ class Login extends React.Component {
 //export default Login;
 const mapDispathToProps = (dispatch) => ({
   //this needs double function since it is jsut assigment
-  loginUser: (username)=>dispatch(logUser(username)),
+  loginUser: (username, byProvider)=>dispatch(logUser(username, byProvider)),
   logUserByGoogle: ()=>dispatch(logUserByGoogle()),
   logOutByGoogle: ()=>dispatch(logOutByGoogle())
 });

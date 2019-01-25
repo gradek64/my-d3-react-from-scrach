@@ -19,7 +19,11 @@ const fakeAuth = {
 
           this.isAuthenticated = true;
           resolve({
-            data:AuthenticatedUser,
+            data:{
+              username,
+              password,
+              byProvider
+            },
           });
 
         }
@@ -35,7 +39,9 @@ const fakeAuth = {
       return firebase.auth().signInWithPopup(googleAuthProvider).then((user)=>{
         const { displayName } = user.user;
         return {
-          data: {username:displayName}
+          data: {
+            username:displayName,
+            byProvider}
         };
       });
 
@@ -45,9 +51,23 @@ const fakeAuth = {
 
     
   },
-  signout(cb) {
+  signout(fromProvider='internal') {
     this.isAuthenticated = false;
-    setTimeout(cb, 100);
+
+    let loggedOut;
+    switch(fromProvider) {
+    case 'internal':
+      loggedOut = true;
+      return loggedOut;  
+    case 'gmail':
+      console.log('loggedOut from gmail');
+      return firebase.auth().signOut();
+    default:
+    }
+
+    /* setTimeout(()=>{
+      return loggedOut;
+    },5000);*/
   }
 };
 

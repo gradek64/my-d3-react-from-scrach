@@ -25,17 +25,20 @@ class UserLoginDisplay extends React.Component {
   constructor(props){
     super(props);
     const { dispatch } = this.props;
-    this.reduxdispatch = dispatch;
+    this.reduxDispatch = dispatch;
   }
 
-  loggOut = () =>{
-    fakeAuth.signout(() => {
-      //remove cookie or local storage in store;
+  loggOut = async () => {
+    const loggedOut = await fakeAuth.signout(this.props.byProvider);
+    console.log('waited');
+    console.log(loggedOut);
 
-      this.reduxdispatch(logOutUser());
-      //U need to redirect either for index or any authorized path;
-      history.push('/');
-    });
+    //() => {
+    //remove cookie or local storage in store;
+
+    this.reduxDispatch(logOutUser());
+    //U need to redirect either for index or any authorized path;
+    history.push('/');
   }
    
   render(){
@@ -83,6 +86,7 @@ class UserLoginDisplay extends React.Component {
 const mapStateToProps = (state) => {
   return {
     userNameRedux: state.user.username,
+    byProvider: state.user.byProvider,
   };
 };
 //export default UserLoginDisplay;

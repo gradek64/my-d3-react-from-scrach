@@ -5,6 +5,7 @@ const localstoredUserName = localStorage.getItem('usernameAuth');
 //const localstoredUserName = document.cookie = "usernameAuth=John Doe";
 const credentials = {
   username:localstoredUserName?localstoredUserName:undefined,
+  autohorizedBy:'internal'
 };
 
 export default (state = credentials, action) => {
