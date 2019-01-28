@@ -9,13 +9,12 @@ import CreateCostModel from './CreateCostModelForm/createCostModelForm';
 import UpdateCostModel from './UpdateCostModelForm/UpdateCostModelForm';
 import DropDownSelect from '../../../components/selectDropdown';
 import events from '../../../utils/events';
-
-
 import './costModelPage.scss';
 
 class CostModel extends React.Component {
 state = {
   data:null,
+  rowsPerPageSent:5,
   selectedCostPot:null,
   selectedCostPotID:null,
   selectDropdownData:null,
@@ -49,37 +48,38 @@ async componentDidMount(){
       }
     ]});
 }
+  /*
+    *@onDataChanged is curried to DataTableWithPagination and get back its method
+    *@updatedData with page and rowsPerPage
+  */
 
-  assigned = () =>{
-
-  }
-
-  onDataChanged = (cb, page, rowsPerPage) => {
-    this.assigned = cb;
+  onDataChanged = (cbUpdateData, cbPageUpdatePagination, page, rowsPerPage) => {
+    //this.assigned gets callback from DataTableWithPagination
+    this.assigned = cbUpdateData;
+    this.paginationUpdate = cbPageUpdatePagination;
     this.page = page;
     this.rowsPerPage = rowsPerPage;
+    this.lastPage = Math.floor(this.state.data.length/rowsPerPage);
   }
 
   overrideDataBase = async (data) => {
     await costModelService.override(data);
   }
   onDelete = async (costPotID) => {
-
   //find array index from costPots array;
-  /*const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
-  //update state
-  this.setState((prevState) => ({
-    data: [...prevState.data.slice(0,arrayIndex), ...prevState.data.slice(arrayIndex+1)]
-  }),()=>{
+    const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
+    //update state
+    this.setState((prevState) => ({
+      data: [...prevState.data.slice(0,arrayIndex), ...prevState.data.slice(arrayIndex+1)]
+    }),()=>{
     //update database with override
-    this.overrideDataBase(this.state.data);
-  });*/
-  //close modal
-    this.assigned( this.page, this.rowsPerPage);
-
-    console.log('onDataChanged',this.assigned);
+      this.overrideDataBase(this.state.data);
+      //update table pagination;
+      this.assigned( this.page, this.rowsPerPage);
+    });
+    //close modal
     events.emit('CLOSE_MODAL');
-  
+
   }
 
 onCreate = (item) => {
@@ -88,12 +88,15 @@ onCreate = (item) => {
   //callback from state
     ,()=>{
       this.overrideDataBase(this.state.data);
+      //jump to the last page in pagination;
+      this.assigned( this.lastPage, this.rowsPerPage);
+      //update pagination as last page;
+      this.paginationUpdate( null, this.lastPage );
+      //close Modal
+      events.emit('CLOSE_MODAL');
     }); 
-  //close Modal
-  events.emit('CLOSE_MODAL');
-  //notify data changed for table;
-  this.onDataChanged();
 }
+
 updateDatabaseOnUpdate = async (id,item) => {
   await costModelService.update(id,item);
 }
@@ -113,7 +116,7 @@ onUpdate = (costPotID,{name}) => {
       data:[...updateModelArr]
     };
   },()=>{
-    const dataArrIndex = this.state.data.findIndex((el)=>el.id===costPotID);
+    //const dataArrIndex = this.state.data.findIndex((el)=>el.id===costPotID);
     this.assigned( this.page, this.rowsPerPage);
     //close modal
     events.emit('CLOSE_MODAL');
@@ -121,8 +124,6 @@ onUpdate = (costPotID,{name}) => {
   
   
 }
-
-
 
 getCostPotName = ({name, costPotId}) => {
   this.setState(() => ({ 

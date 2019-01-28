@@ -26,7 +26,7 @@ const styles = theme => ({
 
 function SimpleTable(props) {
   const { classes, data , pageTableOn } = props;
-  console.log('funciton set', props.updateData);
+
   return (
     <Paper className={classes.root}>
       {/* table with no pagination needs below
@@ -37,7 +37,7 @@ function SimpleTable(props) {
         initialData={data} 
         classes={classes}
         colSpan={3}
-        updataSentData={props.updateData}
+        updataSentData={props.updateData}//this method is curried
         count={data.length?data.length:0}
         rowsPerPage={5}
         startPage={0}

@@ -25,6 +25,7 @@ class TablePaginationActions extends React.Component {
     page:this.props.page
   }
 
+
   handleFirstPageButtonClick = event => {
     this.setState({page:0});
     this.props.onChangePage(event, 0);
@@ -61,6 +62,8 @@ class TablePaginationActions extends React.Component {
 
   render() {
     const { classes, count, rowsPerPage, theme } = this.props;
+
+    console.log('this.props set', this.props);
     return (
       <div className={classes.root}>
         <IconButton

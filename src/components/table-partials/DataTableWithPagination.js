@@ -8,8 +8,6 @@ import FileManagementTableData from './dataStructure/fileManagementTableData';
 class DataTableWithPagination extends React.Component {
         state = {
           data:this.props.initialData,
-          prevData:this.props.initialData,
-          dataChanged:false,
           page:this.props.startPage,
           rowsPerPage:this.props.rowsPerPage,
         }
@@ -17,7 +15,7 @@ class DataTableWithPagination extends React.Component {
         handleChangePage = (event, page) => {
           this.setState({page});
           this.updatedData(page,this.state.rowsPerPage);
-          this.props.updataSentData( this.updatedData, page,this.state.rowsPerPage );
+          this.props.updataSentData( this.updatedData,this.handleChangePage,page,this.state.rowsPerPage );
         };
 
         handleChangeRowsPerPage = event => {
@@ -27,55 +25,28 @@ class DataTableWithPagination extends React.Component {
         };
 
         updatedData = (page,rows) => {
-          console.log('executed', page, rows);
           let updatedPage = page ? page : this.props.startPage;
           let updatedRows = rows ? rows : this.props.rowsPerPage;
-          //console.log('updatedRows', updatedRows);
 
-          this.setState((state) => {
-            return {prevData: this.props.initialData};
-          });
-
-          this.setState((state) => {
+          this.setState(() => {
             return {data: this.props.initialData.slice(updatedPage * updatedRows, 
               updatedPage * updatedRows + updatedRows)};
-          },()=>{
-            return this.state.data;
           });
-      
         }
 
         componentDidMount(){
-
-          /*
-            *@once delete, update,create has been called
-            *@U need to call updatedData(page,rows) from the costModel page thefore 
-            *@ updatedData(page,rows) has to be called from CostModel page by curried it 
-          */
-          //const { page, rowsPerPage} = this.state;
-          //this.props.updataSentData( this.updatedData, page, rowsPerPage );
-
-          //console.log('DataTableWithPagination',this.props.updataSentData);
+          //update number of rows to display
           this.updatedData();
+          //update number of rows, and pass handleChangePage for last page to show after creation of costModel
+          this.props.updataSentData( this.updatedData,this.handleChangePage,0,this.state.rowsPerPage );
         }
 
         render() {
 
-          const { data, prevData} = this.state;
-          const {initialData} = this.props;
-
-          const dataChanged = initialData.length!==prevData.length;
-          /*if(dataChanged){
-            this.updatedData();
-          }*/
-          /* console.log('.............initialData...............', this.state.data);
-          console.log('this.props.initialData',this.props.initialData);
-          console.log('dataChanged', dataChanged);*/
-
           switch (this.props.pageTableOn){
           case 'fileManagement':
             return <FileManagementTableData {...this.props} 
-              data={data}
+              data={this.state.data}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 
@@ -83,7 +54,7 @@ class DataTableWithPagination extends React.Component {
             />;
           case 'costModels':
             return <CostModelsTableData {...this.props} 
-              data={data}
+              data={this.state.data}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 
@@ -91,9 +62,7 @@ class DataTableWithPagination extends React.Component {
             />;
           default:
             return 'this.props.pageTableOn is not defined in props in DataTableWithPagination.js!';
-
           }
-
          
         }
 }
