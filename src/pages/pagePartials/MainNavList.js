@@ -26,6 +26,7 @@ import PetsRounded from '@material-ui/icons/PetsRounded';
 import CameraEnhanceTwoTone from '@material-ui/icons/CameraEnhanceTwoTone';
 import FaceOutlined from '@material-ui/icons/FaceOutlined';
 import EjectSharp from '@material-ui/icons/EjectSharp';
+import { history } from '../../routers/AppRouter';
 
 import './mainNavList.scss';
 
@@ -57,9 +58,16 @@ const styles = theme => ({
 
 const MainNavList = (props) => {
   const { asMobile, multipleOpenPass }= props;
+  const { location } = history;
+  const activetab = {
+    active: location.pathname==='/'?'true':'false'
+  };
   return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} onClick={(e)=>{props.callback?props.callback(e):null;}}>
+      <li className={'menuItem'} 
+        onClick={(e)=>{props.callback?props.callback(e):null;}}
+        {...activetab}
+      >
         <NavLink to="/"   exact={true}>
           <div className='verticalAlignment' >
             <Accessibility  color="secondary" />
@@ -86,7 +94,7 @@ const MainNavList = (props) => {
           </div>
         </DropDownMenu>
       </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
+      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes'   >
         <DropDownMenu 
           onMouseEnter={asMobile?false:true} 
           collapsebleAccordion={asMobile?true:false}

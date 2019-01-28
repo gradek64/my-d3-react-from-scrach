@@ -17,6 +17,7 @@ class DataTableWithPagination extends React.Component {
         handleChangePage = (event, page) => {
           this.setState({page});
           this.updatedData(page,this.state.rowsPerPage);
+          this.props.updataSentData( this.updatedData, page,this.state.rowsPerPage );
         };
 
         handleChangeRowsPerPage = event => {
@@ -26,6 +27,7 @@ class DataTableWithPagination extends React.Component {
         };
 
         updatedData = (page,rows) => {
+          console.log('executed', page, rows);
           let updatedPage = page ? page : this.props.startPage;
           let updatedRows = rows ? rows : this.props.rowsPerPage;
           //console.log('updatedRows', updatedRows);
@@ -38,12 +40,22 @@ class DataTableWithPagination extends React.Component {
             return {data: this.props.initialData.slice(updatedPage * updatedRows, 
               updatedPage * updatedRows + updatedRows)};
           },()=>{
-            //return this.state.data;
+            return this.state.data;
           });
       
         }
 
         componentDidMount(){
+
+          /*
+            *@once delete, update,create has been called
+            *@U need to call updatedData(page,rows) from the costModel page thefore 
+            *@ updatedData(page,rows) has to be called from CostModel page by curried it 
+          */
+          //const { page, rowsPerPage} = this.state;
+          //this.props.updataSentData( this.updatedData, page, rowsPerPage );
+
+          //console.log('DataTableWithPagination',this.props.updataSentData);
           this.updatedData();
         }
 
@@ -63,7 +75,7 @@ class DataTableWithPagination extends React.Component {
           switch (this.props.pageTableOn){
           case 'fileManagement':
             return <FileManagementTableData {...this.props} 
-              data={initialData}
+              data={data}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 
@@ -71,7 +83,7 @@ class DataTableWithPagination extends React.Component {
             />;
           case 'costModels':
             return <CostModelsTableData {...this.props} 
-              data={initialData}
+              data={data}
               pageUpdate = {this.state.page}
               rowsPerPageUpdate = {this.state.rowsPerPage}
               handleChangePage={this.handleChangePage} 

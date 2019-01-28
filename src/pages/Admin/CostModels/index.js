@@ -50,24 +50,37 @@ async componentDidMount(){
     ]});
 }
 
-overrideDataBase = async (data) => {
-  await costModelService.override(data);
-}
-onDelete = async (costPotID) => {
+  assigned = () =>{
+
+  }
+
+  onDataChanged = (cb, page, rowsPerPage) => {
+    this.assigned = cb;
+    this.page = page;
+    this.rowsPerPage = rowsPerPage;
+  }
+
+  overrideDataBase = async (data) => {
+    await costModelService.override(data);
+  }
+  onDelete = async (costPotID) => {
 
   //find array index from costPots array;
-  const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
+  /*const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
   //update state
   this.setState((prevState) => ({
     data: [...prevState.data.slice(0,arrayIndex), ...prevState.data.slice(arrayIndex+1)]
   }),()=>{
     //update database with override
     this.overrideDataBase(this.state.data);
-  });
+  });*/
   //close modal
-  events.emit('CLOSE_MODAL');
+    this.assigned( this.page, this.rowsPerPage);
+
+    console.log('onDataChanged',this.assigned);
+    events.emit('CLOSE_MODAL');
   
-}
+  }
 
 onCreate = (item) => {
   //update data in state; (recommeded way of update)
@@ -78,6 +91,8 @@ onCreate = (item) => {
     }); 
   //close Modal
   events.emit('CLOSE_MODAL');
+  //notify data changed for table;
+  this.onDataChanged();
 }
 updateDatabaseOnUpdate = async (id,item) => {
   await costModelService.update(id,item);
@@ -99,13 +114,16 @@ onUpdate = (costPotID,{name}) => {
     };
   },()=>{
     const dataArrIndex = this.state.data.findIndex((el)=>el.id===costPotID);
-    this.updateDatabaseOnUpdate( dataArrIndex, updateObject); 
+    this.assigned( this.page, this.rowsPerPage);
     //close modal
     events.emit('CLOSE_MODAL');
   });
   
   
 }
+
+
+
 getCostPotName = ({name, costPotId}) => {
   this.setState(() => ({ 
     selectedCostPot:name,
@@ -148,7 +166,7 @@ render(){
       {this.state.data?this.state.data.length:null}
       {this.state.data?
         <div>
-          <SimpleTable data={this.state.data} pageTableOn={'costModels'} />
+          <SimpleTable data={this.state.data} updateData={this.onDataChanged} pageTableOn={'costModels'} />
           <div>
             <ModalCustom isOpen={false} >
               <CreateCostModel selectDropdownData={this.state.selectDropdownData} onSubmit={this.onCreate}/>

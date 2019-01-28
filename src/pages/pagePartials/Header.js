@@ -101,6 +101,24 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  mobileMenuContainer:{
+    position:'fixed',
+    zIndex:'1500',
+    width:'100vw',
+    height:'100%',
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'flexStart',
+  },
+  mobileMenuConcealer:{
+    position:'absolute',
+    width:'100vw',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.3)'
+  },
+  mobileMenu:{
+
+  }
 });
 
 class PrimarySearchAppBar extends React.Component {
@@ -317,7 +335,11 @@ class PrimarySearchAppBar extends React.Component {
         {renderMenu}
         {renderMobileMenu}
         {/*setting for acording which is dropdownMenu prop set here*/}
-        {this.state.mobileMenuOpen?<MobileNavList multipleOpenPass={false} />:null}
+        {this.state.mobileMenuOpen?
+          <div className={classes.mobileMenuContainer} >
+            <div className={classes.mobileMenuConcealer} onClick={()=>{ this.setState({ mobileMenuOpen: false});} } ></div>
+            <MobileNavList multipleOpenPass={false} className={classes.mobileMenu} />
+          </div>:null}
       </div>
     );
   }
