@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fakeAuth } from '../../services/fakeAuth';
 import Typography from '@material-ui/core/Typography';
 import MenuSubLinks from './MenuSubLinks';
+import DropDownCovered from './dropDownCovered';
 
 import './MenuSubLinks/menuSubLinks.scss';
 
@@ -82,7 +83,11 @@ class CostOverview extends React.Component {
 
   render() {
     return (
-      <MenuSubLinks linkActive='home'/>
+      <div>
+        <MenuSubLinks linkActive='home'/>
+     
+        <DropDownCovered />
+      </div>
     );
   }
 }
