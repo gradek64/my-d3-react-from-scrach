@@ -14,6 +14,9 @@ import MainNavBar from '../pages/pagePartials/MainNavBar';
 import AuthRoute  from './AuthRoute';
 import '../main.scss';
 
+//front-end pages 
+import CostOverview from '../pages/cost-overview';
+
 //make history available everywhere
 export const history = createHistory();
 const {location} = history;
@@ -53,6 +56,10 @@ export const ProtectedRoutes = (props) => {
   if(/admin\/cost-models\/\d+\/costpots\/\d+\/dataset-filters\/?$/.test(url)){
     return <DataSetFilterstCostPot costModelId={params.costModelId} costPotId={params.costPotId}/>;
   }
+  //*cost-overview Routes
+  if(/cost-overview/.test(url)){
+    return <CostOverview costModelId={params.costModelId} costPotId={params.costPotId}/>;
+  }
 
   if(url.includes('edit')){
     return <HomePage />;
@@ -86,6 +93,8 @@ const AppRouter = () => (
           <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/file-management" exact component={ProtectedRoutes}/>
           {/*dataset-filters Routes*/}
           <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/dataset-filters" exact component={ProtectedRoutes}/>
+          {/* front end pages */}
+          {<AuthRoute path="/cost-overview" component={ProtectedRoutes} />}
           {/*fallback to login */}
           {<Route path="/login" component={Login} />}
           <Route component={NotFoundPage} />

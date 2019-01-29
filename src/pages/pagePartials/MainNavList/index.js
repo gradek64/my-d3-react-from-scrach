@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import DropDownMenu from '../../components/dropDownMenu';
+import DropDownMenu from '../../../components/dropDownMenu';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import DropdownContent from '../../components/dropDownContent/contentRandom';
+import DropdownContent from '../../../components/dropDownContent/contentRandom';
 
 
 /*
@@ -26,7 +26,7 @@ import PetsRounded from '@material-ui/icons/PetsRounded';
 import CameraEnhanceTwoTone from '@material-ui/icons/CameraEnhanceTwoTone';
 import FaceOutlined from '@material-ui/icons/FaceOutlined';
 import EjectSharp from '@material-ui/icons/EjectSharp';
-import { history } from '../../routers/AppRouter';
+import { history } from '../../../routers/AppRouter';
 
 import './mainNavList.scss';
 
@@ -57,6 +57,49 @@ const styles = theme => ({
 
 
 const MainNavList = (props) => {
+
+  const links = [
+    {
+      name: 'cost-overview',
+      icon: {name: 'itCostOverview', color: 'white'},
+      href: '/#!/cost-overview',
+      label: 'Cost Overview',
+      toBePresentOn: [
+        'cost-overview',
+        'service-statement',
+        'kpi',
+        'analytics',
+        'my-reports',
+      ],
+    },
+    {
+      name: 'cost-overview',
+      icon: {name: 'itCostOverview', color: 'white'},
+      href: '/#!/cost-overview',
+      label: 'Cost Overview',
+      toBePresentOn: [
+        'cost-overview',
+        'service-statement',
+        'kpi',
+        'analytics',
+        'my-reports',
+      ],
+    },
+    {
+      name: 'cost-overview',
+      icon: {name: 'itCostOverview', color: 'white'},
+      href: '/#!/cost-overview',
+      label: 'Cost Overview',
+      toBePresentOn: [
+        'cost-overview',
+        'service-statement',
+        'kpi',
+        'analytics',
+        'my-reports',
+      ],
+    }
+  ];
+
   const { asMobile, multipleOpenPass }= props;
   const { location } = history;
   const activetab = {
@@ -127,6 +170,16 @@ const MainNavList = (props) => {
             <FaceOutlined  color="secondary" />
             <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
              News
+            </Typography>
+          </div>
+        </NavLink>
+      </li>
+      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
+        <NavLink to="/cost-overview">
+          <div className='verticalAlignment' >
+            <FaceOutlined  color="secondary" />
+            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+             Cost Overview
             </Typography>
           </div>
         </NavLink>

@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 //custom imports
-import MainNaVList from './MainNavList';
+import MainNaVList from '../MainNavList';
 
 const styles = (theme) => ({
   root: {

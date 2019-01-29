@@ -65,6 +65,7 @@ async componentDidMount(){
   overrideDataBase = async (data) => {
     await costModelService.override(data);
   }
+  
   onDelete = async (costPotID) => {
   //find array index from costPots array;
     const arrayIndex = this.state.data.findIndex((arrEl)=>arrEl.id === costPotID);
