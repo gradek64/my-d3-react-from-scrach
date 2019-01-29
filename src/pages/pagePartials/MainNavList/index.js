@@ -29,6 +29,7 @@ import EjectSharp from '@material-ui/icons/EjectSharp';
 import { history } from '../../../routers/AppRouter';
 
 import './mainNavList.scss';
+import { links } from './mainNavList_config';
 
 
 function HomeIcon(props) {
@@ -58,149 +59,67 @@ const styles = theme => ({
 
 const MainNavList = (props) => {
 
-  const links = [
-    {
-      name: 'cost-overview',
-      icon: {name: 'itCostOverview', color: 'white'},
-      href: '/#!/cost-overview',
-      label: 'Cost Overview',
-      toBePresentOn: [
-        'cost-overview',
-        'service-statement',
-        'kpi',
-        'analytics',
-        'my-reports',
-      ],
-    },
-    {
-      name: 'cost-overview',
-      icon: {name: 'itCostOverview', color: 'white'},
-      href: '/#!/cost-overview',
-      label: 'Cost Overview',
-      toBePresentOn: [
-        'cost-overview',
-        'service-statement',
-        'kpi',
-        'analytics',
-        'my-reports',
-      ],
-    },
-    {
-      name: 'cost-overview',
-      icon: {name: 'itCostOverview', color: 'white'},
-      href: '/#!/cost-overview',
-      label: 'Cost Overview',
-      toBePresentOn: [
-        'cost-overview',
-        'service-statement',
-        'kpi',
-        'analytics',
-        'my-reports',
-      ],
-    }
-  ];
-
-  const { asMobile, multipleOpenPass }= props;
+  const { asMobile, multipleOpenPass, page }= props;
   const { location } = history;
   const activetab = {
     active: location.pathname==='/'?'true':'false'
   };
   return (<div className={asMobile?'menuMobile':'menuDesktop'}>
     <ul className={'MainNavList'}>
-      <li className={'menuItem'} 
-        onClick={(e)=>{props.callback?props.callback(e):null;}}
-        {...activetab}
-      >
-        <NavLink to="/"   exact={true}>
-          <div className='verticalAlignment' >
-            <Accessibility  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-              News
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
-        <DropDownMenu 
-          onMouseEnter={asMobile?false:true} 
-          collapsebleAccordion={asMobile?true:false}
-          multipleOpen={multipleOpenPass?multipleOpenPass:false}
-          animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
-            <AlarmOn  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown mobile 2
-            </Typography>
-          </div>
-          <div>
-            <DropdownContent/>
-          </div>
-        </DropDownMenu>
-      </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes'   >
-        <DropDownMenu 
-          onMouseEnter={asMobile?false:true} 
-          collapsebleAccordion={asMobile?true:false}
-          multipleOpen={multipleOpenPass?multipleOpenPass:false}
-          animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
-            <PetsRounded  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown 3
-            </Typography>
-          </div>
-          <div>
-            <DropdownContent/>
-          </div>
-        </DropDownMenu>
-      </li>
-      <li className={'menuItem'} onClick={(e)=>{props.callback?props.callback(e):null;}}>
-        <NavLink to="/admin/cost-models/">
-          <div className='verticalAlignment' >
-            <CameraEnhanceTwoTone  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-               News
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
-        <NavLink to="/admin/edit/76">
-          <div className='verticalAlignment' >
-            <FaceOutlined  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             News
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} onClick={(e)=>{props.callback(e);}}>
-        <NavLink to="/cost-overview">
-          <div className='verticalAlignment' >
-            <FaceOutlined  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Cost Overview
-            </Typography>
-          </div>
-        </NavLink>
-      </li>
-      <li className={'menuItem'} dropped='false' dropdownmenuanchor='yes' onClick={(e)=>{props.callback?props.callback(e):null;}}>
-        <DropDownMenu 
-          onMouseEnter={asMobile?false:true} 
-          collapsebleAccordion={asMobile?true:false}
-          multipleOpen={multipleOpenPass?multipleOpenPass:false}
-          animation={asMobile?true:false} >
-          <div className='verticalAlignment'>
-            <EjectSharp  color="secondary" />
-            <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-             Dropdown
-            </Typography>
-          </div>
-          <div>
-            <DropdownContent/>
-          </div>
-        </DropDownMenu>
-      </li>
+      {
+
+        links
+          .filter((link)=>link.toBePresentOn.includes( page ))
+          .map(({label,type,href,icon,dropDownContent},i)=>{
+            const IconComponet = icon.name;
+            const DropdownContent = dropDownContent;
+
+            if ( type==='link' ){
+
+              return <li className={'menuItem'} 
+                key={`link}${i}`}
+                onClick={(e)=>{props.callback?props.callback(e):null;}}
+                {...activetab}
+              >
+                <NavLink to={href}   exact={true}>
+                  <div className='verticalAlignment' >
+                    <IconComponet  color="secondary" />
+                    <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+                      {label}
+                    </Typography>
+                  </div>
+                </NavLink>
+              </li>;
+            }
+
+            if ( type==='dropdown' ) {
+
+              return <li className={'menuItem'} 
+                key={`link}${i}`}
+                dropped='false' 
+                dropdownmenuanchor='yes' 
+                onClick={(e)=>{props.callback?props.callback(e):null;}}>
+                <DropDownMenu 
+                  onMouseEnter={asMobile?false:true} 
+                  collapsebleAccordion={asMobile?true:false}
+                  multipleOpen={multipleOpenPass?multipleOpenPass:false}
+                  animation={asMobile?true:false} >
+                  <div className='verticalAlignment'>
+                    <IconComponet  color={icon.color} />
+                    <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+                      {label}
+                    </Typography>
+                  </div>
+                  <div>
+                    <DropdownContent/>
+                  </div>
+                </DropDownMenu>
+              </li>;
+            }
+
+          })
+      
+      }
     </ul>
   </div>
   );};

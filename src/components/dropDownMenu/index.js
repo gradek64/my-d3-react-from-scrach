@@ -103,6 +103,7 @@ class DropDownMenu extends React.Component {
                   <div style={{
                     position:collapsebleAccordion?'block':'absolute',
                     left:0,
+                    minWidth:'160px',
                     color:'black',
                     zIndex:'100',
                     transform: placement==='left'?'translate(-100%)':'translate(0)'

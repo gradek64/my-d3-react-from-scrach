@@ -1,0 +1,45 @@
+.sub-links-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-height: 50px;
+
+    li {
+        display: inline-block;
+        text-align: center;
+        padding: 0 10px 0 10px;
+
+        /* min-height: 64px;*/
+
+        .MainNavList-root-140 {
+            /*min-height: 64px;*/
+        }
+
+        a {
+            color: #ffb74d;
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: #ffb74d;
+            text-decoration: underline;
+            -webkit-text-decoration-color: #28B1E1;
+            text-decoration-color: #28B1E1;
+        }
+
+        &[active='true'] {
+            text-decoration: underline;
+            text-decoration-color: red;
+            -webkit-text-decoration-color: red;
+        }
+
+        .verticalAlignment {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            /*min-height: 64px;*/
+        }
+    }
+}

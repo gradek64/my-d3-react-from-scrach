@@ -67,6 +67,7 @@ const MobileNavList = (BaseComponent) => {
     render() {
       return <BaseComponent 
         asMobile={true} 
+        page='kpi'
         callback={this.updateCrossMinusIcon} 
         multipleOpenPass={this.props.multipleOpenPass}
       />;

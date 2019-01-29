@@ -3,7 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fakeAuth } from '../../services/fakeAuth';
 import Typography from '@material-ui/core/Typography';
+import MenuSubLinks from './MenuSubLinks';
 
+import './MenuSubLinks/menuSubLinks.scss';
 
 
 
@@ -80,7 +82,7 @@ class CostOverview extends React.Component {
 
   render() {
     return (
-      <div>this is CostOverview</div>
+      <MenuSubLinks linkActive='home'/>
     );
   }
 }

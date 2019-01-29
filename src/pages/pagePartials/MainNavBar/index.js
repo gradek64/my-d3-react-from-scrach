@@ -39,7 +39,7 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.sectionDesktop}>
         <Toolbar>
-          <MainNaVList />
+          <MainNaVList page='cost-overview' />
         </Toolbar>
       </AppBar>
     </div>
