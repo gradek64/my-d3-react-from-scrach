@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { Redirect, Router, Route, Switch, Link, NavLink } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import HomePage from '../pages';
@@ -15,7 +15,7 @@ import AuthRoute  from './AuthRoute';
 import '../main.scss';
 
 //front-end pages 
-import CostOverview from '../pages/cost-overview';
+import CostOverview from '../pages/front-reports/cost-overview';
 
 //make history available everywhere
 export const history = createHistory();
@@ -57,8 +57,14 @@ export const ProtectedRoutes = (props) => {
     return <DataSetFilterstCostPot costModelId={params.costModelId} costPotId={params.costPotId}/>;
   }
   //*cost-overview Routes
-  if(/cost-overview/.test(url)){
-    return <CostOverview costModelId={params.costModelId} costPotId={params.costPotId}/>;
+  if(/cost-overview || cost-overview\/\w+?$/.test(url)){
+
+    //even if the user is on /cost-overview general then redirect it to cost-overview/general-ledger
+    if(params.reportName){
+      return <CostOverview activeTab={params.reportName} costPotId={params.costPotId}/>;
+    }else {
+      return <Redirect to={'/cost-overview/general-ledger'} />;
+    } 
   }
 
   if(url.includes('edit')){
@@ -94,7 +100,7 @@ const AppRouter = () => (
           {/*dataset-filters Routes*/}
           <AuthRoute path="/admin/cost-models/:costModelId/costpots/:costPotId/dataset-filters" exact component={ProtectedRoutes}/>
           {/* front end pages */}
-          {<AuthRoute path="/cost-overview" component={ProtectedRoutes} />}
+          {<AuthRoute path="/cost-overview/:reportName?" component={ProtectedRoutes} />}
           {/*fallback to login */}
           {<Route path="/login" component={Login} />}
           <Route component={NotFoundPage} />

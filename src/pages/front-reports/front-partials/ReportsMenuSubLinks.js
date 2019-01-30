@@ -3,13 +3,11 @@ import { NavLink } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import DropDownMenu from '../../../components/dropDownMenu';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-import DropdownContent from '../../../components/dropDownContent/contentRandom';
 
 
 /*
@@ -30,10 +28,8 @@ import PetsRounded from '@material-ui/icons/PetsRounded';
 import CameraEnhanceTwoTone from '@material-ui/icons/CameraEnhanceTwoTone';
 import FaceOutlined from '@material-ui/icons/FaceOutlined';
 import EjectSharp from '@material-ui/icons/EjectSharp';
-import { history } from '../../../routers/AppRouter';
 
-import './menuSubLinks.scss';
-import { links } from './mainNavList_config';
+import './reportsMenuSubLinks.scss';
 
 
 function HomeIcon(props) {
@@ -61,40 +57,50 @@ const styles = theme => ({
 });
 
 
-const MainNavList = (props) => {
+const ReportSubNav = (props) => {
 
-  
+  const { linkActive, configuration }= props;
 
-  const { asMobile, multipleOpenPass, linkActive }= props;
-  const { location } = history;
+  const links =Object.keys(configuration).reduce((a,key,i)=>{
+    a[i]=configuration[key]['reportsMenuButton'];
+    return a;
+  },[]);
+  // only consider an event active if its event id is an odd number
+
+
   return (
     <AppBar position="static" color='default'>
       <Toolbar className='sub-links-menu' style={{minHeight:'40px', 'height':'40px'}} >
         <Switch value="checkedC" />
-        <ul className={'MainNavList'}>
-          {
+        <ul className={'ReportSubNav'}>
+          {links?
             links
-              .filter((link)=>link.toBePresentOn.includes( 'cost-overview' ))
-              .map(({label,type,href,name},i)=>{
-                if ( type==='link' ){
-                  return <li className={'menuItem'}
-                    active= { name==linkActive ? 'true':'false'}
-                    key={`link}${i}`}
-                    onClick={(e)=>{props.callback?props.callback(e):null;}}
+              .map(({label,href,id},i)=>{
+                return <li className={'menuItem'}
+                  active= { id==linkActive ? 'true':'false'}
+                  key={`link}${i}`}
+                  onClick={(e)=>{props.callback?props.callback(e):null;}}
                
-                  >
-                    <NavLink to={href}   exact={true}>
-                      <div className='verticalAlignment' >
-                        <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
-                          {label}
-                        </Typography>
-                      </div>
-                    </NavLink>
-                  </li>;
-                }
+                >
 
 
-              })
+                  {/*
+                By clicking on NavLink , the whole component that NavLink is injected it will 
+                RE-RENDER therefore it will run its props and state (if defined) again , no point 
+                of assing methods from props to other function cause it will call it any time you click on it 
+                unless U will need that feature
+              */}
+                  <NavLink to={href} /*isActive={()=>true}*/  >
+                    <div className='verticalAlignment' >
+                      <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
+                        {label}
+                      </Typography>
+                    </div>
+                  </NavLink>
+                </li>;
+
+
+              }):null
       
           }
         </ul>
@@ -103,4 +109,4 @@ const MainNavList = (props) => {
   );};
 
 
-export default withStyles(styles)(MainNavList);
+export default withStyles(styles)(ReportSubNav);
