@@ -11,7 +11,7 @@ const ChartDiscription = (props) =>{
   return (
     <div>
       {
-        confCurrentTab.buttons.map((item)=>item)
+        /*confCurrentTab.buttons.map((item)=>item)*/
       }
     </div>
   );

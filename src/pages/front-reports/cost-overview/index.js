@@ -4,14 +4,18 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import ReportsMenuSubLinks from '../front-partials/ReportsMenuSubLinks';
 import ChartDiscription from '../front-partials/ChartDiscription';
-import DropDownCovered from './dropDownCovered';
+import Chart from '../front-partials/Chart/';
 
 
 //page Configuration;
 import { pageConfiguration } from './cost-overview-config';
 
 
-
+const pageConfigurationArray =Object.keys(pageConfiguration).reduce((a,key,i)=>{
+  a[i]=pageConfiguration[key];
+  return a;
+},[]);
+console.log('gagd',pageConfigurationArray);
 
 const CostOverview = (props) => {
 
@@ -28,7 +32,7 @@ const CostOverview = (props) => {
   };
   
 
-    
+  console.log('CostOverview page rendered ......');
 
   return (
     <div>
@@ -39,8 +43,7 @@ const CostOverview = (props) => {
         /* just for science experiment assing already set prop to stop them from reasigning links*/
       />
       <ChartDiscription config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
-     
-      <DropDownCovered />
+      <Chart config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
     </div>
   );
 };

@@ -66,8 +66,8 @@ const  MenuListComposition = (props) => {
                           <MenuItem key={`dropIcon${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); } }>
                             {direction=='right'? <ListItemText primary={el} />:null}
                             <ListItemIcon className={classes.icon}>
-                              <Icon className={classes.icon} color={iconColor?iconColor:'primary'}>  
-                                {icon}                
+                              <Icon  color={iconColor?iconColor:'primary'}>  
+                                {'alarm'}                
                               </Icon>
                             </ListItemIcon>
                             {direction=='left'? <ListItemText primary={el} />:null}

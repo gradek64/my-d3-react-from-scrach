@@ -5,11 +5,13 @@ import ModalCustom from '../customized-vendors/modalVendor';
 
 import Typography from '@material-ui/core/Typography';
 
+import BarChart from '../services/d3-charts/BarChart/Resizer';
+
 const home = () => {
   const {emit} = events;
   return (
     <div>
-      
+      <BarChart />
 
 
       <ModalCustom isOpen={false} >

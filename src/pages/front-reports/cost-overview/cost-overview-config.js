@@ -6,7 +6,16 @@ export const pageConfiguration = {
       id:'general-ledger',
       href:'/cost-overview/general-ledger'
     },
-    buttons:['one','two','three']
+    groupByButtons:[
+      {'_id':1,'label':'Legal Entity','value':'SOURCE_LEGAL_ENTITY','selected':true},
+      {'_id':2,'label':'Cost Centre','value':'SOURCE_COST_CENTRE'},
+      {'_id':3,'label':'Nominal','value':'NOMINALS'}
+    ],
+    types:[
+      {'id':1,'label':'Table','value':'table'},
+      {'id':4,'label':'Donut','value':'donut','selected':true},
+      {'id':5,'label':'Pie','value':'pie'},
+      {'id':6,'label':'Bar','value':'bar'}],
   },
   'cost-pools':{
     reportsMenuButton:{
@@ -14,7 +23,11 @@ export const pageConfiguration = {
       id:'cost-pools',
       href:'/cost-overview/cost-pools'
     },
-    buttons:['one','two','three','four','five']
+    types:[
+      {'id':1,'label':'Table','value':'table'},
+      {'id':4,'label':'Donut','value':'donut','selected':true},
+      {'id':5,'label':'Pie','value':'pie'},
+      {'id':6,'label':'Bar','value':'bar'}],
   },
   'cost-category':{
     reportsMenuButton:{
@@ -22,7 +35,11 @@ export const pageConfiguration = {
       id:'cost-category',
       href:'/cost-overview/cost-category'
     },
-    buttons:['one','two','three','four','five']
+    types:[
+      {'id':1,'label':'Table','value':'table'},
+      {'id':4,'label':'Donut','value':'donut','selected':true},
+      {'id':5,'label':'Pie','value':'pie'},
+      {'id':6,'label':'Bar','value':'bar'}],
   },
   'functional':{
     reportsMenuButton:{
@@ -30,7 +47,15 @@ export const pageConfiguration = {
       id:'functional',
       href:'/cost-overview/functional'
     },
-    buttons:['one','two','three','four','five']
+    groupByButtons:[
+      {'_id':6,'label':'Functional Level 1','value':'ITFBLevel1','selected':true},
+      {'_id':7,'label':'Functional Level 2','value':'ITFBLevel2'},
+      {'_id':8,'label':'Functional Level 3','value':'ITFBLevel3'}
+    ],
+    types:[
+      {'id':1,'label':'Table','value':'table'},
+      {'id':4,'label':'Sunburst','value':'sunburst','selected':true},
+    ],
   },
   'service-list':{
     reportsMenuButton:{
@@ -38,15 +63,16 @@ export const pageConfiguration = {
       id:'service-list',
       href:'/cost-overview/service-list'
     },
-    buttons:['one','two','three','four','five']
-  },
-  'service-consumption':{
-    reportsMenuButton:{
-      label:'service Consumption',
-      id:'service-consumption',
-      href:'/cost-overview/service-consumption'
-    },
-    buttons:['one','two','three','four','five']
+    groupByButtons:[
+      {'_id':9,'label':'Service Type','value':'SERVICE_TYPE','selected':true},
+      {'_id':22,'label':'Service Group','value':'SERVICE_GROUP'},
+      {'_id':11,'label':'Service Name','value':'SERVICE_NAME',disabled: true,selected: true}
+    ],
+    types:[
+      {'id':1,'label':'Table','value':'table'},
+      {'id':1,'label':'TreeMap','value':'TreeMap'},
+      {'id':4,'label':'Sunburst','value':'sunburst','selected':true},
+    ],
   }
 
 };
