@@ -12,10 +12,10 @@ export const pageConfiguration = {
       {'_id':3,'label':'Nominal','value':'NOMINALS'}
     ],
     types:[
-      {'id':1,'label':'Table','value':'table'},
-      {'id':4,'label':'Donut','value':'donut','selected':true},
-      {'id':5,'label':'Pie','value':'pie'},
-      {'id':6,'label':'Bar','value':'bar'}],
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
+      {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut','selected':true},
+      {'id':5,'label':'Pie',materialIcon:'pie_chart_outlined','value':'pie'},
+      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar'}],
   },
   'cost-pools':{
     reportsMenuButton:{
@@ -24,10 +24,10 @@ export const pageConfiguration = {
       href:'/cost-overview/cost-pools'
     },
     types:[
-      {'id':1,'label':'Table','value':'table'},
-      {'id':4,'label':'Donut','value':'donut','selected':true},
-      {'id':5,'label':'Pie','value':'pie'},
-      {'id':6,'label':'Bar','value':'bar'}],
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
+      {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut','selected':true},
+      {'id':5,'label':'Pie',materialIcon:'pie_chart_outlined','value':'pie'},
+      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar'}],
   },
   'cost-category':{
     reportsMenuButton:{
@@ -36,10 +36,10 @@ export const pageConfiguration = {
       href:'/cost-overview/cost-category'
     },
     types:[
-      {'id':1,'label':'Table','value':'table'},
-      {'id':4,'label':'Donut','value':'donut','selected':true},
-      {'id':5,'label':'Pie','value':'pie'},
-      {'id':6,'label':'Bar','value':'bar'}],
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
+      {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut','selected':true},
+      {'id':5,'label':'Pie',materialIcon:'pie_chart_outlined','value':'pie'},
+      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar'}],
   },
   'functional':{
     reportsMenuButton:{
@@ -53,8 +53,8 @@ export const pageConfiguration = {
       {'_id':8,'label':'Functional Level 3','value':'ITFBLevel3'}
     ],
     types:[
-      {'id':1,'label':'Table','value':'table'},
-      {'id':4,'label':'Sunburst','value':'sunburst','selected':true},
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
+      {'id':4,'label':'Sunburst',materialIcon:'radio_button_checked','value':'sunburst','selected':true},
     ],
   },
   'service-list':{
@@ -69,9 +69,9 @@ export const pageConfiguration = {
       {'_id':11,'label':'Service Name','value':'SERVICE_NAME',disabled: true,selected: true}
     ],
     types:[
-      {'id':1,'label':'Table','value':'table'},
-      {'id':1,'label':'TreeMap','value':'TreeMap'},
-      {'id':4,'label':'Sunburst','value':'sunburst','selected':true},
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
+      {'id':44,'label':'TreeMap',materialIcon:'view_quilt','value':'TreeMap'},
+      {'id':4,'label':'Sunburst',materialIcon:'radio_button_checked','value':'sunburst','selected':true},
     ],
   }
 

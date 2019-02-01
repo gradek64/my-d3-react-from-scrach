@@ -8,13 +8,15 @@ import withState from 'recompose/withState';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
+import './dropDownSelectIconList.scss';
 
-class RenderPropsMenu extends React.Component {
+
+class DropDownSelectIconList extends React.Component {
 
   state = {showDropDownMenu:false}
   anchorEl = React.createRef();
 
-  toggleMenuOpen = (showDropDownMenuState) => {
+  hideDropDown = (showDropDownMenuState) => {
     this.setState({ showDropDownMenu: !showDropDownMenuState });
 
 
@@ -22,30 +24,40 @@ class RenderPropsMenu extends React.Component {
   }
   hideDropDown = (icon) => {
     this.setState({ showDropDownMenu: false });
-    this.anchorEl.current.querySelector('span').innerHTML=icon;
+    //change first icon to selected;
+    const firstIcon = this.anchorEl.current.querySelector('span');
+    if(firstIcon) firstIcon.innerHTML=icon;
   };
+
+  performAction = (value) =>{
+    console.log(value);
+    this.hideDropDown(value);
+  }
 
   render(){
 
     const {showDropDownMenu} = this.state;
+    const { items } = this.props;
 
     return (
-      <div>
+      <div className='typeToggle'>
         {/*dropdown trigger from outside=*/}
-        <div onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}} ref={this.anchorEl}>
+        <div onClick={()=>{ this.setState({ showDropDownMenu: true });} } ref={this.anchorEl}>
           {this.props.children } 
         </div>
-        <Menu id="render-props-menu"  open={showDropDownMenu} >
-          <MenuItem onClick={()=>{this.hideDropDown('alarm_off');}}>
-            <Icon>expand_more</Icon>
-            <Typography variant="inherit">A short message</Typography>
-          </MenuItem>
-          <MenuItem onClick={()=>{this.hideDropDown('alarm_add');}}>Logout</MenuItem>
-          <MenuItem onClick={()=>{this.hideDropDown('all_out');}}>Logout</MenuItem>
+        <Menu open={showDropDownMenu} anchorEl={this.anchorEl.current}>
+
+          {items?items.map( ({label,iconName},key) => (
+            <MenuItem onClick={ this.performAction.bind(null,{iconName}) } key={`item${key}`}>
+              <Icon>{iconName}</Icon>
+              <Typography variant="inherit">{label}</Typography>
+            </MenuItem>
+          )):null}
+        
         </Menu>
       </div>
     );
   }
 }
 
-export default RenderPropsMenu;
+export default DropDownSelectIconList;
