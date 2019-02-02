@@ -4,15 +4,18 @@ import ChartHeader from './ChartHeader';
 
 const Chart = (props) =>{
 
-  const { tabActive, config} = props;
+  const { tabActive, config, page, isVariance} = props;
   const confCurrentTab = config[ tabActive ];
-  const groubByButtons = confCurrentTab['groupByButtons'];
-  const chartTypes = confCurrentTab['types'];
-  console.log('groubByButtons',groubByButtons);
+  const groubByButtons = { [tabActive]:  confCurrentTab['groupByButtons']};
+  const chartTypes = { [tabActive]: confCurrentTab['types'] };
 
   return (
     <div className='chart'>
-      <ChartHeader groubByButtons={groubByButtons} chartTypes={chartTypes}/>
+      <ChartHeader groubByButtons={groubByButtons} 
+        tabActive={tabActive}
+        chartTypes={chartTypes} 
+        page={page} 
+        isVariance={isVariance}/>
     </div>
   );
 };

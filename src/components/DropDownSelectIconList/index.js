@@ -10,9 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { withStyles } from '@material-ui/core/styles';
 
-
-import './dropDownSelectIconList.scss';
-
 const styles = (theme) => ({
   container: {
     display:'flex',
@@ -32,7 +29,8 @@ class DropDownSelectIconList extends React.Component {
 
   state = {
     showDropDownMenu:false,
-    selected:this.props.selected
+    selected:this.props.selected,
+    items:this.props.items,
   }
   anchorEl = React.createRef();
 
@@ -46,29 +44,44 @@ class DropDownSelectIconList extends React.Component {
     if (this.props.selected !== prevProps.selected) {
       console.log('this.props.selected',this.props.selected);
     }*/
+    const { items, selected} = this.props;
+    const {items:prevItems} = prevProps;
+    if(items!==prevItems){
+      this.setState(()=>{
+        return { 
+          items,
+          selected,
+        };
+      });
+      
+    }
   }
 
   hideDropDown = (icon) => {
     this.setState({ showDropDownMenu: false });
     if(icon) {
       //change first icon to selected to menu only;
-      const firstIcon = this.anchorEl.current.querySelector('span');
-      if(firstIcon) firstIcon.innerHTML=icon;
+      //const firstIcon = this.anchorEl.current.querySelector('span');
+      //if(firstIcon) firstIcon.innerHTML=icon;
     }
   };
 
-  performAction = (icon,value) =>{
-    console.log(value);
-    this.setState({selected:value});
-    this.hideDropDown(icon);
-    //call action 
-    this.props.action(value);
+  performAction = (selected) =>{
+    console.log(selected.value);
+    this.setState({ selected });
+    this.hideDropDown(selected.materialIcon);
+    //call action
+
+    console.log('type selected', selected); 
+    this.props.action(selected);
   }
 
   render(){
 
-    const {showDropDownMenu, selected  } = this.state;
-    const {  items, classes } = this.props;
+    const {showDropDownMenu, items ,selected } = this.state;
+    const {   classes  } = this.props;
+
+    console.log('....selected.....',selected);
 
     return (
       <div>
@@ -83,11 +96,11 @@ class DropDownSelectIconList extends React.Component {
         </div>
         <Menu open={showDropDownMenu} anchorEl={this.anchorEl.current}>
 
-          {items?items.map( ({label,value, materialIcon},key) => 
-          {return selected!==value?
-            <MenuItem onClick={ this.performAction.bind(null,materialIcon,value) } key={`item${key}`}>
-              <Icon color={'primary'} className={classes.iconSpacer}>{materialIcon}</Icon>
-              <Typography variant="inherit" color={'primary'}>{label}</Typography>
+          {items?items.map( (item,key) => 
+          {return selected.value!==item.value?
+            <MenuItem onClick={ this.performAction.bind(null,item) } key={`item${key}`}>
+              <Icon color={'primary'} className={classes.iconSpacer}>{item.materialIcon}</Icon>
+              <Typography variant="inherit" color={'primary'}>{item.label}</Typography>
             </MenuItem>:null;}
           ):null}
         

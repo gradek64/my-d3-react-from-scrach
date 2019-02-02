@@ -6,41 +6,52 @@ import './ChartHeader.scss';
 
 class ChartHeader extends React.Component {
 
+  constructor(props){
+    super(props);
+
+    console.log('...chart ChartHeader props......', props);
+    console.log('...chart ChartHeader state......', this.state);
+  }
+
   state = {
-    chartTypes:this.props.chartTypes,
-    typeSelected:this.props.chartTypes.find(({selected})=>selected),
-    groubByButtons:this.props.groubByButtons,
+    chartTypes:this.props.chartTypes[this.props.tabActive],
+    typeSelected:this.props.chartTypes[this.props.tabActive].find(({selected})=>selected),
+    groubByButtons:this.props.groubByButtons[this.props.tabActive],
     iconDownload:false
   }
 
   componentDidUpdate(prevProps) {
   // Typical usage (don't forget to compare props):
-    console.log('prevProps.typeSelected',prevProps.typeSelected);
-    console.log('this.props.typeSelected',this.props.typeSelected);
 
-    const selected = this.props.chartTypes.find(({selected})=>selected);
-    const prevSelected = prevProps.chartTypes.find(({selected})=>selected);
+    const {chartTypes,groubByButtons, tabActive } = this.props;
+    const {chartTypes:prevTypes,groubByButtons:prevButtons, tabActive:previousTab } = prevProps;
 
-    const {chartTypes,groubByButtons}= this.props;
+    const selected = chartTypes[tabActive].find(({selected})=>selected);
+    const prevSelected = prevTypes[previousTab].find(({selected})=>selected);
+  
 
-    if (chartTypes !== prevProps.chartTypes) {
-      this.setState({ chartTypes });
+    if (chartTypes[tabActive] !== prevTypes[previousTab]) {
+      this.setState({ chartTypes:chartTypes[tabActive] });
     }
-    if (selected !== prevSelected) {
-      console.log('selected',selected);
-      console.log('prevSelected',prevSelected);
-      console.log('this.state.typeSelected', this.state.typeSelected);
+    if (selected !== prevSelected && tabActive!==previousTab) {
       this.setState({ typeSelected:selected });
     }
-    if (groubByButtons !== prevProps.groubByButtons) {
-      this.setState({ groubByButtons });
+    if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
+      this.setState({ groubByButtons:groubByButtons[tabActive] });
     }
   }
 
-  onSelectType = (type) => {
-    console.log(type);
-    const iconDownload = type==='table'? true:false;
+  onSelectType = (selected) => {
+    const iconDownload = selected.value==='table'? true:false;
     this.setState({ iconDownload });
+    this.setState(()=>{
+      return { typeSelected: selected };
+    });
+
+
+    console.log('resposible for render chart from here.......',
+      selected,'page:', this.props.page , 'tabActive', this.props.tabActive
+    );
   };
 
   render(){
@@ -50,7 +61,11 @@ class ChartHeader extends React.Component {
         {/*<!-- Left controls -->*/}
         <div className="left">
           {/*<!-- type toggle -->*/}
-          <DropDownSelectIconList items={this.state.chartTypes} selected={this.state.typeSelected.value} action={this.onSelectType}>
+          <DropDownSelectIconList 
+            tabActive={this.props.tabActive}
+            items={this.state.chartTypes} 
+            selected={this.state.typeSelected} 
+            action={this.onSelectType}>
             <Icon color={'primary'} >{this.state.typeSelected.materialIcon}</Icon>
             <Icon color={'primary'} >arrow_drop_down</Icon>
           </DropDownSelectIconList>

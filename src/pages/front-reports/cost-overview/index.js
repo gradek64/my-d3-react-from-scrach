@@ -19,7 +19,8 @@ console.log('gagd',pageConfigurationArray);
 
 const CostOverview = (props) => {
 
-
+  const page = 'cost-overwiew';
+  const isVariance = false;
   const { activeTab } = props;
   const adjustReportLinks = ({reportsMenuSubLinks}) => {
     console.log('....it will rerun but not mount again........', activeTab);
@@ -43,7 +44,7 @@ const CostOverview = (props) => {
         /* just for science experiment assing already set prop to stop them from reasigning links*/
       />
       <ChartDiscription config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
-      <Chart config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
+      <Chart config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'} page={page} isVariance={isVariance}/>
     </div>
   );
 };
