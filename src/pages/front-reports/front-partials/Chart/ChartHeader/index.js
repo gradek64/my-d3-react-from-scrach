@@ -34,35 +34,54 @@ class ChartHeader extends React.Component {
     const prevSelected = prevTypes[previousTab].find(({selected})=>selected);
   
 
-    if (chartTypes[tabActive] !== prevTypes[previousTab]) {
+    if (chartTypes[tabActive] !== prevTypes[previousTab] ) {
       this.setState({ chartTypes:chartTypes[tabActive] });
     }
     if (selected !== prevSelected && tabActive!==previousTab) {
-      this.setState({ typeSelected:selected });
+      this.setState({ 
+        typeSelected:selected
+      });
+
     }
     if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
       this.setState({ 
-        groubByButtons:groubByButtons[tabActive],
-        groubByButtonSelected:groubByButtons[tabActive]?
-          groubByButtons[tabActive].find(({selected})=>selected).value:
-          'none'
+        groubByButtons:groubByButtons[tabActive]
       });
     }
+  }
+
+  shouldComponentUpdate(prevProps) {
+
+    const {chartTypes,groubByButtons, tabActive , typeSelected} = this.props;
+    const {chartTypes:prevTypes,
+      groubByButtons:prevButtons, 
+      tabActive:previousTab,
+      typeSelected:previousSelected } = prevProps;
+    if(!chartTypes[tabActive]) return true;
+    const selectedChange = chartTypes[tabActive].find(({selected})=>selected )
+                    !== prevTypes[previousTab].find(({selected})=>selected);
+    console.log('typeSelected',typeSelected);
+    console.log('previousSelected',previousSelected);
+    console.log(selectedChange);
+    //const differentDone = this.props.done !== nextProps.done;
+    return selectedChange;
   }
 
   onSelectType = (selected) => {
     const iconDownload = selected.value==='table'? true:false;
     this.setState({ iconDownload });
-    this.setState(()=>{
+    this.setState((state)=>{
       return { typeSelected: selected };
     });
 
+    console.log(this.state.groubByButtons);
 
-    console.log('resposible for render chart from here.......',
+
+    /* console.log('resposible for render chart from here.......',
       selected,'page:', this.props.page , 
       'tabActive', this.props.tabActive,
       'groubByButtonSelected', this.state.groubByButtonSelected
-    );
+    );*/
   };
 
   onGroupButtonClick = ({value}) => {

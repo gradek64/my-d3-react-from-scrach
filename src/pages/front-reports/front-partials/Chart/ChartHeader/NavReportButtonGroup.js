@@ -9,6 +9,9 @@ const NavReportButtonGroup = (props) => {
   const { groubByButtonsList, actionCb } = props;
 
   const initialSelected = groubByButtonsList.findIndex(({selected})=>selected);
+  console.log('groubByButtonsList',groubByButtonsList);
+
+  console.log('..........initialSelected...........',initialSelected);
   const StateWithPropstoRenderProps = toRenderProps( withState('selectedState', 'setActive', initialSelected) );
 
   return (
