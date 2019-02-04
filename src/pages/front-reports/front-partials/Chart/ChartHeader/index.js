@@ -18,7 +18,9 @@ class ChartHeader extends React.Component {
     chartTypes:this.props.chartTypes[this.props.tabActive],
     typeSelected:this.props.chartTypes[this.props.tabActive].find(({selected})=>selected),
     groubByButtons:this.props.groubByButtons[this.props.tabActive],
-    groubByButtonSelected:this.props.groubByButtons[this.props.tabActive].find(({selected})=>selected).value,
+    groubByButtonSelected:this.props.groubByButtons[this.props.tabActive]?
+      this.props.groubByButtons[this.props.tabActive].find(({selected})=>selected).value:
+      'none',
     iconDownload:false
   }
 
@@ -41,7 +43,9 @@ class ChartHeader extends React.Component {
     if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
       this.setState({ 
         groubByButtons:groubByButtons[tabActive],
-        groubByButtonSelected:groubByButtons[tabActive].find(({selected})=>selected).value 
+        groubByButtonSelected:groubByButtons[tabActive]?
+          groubByButtons[tabActive].find(({selected})=>selected).value:
+          'none'
       });
     }
   }
