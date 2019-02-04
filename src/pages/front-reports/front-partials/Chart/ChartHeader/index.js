@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import DropDownSelectIconList from '../../../../../components/DropDownSelectIconList';
 import Icon from '@material-ui/core/Icon';
+import NavReportButtonGroup from './NavReportButtonGroup';
 import './ChartHeader.scss';
 
 class ChartHeader extends React.Component {
@@ -17,6 +18,7 @@ class ChartHeader extends React.Component {
     chartTypes:this.props.chartTypes[this.props.tabActive],
     typeSelected:this.props.chartTypes[this.props.tabActive].find(({selected})=>selected),
     groubByButtons:this.props.groubByButtons[this.props.tabActive],
+    groubByButtonSelected:this.props.groubByButtons[this.props.tabActive].find(({selected})=>selected).value,
     iconDownload:false
   }
 
@@ -37,7 +39,10 @@ class ChartHeader extends React.Component {
       this.setState({ typeSelected:selected });
     }
     if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
-      this.setState({ groubByButtons:groubByButtons[tabActive] });
+      this.setState({ 
+        groubByButtons:groubByButtons[tabActive],
+        groubByButtonSelected:groubByButtons[tabActive].find(({selected})=>selected).value 
+      });
     }
   }
 
@@ -50,9 +55,22 @@ class ChartHeader extends React.Component {
 
 
     console.log('resposible for render chart from here.......',
-      selected,'page:', this.props.page , 'tabActive', this.props.tabActive
+      selected,'page:', this.props.page , 
+      'tabActive', this.props.tabActive,
+      'groubByButtonSelected', this.state.groubByButtonSelected
     );
   };
+
+  onGroupButtonClick = ({value}) => {
+    console.log('and type selected',this.state.typeSelected);
+    console.log('value', value);
+    console.log('groubByButtonSelected', this.state.groubByButtonSelected);
+ 
+    //asign groubByButtonSelected;
+    /*this.setState({groubByButtonSelected:value},()=>{
+      console.log(this.state);  
+    });*/
+  }
 
   render(){
     return (
@@ -73,26 +91,18 @@ class ChartHeader extends React.Component {
 
         {/*<!-- Middle toolbar -->*/}
         <div>
-          {this.state.groubByButtons?this.state.groubByButtons.map(({ label, value, selected },i)=>{
-          
-            return (<Button 
-              className='groubByButton'
-              key={`button${i}`}
-              variant="outlined"
-              color={selected?'primary':'default'}
-              onClick={()=>console.log({value})}
-            >
-              {label}
-            </Button>);}):null}
+          {this.state.groubByButtons?
+            <NavReportButtonGroup 
+              groubByButtonsList={this.state.groubByButtons} 
+              actionCb={this.onGroupButtonClick}
+            />
+            :null}
         </div>
 
         {/*<!-- Right controls -->*/}
         <div className="right chart-controls right-align">
           {this.state.iconDownload?<Button variant="outlined" ><Icon>{'file_download'}</Icon></Button>:null}
         </div>
-
-     
-
       </div>
     );
   }
