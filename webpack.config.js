@@ -56,7 +56,7 @@ module.exports = (env) => {
       port: 2000, // open app in localhost:2000
       historyApiFallback: true,
       publicPath: '/dist/', //fallback not existing urls to index
-      open:true
+      //open:true
     }
   };
 };

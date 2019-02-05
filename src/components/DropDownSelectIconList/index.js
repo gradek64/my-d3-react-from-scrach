@@ -67,12 +67,9 @@ class DropDownSelectIconList extends React.Component {
   };
 
   performAction = (selected) =>{
-    console.log(selected.value);
     this.setState({ selected });
     this.hideDropDown(selected.materialIcon);
     //call action
-
-    console.log('type selected', selected); 
     this.props.action(selected);
   }
 
@@ -80,8 +77,6 @@ class DropDownSelectIconList extends React.Component {
 
     const {showDropDownMenu, items ,selected } = this.state;
     const {   classes  } = this.props;
-
-    console.log('....selected.....',selected);
 
     return (
       <div>

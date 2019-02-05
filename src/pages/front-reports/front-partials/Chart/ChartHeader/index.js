@@ -7,13 +7,6 @@ import './ChartHeader.scss';
 
 class ChartHeader extends React.Component {
 
-  constructor(props){
-    super(props);
-
-    console.log('...chart ChartHeader props......', props);
-    console.log('...chart ChartHeader state......', this.state);
-  }
-
   state = {
     chartTypes:this.props.chartTypes[this.props.tabActive],
     typeSelected:this.props.chartTypes[this.props.tabActive].find(({selected})=>selected),
@@ -21,78 +14,75 @@ class ChartHeader extends React.Component {
     groubByButtonSelected:this.props.groubByButtons[this.props.tabActive]?
       this.props.groubByButtons[this.props.tabActive].find(({selected})=>selected).value:
       'none',
-    iconDownload:false
+    iconDownload:this.props.chartTypes[this.props.tabActive].find(({selected})=>selected).value ==='table'
   }
 
+  //render first chart once component is ready;
+  componentDidMount(){
+    this.renderChart();
+  }
+
+  /*
+    *@componentDidUpdate is neccessary to keep track between prevProps and updated Props
+    *@React wont update props once they sent, to change them U need use state for your changes
+  */
   componentDidUpdate(prevProps) {
-  // Typical usage (don't forget to compare props):
 
     const {chartTypes,groubByButtons, tabActive } = this.props;
     const {chartTypes:prevTypes,groubByButtons:prevButtons, tabActive:previousTab } = prevProps;
 
+    /*
+      *@selected it doenst live on props it gets created from chartTypes array by selected property
+      *@thefore you need listen for changes by looking for array change and then selecting;
+    */
     const selected = chartTypes[tabActive].find(({selected})=>selected);
     const prevSelected = prevTypes[previousTab].find(({selected})=>selected);
   
-
+    //charTypes has changed
     if (chartTypes[tabActive] !== prevTypes[previousTab] ) {
-      this.setState({ chartTypes:chartTypes[tabActive] });
+      this.setState({ 
+        chartTypes:chartTypes[tabActive],
+        iconDownload:selected.value ==='table' 
+      });
     }
-    if (selected !== prevSelected && tabActive!==previousTab) {
+    //selected type changed important for changing tab
+    if (selected !== prevSelected) {
       this.setState({ 
         typeSelected:selected
       });
-
     }
+    /*
+      *@menu for reports has changed thefore select groubBybutton has changed;
+      *@therefore tabActive has change so once all complited render chart as callback
+    */
     if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
       this.setState({ 
-        groubByButtons:groubByButtons[tabActive]
-      });
+        groubByButtons:groubByButtons[tabActive],
+        groubByButtonSelected:this.props.groubByButtons[tabActive]?
+          this.props.groubByButtons[tabActive].find(({selected})=>selected).value:
+          'none'
+      },this.renderChart);
     }
   }
 
-  shouldComponentUpdate(prevProps) {
-
-    const {chartTypes,groubByButtons, tabActive , typeSelected} = this.props;
-    const {chartTypes:prevTypes,
-      groubByButtons:prevButtons, 
-      tabActive:previousTab,
-      typeSelected:previousSelected } = prevProps;
-    if(!chartTypes[tabActive]) return true;
-    const selectedChange = chartTypes[tabActive].find(({selected})=>selected )
-                    !== prevTypes[previousTab].find(({selected})=>selected);
-    console.log('typeSelected',typeSelected);
-    console.log('previousSelected',previousSelected);
-    console.log(selectedChange);
-    //const differentDone = this.props.done !== nextProps.done;
-    return selectedChange;
+  renderChart(){
+    console.log('\n\n.....ONCE.......\n\n',
+      'typeSelected::: ',this.state.typeSelected.value,'page::: ', this.props.page , 
+      'tabActive:: ', this.props.tabActive,
+      'groubByButtonSelected:: ', this.state.groubByButtonSelected, '\n\n.....ONCE.......\n\n'
+    );
   }
 
-  onSelectType = (selected) => {
-    const iconDownload = selected.value==='table'? true:false;
-    this.setState({ iconDownload });
-    this.setState((state)=>{
-      return { typeSelected: selected };
-    });
-
-    console.log(this.state.groubByButtons);
-
-
-    /* console.log('resposible for render chart from here.......',
-      selected,'page:', this.props.page , 
-      'tabActive', this.props.tabActive,
-      'groubByButtonSelected', this.state.groubByButtonSelected
-    );*/
-  };
+  onSelectType = (typeSelected) => {
+    const iconDownload = typeSelected.value==='table'? true:false;
+    this.setState({ 
+      iconDownload,
+      typeSelected }, this.renderChart);
+  }
 
   onGroupButtonClick = ({value}) => {
-    console.log('and type selected',this.state.typeSelected);
-    console.log('value', value);
-    console.log('groubByButtonSelected', this.state.groubByButtonSelected);
- 
     //asign groubByButtonSelected;
-    /*this.setState({groubByButtonSelected:value},()=>{
-      console.log(this.state);  
-    });*/
+    this.setState({groubByButtonSelected:value}, this.renderChart);
   }
 
   render(){
@@ -117,6 +107,7 @@ class ChartHeader extends React.Component {
           {this.state.groubByButtons?
             <NavReportButtonGroup 
               groubByButtonsList={this.state.groubByButtons} 
+              selectedGroupByValue={this.state.groubByButtonSelected}
               actionCb={this.onGroupButtonClick}
             />
             :null}
@@ -129,7 +120,6 @@ class ChartHeader extends React.Component {
       </div>
     );
   }
-
 }
 
 export default ChartHeader;
