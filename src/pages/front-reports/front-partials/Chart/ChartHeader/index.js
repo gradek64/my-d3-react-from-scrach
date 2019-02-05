@@ -23,6 +23,13 @@ class ChartHeader extends React.Component {
   }
 
   /*
+    *@there one more react cycle method called ---  componentShouldUpdate(nextProps) { return true/false } ----
+    *@it returns true or false , U make condition when should update no good for me 
+    *@since I always want to change state but once it returns true it wont update nothing, 
+    *@could be usefull in the future ;)
+  */
+
+  /*
     *@componentDidUpdate is neccessary to keep track between prevProps and updated Props
     *@React wont update props once they sent, to change them U need use state for your changes
   */
