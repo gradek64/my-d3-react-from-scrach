@@ -78,6 +78,9 @@ class ChartHeader extends React.Component {
       'tabActive:: ', this.props.tabActive,
       'groubByButtonSelected:: ', this.state.groubByButtonSelected, '\n\n.....ONCE.......\n\n'
     );
+
+    //notify outside componets;
+    this.props.getData(this.state);
   }
 
   onSelectType = (typeSelected) => {

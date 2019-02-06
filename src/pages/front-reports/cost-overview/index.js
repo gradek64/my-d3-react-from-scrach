@@ -1,10 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
 import ReportsMenuSubLinks from '../front-partials/ReportsMenuSubLinks';
 import ChartDiscription from '../front-partials/ChartDiscription';
-import Chart from '../front-partials/Chart/';
+import ChartComponents  from '../front-partials/ChartComponents/';
 
 
 //page Configuration;
@@ -39,9 +36,9 @@ const CostOverview = (props) => {
         /* just for science experiment assing already set prop to stop them from reasigning links*/
       />
       <ChartDiscription config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
-      <Chart config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'} page={page} isVariance={isVariance}/>
+      <ChartComponents config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'} page={page} isVariance={isVariance}/>
     </div>
   );
 };
 
-export default   CostOverview;
+export default CostOverview;
