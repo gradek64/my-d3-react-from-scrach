@@ -5,24 +5,23 @@ import { max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 
-// Same as data.tsv
-import data from './data';
-
-import './barChart.scss';
-
-const BarChart = ({ svgWidth, svgHeight }) => {
+const BarChart = (props) => {
+  const { svgWidth, svgHeight, data } = props;
+  
   //Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
   const margin = { top: 20, right: 20, bottom: 30, left: 40 },
     width = svgWidth - margin.left - margin.right,
     height = svgHeight - margin.top - margin.bottom;
+  const label = 'label';
+  const value = 'value';
 
   const x = scaleBand()
       .rangeRound([0, width])
       .padding(0.1),
     y = scaleLinear().rangeRound([height, 0]);
 
-  x.domain(data.map(d => d.letter));
-  y.domain([0, max(data, d => d.frequency)]);
+  x.domain(data.map(d => d[label]));
+  y.domain([0, max(data, d => d[value])]);
   return (
     <svg width={svgWidth} height={svgHeight}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
@@ -45,12 +44,12 @@ const BarChart = ({ svgWidth, svgHeight }) => {
         {data.map((d, i) => (
           <rect
             key={i}
-            key={d.letter}
+            key={d[label]}
             className="bar"
-            x={x(d.letter)}
-            y={y(d.frequency)}
+            x={x(d[label])}
+            y={y(d[value])}
             width={x.bandwidth()}
-            height={height - y(d.frequency)}
+            height={height - y(d[value])}
           />
         ))}
       </g>

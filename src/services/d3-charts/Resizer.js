@@ -1,7 +1,6 @@
 import React from 'react';
-import Chart from './BarChart';
 
-export default class Risizer extends React.Component {
+class Resizer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,13 +24,17 @@ export default class Risizer extends React.Component {
   }
 
   render() {
+    const propsTranform = {
+      data:this.props.data,
+      svgWidth:this.state.windowWidth,
+      svgHeight:this.state.windowHeight/2,
+    };
     return (
-      <React.Fragment>
-        <Chart
-          svgWidth={this.state.windowWidth}
-          svgHeight={this.state.windowHeight}
-        />
-      </React.Fragment>
+      <div>
+        {React.cloneElement(this.props.children, {...propsTranform})}
+      </div>
     );
   }
 }
+
+export default Resizer;

@@ -12,10 +12,10 @@ export const pageConfiguration = {
       {'_id':3,'label':'Nominal','value':'NOMINALS'}
     ],
     types:[
-      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table','selected':true},
+      {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
       {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut'},
       {'id':5,'label':'Pie',materialIcon:'pie_chart_outlined','value':'pie'},
-      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar'}],
+      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar','selected':true}],
   },
   'cost-pools':{
     reportsMenuButton:{
