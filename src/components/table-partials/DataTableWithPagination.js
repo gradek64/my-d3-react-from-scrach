@@ -16,13 +16,13 @@ class DataTableWithPagination extends React.Component {
           this.setState({page});
           this.updatedData(page,this.state.rowsPerPage);
           this.props.updataSentData( this.updatedData,this.handleChangePage,page,this.state.rowsPerPage );
-        };
+        }
 
         handleChangeRowsPerPage = event => {
           let rows = event.target.value;
           this.setState({ rowsPerPage: event.target.value });
           this.updatedData(this.state.page,rows);
-        };
+        }
 
         updatedData = (page,rows) => {
           let updatedPage = page ? page : this.props.startPage;
@@ -38,7 +38,8 @@ class DataTableWithPagination extends React.Component {
           //update number of rows to display
           this.updatedData();
           //update number of rows, and pass handleChangePage for last page to show after creation of costModel
-          this.props.updataSentData( this.updatedData,this.handleChangePage,0,this.state.rowsPerPage );
+          if(this.props.updataSentData)
+            this.props.updataSentData( this.updatedData,this.handleChangePage,0,this.state.rowsPerPage );
         }
 
         render() {
