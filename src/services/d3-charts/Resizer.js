@@ -7,6 +7,8 @@ class Resizer extends React.Component {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight
     };
+    this.resizeWindow = this.resizeWindow.bind(this);
+    this.myRef = React.createRef();
   }
   resizeWindow() {
     this.setState({
@@ -16,18 +18,20 @@ class Resizer extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow.bind(this));
+    window.addEventListener('resize', this.resizeWindow,false);
   }
 
   componentWillUnmount(){
-    window.removeEventListener('resize', this.resizeWindow.bind(this));
+    window.removeEventListener('resize', this.resizeWindow,false);
   }
 
   render() {
     const propsTranform = {
       data:this.props.data,
+      type:this.props.type,
       svgWidth:this.state.windowWidth,
       svgHeight:this.state.windowHeight/2,
+      svgElementsCB:this.props.svgElementsCB
     };
     return (
       <div>

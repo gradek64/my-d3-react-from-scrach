@@ -1,66 +1,57 @@
-/**
- * Created by Sergiu Ghenciu on 01/03/2018
- *
- * Expected data structure: [{value: 10}, {value: 20}, ...]
- *
- */
+import React from 'react';
+import * as d3 from 'd3';
 
-'use strict';
+const PieHolder = (props) => {
 
+  const { svgWidth ,data, svgElementsCB, type } = props;
+  const svgElements = [];
+  const colors = ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'];
 
-const PieChartService = (_) =>{
-  const arcFactory = (type, radius) =>
-    d3
-      .arc()
-      .outerRadius(radius)
-      .innerRadius(type === 'donut' ? radius / 2 : 0);
-
-  const render = (element, data, opts) => {
-    const width = opts.width;
-    const height = opts.height;
-    const minSide = Math.min(width, height);
-    const radius = minSide / 2;
-
-    const color = _.scaleOrdinal(opts.colors);
-
-    const arc = arcFactory(opts.type, radius);
-
-    const pie = d3
-      .pie()
-      .sort(opts.sort)
-      .value(_.prop('value'));
-
-    const svg = d3
-      .select(element)
-      .append('svg')
-      .attr('width', '100%')
-      .attr('height', '100%')
-      .attr('viewBox', '0 0 ' + minSide + ' ' + minSide)
-      .attr('preserveAspectRatio', 'xMidYMin')
-      .append('g')
-      .attr(
-        'transform',
-        'translate(' + minSide / 2 + ',' + minSide / 2 + ')'
-      );
-
-    const g = svg
-      .selectAll('.arc')
-      .data(pie(data))
-      .enter()
-      .append('g')
-      .attr('class', 'arc');
-
-    g
-      .append('path')
-      .attr('d', arc)
-      .style('fill', (d) => color(d.index));
-
-    return g;
+  const makePie =(type) => {
+    return d3
+      .pie()( data.map( ({value})=>value))
+      .map(d => d3.arc()(
+        {
+          startAngle: d.startAngle,
+          endAngle: d.endAngle,
+          innerRadius: type==='donut'?100:0,
+          outerRadius:  svgWidth / 2 - 10,
+          padAngle: type==='donut'?0.03:0
+        }));
+  };
+  // define event handlers on the parent holder component
+  const onMouseOver = (e) => {
+    console.log('hello');
+  };
+  const onMouseOut = (e) => {
+    
   };
 
-  return {
-    render,
-    arcFactory,
-  };
+  return (
+
+    <svg height={svgWidth}
+      width={svgWidth}>
+      <g transform={`translate(${svgWidth / 2},${svgWidth / 2})`}>
+        { 
+          makePie(type).map((d, i) => {
+            return (
+              <path key={i}
+                d={d}
+                id={i}
+                /* U need to store refference for every <rect> element and expose it outside 
+                to chart.js for mouseover, click etc...
+                */
+                ref={ (ref) => {
+                  let currentRef = svgElements[i] = ref;
+                  svgElementsCB(currentRef,data[i]);
+                } }
+                onMouseOut={onMouseOut}
+                onMouseOver={onMouseOver}
+                style={{fill: colors[i], opacity: '0.8'}}/>);
+          })
+        }
+      </g>
+    </svg>
+  );
 };
-
+export default PieHolder; 

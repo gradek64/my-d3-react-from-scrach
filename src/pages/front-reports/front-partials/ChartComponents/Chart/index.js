@@ -1,5 +1,7 @@
 import React from 'react';
 import BarChartService from '../../../../../services/d3-charts/BarChart';
+import PieChartService from '../../../../../services/d3-charts/PieChart';
+import ReportsTableDataStructure from '../../../../../components/table-partials/dataStructure/ReportsTableDataStructure';
 import Resizer from '../../../../../services/d3-charts/Resizer';
 
 const Chart = (props) => {
@@ -10,11 +12,9 @@ const Chart = (props) => {
 
   const getService = (type) => {
     switch (type) {
-    case 'table':
-      return tableService(scope);
     case 'pie':
     case 'donut':
-      return pieService;
+      return <PieChartService/>;
     case 'bar':
       return <BarChartService/>;
     case 'rows':
@@ -54,11 +54,30 @@ const Chart = (props) => {
     return a;
   },[]);
 
+  const onSVGElementClick = (data)=>(e)=>{
+    console.log(e);
+    console.log('data',data);
+  };
+  const svgElementsCB = (svgElement,data) => {
+    console.log('svgElement',svgElement,data);
+    if(svgElement) svgElement.addEventListener('click',onSVGElementClick(data));
+
+  };
+
   const service = getService(params.typeSelected.value);
+  console.log('service', service);
+  const resizerProps = {
+    data:prepareData(data),
+    type:params.typeSelected.value,
+    svgElementsCB
+  };
   return (
-    <Resizer data={prepareData(data)}>
-      {service}
-    </Resizer>
+    <div>
+      {params.typeSelected.value!=='table'?
+        <Resizer {...resizerProps}>{service}</Resizer>:
+        <ReportsTableDataStructure data={resizerProps.data} />
+      }
+    </div>
   );
 };
 

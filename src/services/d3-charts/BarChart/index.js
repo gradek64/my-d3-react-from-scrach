@@ -6,7 +6,8 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 
 const BarChart = (props) => {
-  const { svgWidth, svgHeight, data } = props;
+  const { svgWidth, svgHeight, data, svgElementsCB } = props;
+  let svgElements = [];
   
   //Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
   const margin = { top: 20, right: 20, bottom: 30, left: 40 },
@@ -46,6 +47,13 @@ const BarChart = (props) => {
             key={i}
             key={d[label]}
             className="bar"
+            /* U need to store refference for every <rect> element and expose it outside 
+               to chart.js for mouseover, click etc...
+            */
+            ref={ (ref) => {
+              let currentRef = svgElements[i] = ref;
+              svgElementsCB(currentRef,d);
+            } }
             x={x(d[label])}
             y={y(d[value])}
             width={x.bandwidth()}

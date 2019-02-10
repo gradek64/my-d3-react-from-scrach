@@ -1,0 +1,50 @@
+/*::-webkit-scrollbar {
+    display: none;
+}*/
+
+.table-fixed {
+    tbody {
+        height: 193px;
+        overflow-y: auto;
+        display: block;
+
+        /* margin: 10px 0 10px 0;*/
+    }
+
+    tr {
+        display: flex;
+        align-items: center;
+    }
+
+    th,
+    td {
+        text-align: left;
+        min-width: 100px;
+        vertical-align: 50%;
+
+        /*border: 1px solid green;*/
+        width: 33.3%;
+    }
+
+    thead,
+    tfoot {
+        tr {
+            padding-right: 15px;
+
+            /*
+  box-sizing property allows us to include the padding and border in an element's total width and height.
+*/
+            box-sizing: border-box;
+
+            th,
+            td {
+                border-bottom: none;
+            }
+
+            td:last-child {
+                text-align: right;
+                vertical-align: middle;
+            }
+        }
+    }
+}

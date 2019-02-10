@@ -13,9 +13,9 @@ export const pageConfiguration = {
     ],
     types:[
       {'id':1,'label':'Table',materialIcon:'grid_on','value':'table'},
-      {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut'},
+      {'id':4,'label':'Donut',materialIcon:'donut_large','value':'donut','selected':true},
       {'id':5,'label':'Pie',materialIcon:'pie_chart_outlined','value':'pie'},
-      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar','selected':true}],
+      {'id':6,'label':'Bar',materialIcon:'insert_chart','value':'bar'}],
   },
   'cost-pools':{
     reportsMenuButton:{
