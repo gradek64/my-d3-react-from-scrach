@@ -3,21 +3,30 @@ import React from 'react';
 class Resizer extends React.Component {
   constructor(props) {
     super(props);
+    /*
+      *@intial state set to window 
+      *@to prevent d3 comlain about not receive any dememntions;
+    */
     this.state = {
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+      containerWidth: window.innerWidth,
+      containerHeight: window.innerHeight
     };
     this.resizeWindow = this.resizeWindow.bind(this);
-    this.myRef = React.createRef();
+
   }
   resizeWindow() {
     this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
+      containerWidth: document.querySelector('.chart').clientWidth,
+      containerHeight: document.querySelector('.chart').clientHeight
     });
   }
 
   componentDidMount() {
+    this.setState({
+      containerWidth: document.querySelector('.chart').clientWidth,
+      containerHeight: document.querySelector('.chart').clientHeight
+    });
+
     window.addEventListener('resize', this.resizeWindow,false);
   }
 
@@ -29,14 +38,14 @@ class Resizer extends React.Component {
     const propsTranform = {
       data:this.props.data,
       type:this.props.type,
-      svgWidth:this.state.windowWidth,
-      svgHeight:this.state.windowHeight/2,
+      svgWidth:this.props.type!=='bar'?this.state.containerWidth/2:this.state.containerWidth,
+      svgHeight:this.props.type!=='bar'?this.state.containerHeight/2:this.state.containerHeight/2,
       svgElementsCB:this.props.svgElementsCB
     };
     return (
-      <div>
+      <React.Fragment>
         {React.cloneElement(this.props.children, {...propsTranform})}
-      </div>
+      </React.Fragment>
     );
   }
 }

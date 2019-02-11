@@ -34,30 +34,27 @@ const styles = theme => ({
 
 const TableDataReports = (props) => { 
   const { classes ,pageUpdate, rowsPerPageUpdate, hasHeader=true ,hasFooter=true} = props;
-  console.log('///hre ');
+  const columns = ['label','percentage','value'];
   return (
-    <Paper>
-      <Table className='table-fixed'>
+    <Paper style={{overflowX:'scroll'}}>
+      <Table className='table-fixed' style={{ minWidth:'860px'}}>
         {hasHeader?<TableHead >
           <TableRow>
-            <TableCell >Label</TableCell>
-            <TableCell>Percentage</TableCell>
-            <TableCell>Value</TableCell>
+            {hasHeader && columns.map((label,i)=>
+              <TableCell component="th" scope="row" key={`labelKey${i}`}>
+                {label}
+              </TableCell>)}
           </TableRow>
         </TableHead>:null}
         <TableBody >
-          {props.data?props.data.map(({label,percentage,value},id) => {
+          {props.data?props.data.map((item,index) => {
             return (
-              <TableRow key={`table-reports${id}`} >
-                <TableCell component="th" scope="row" >
-                  {label}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {percentage}
-                </TableCell>
-                <TableCell >
-                  {value}
-                </TableCell>  
+              <TableRow key={`table-reports${index}`} >
+                { columns.map((column,i)=>Object.keys(item).includes(column)?
+                  <TableCell component="th" scope="row" key={`tableKey${i}`}>
+                    {item[column]}
+                  </TableCell>:null)
+                }
               </TableRow>
             );
           }):null}
@@ -65,9 +62,11 @@ const TableDataReports = (props) => {
         {  hasFooter? (
           <TableFooter>
             <TableRow>
-              <TableCell ></TableCell>
-              <TableCell></TableCell>
-              <TableCell>Value</TableCell>
+              {columns.map((label,i)=>
+                <TableCell component="th" scope="row" key={`labelKey${i}`}>
+                  {i===0?'total':null}
+                  {(i+1)===columns.length?'53534545645':null}
+                </TableCell>)}
             </TableRow>
           </TableFooter>) : null
         }
