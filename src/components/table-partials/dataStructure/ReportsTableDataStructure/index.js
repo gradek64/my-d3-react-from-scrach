@@ -19,28 +19,34 @@ const TableDataReports = (props) => {
   return (
     <Paper style={{overflowX:'scroll'}}>
       <Table className='table-fixed' style={{ minWidth:'860px'}}>
+        
         {hasHeader?<TableHead >
           <TableRow>
             {hasHeader && columns.map((label,i)=>
-              <TableCell component="th" scope="row" key={`labelKey${i}`}>
+              <TableCell component="th" 
+                scope="row" 
+                key={`labelKey${i}`} 
+                dropdownmenuanchor='yes'>
                 {label}
                 <DropDownMenu 
+                  key={i}
                   onMouseEnter={false} 
-                  collapsebleAccordion={true}
+                  collapsebleAccordion={false}
                   multipleOpen={false}
-                  animation={false} >
-                  <div className='verticalAlignment'>
-                    {'label'}
+                  animation={true} >
+                  <div className='verticalAlignment' >
+                    {label}
                   </div>
                   <div>
-                    <ul>
-                      { props.data.map((item,i)=>
-                        <li component="th" scope="row" key={`dropdown${i}`}>
-                          {item[label]}
-                        </li>:null)
-                      }
-                    </ul>
-                   
+                    <Paper>
+                      <ul>
+                        { props.data.map((item,i)=>
+                          <li component="th" scope="row" key={`dropdown${i}`}>
+                            {item[label]}
+                          </li>:null)
+                        }
+                      </ul>  
+                    </Paper>            
                   </div>
                 </DropDownMenu>
               </TableCell>)}

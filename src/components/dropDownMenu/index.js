@@ -39,7 +39,6 @@ class DropDownMenu extends React.Component {
   };
 
   toggleMenuOpen = (showDropDownMenuState) => {
-    console.log('is toggling');
     this.setState({ showDropDownMenu: !showDropDownMenuState });
   }
 
@@ -51,6 +50,8 @@ class DropDownMenu extends React.Component {
       *@which is the same as 'contaoins' then funcioned is returned in if statament so doenst go any further
       *@by if statement if(this.anchorEl.current.contains(event.target)) checking what element is clicked
     */
+
+    console.log('this.anchorEl.current',this.anchorEl.current);
     if (this.anchorEl.current.contains(event.target)) {
       return;
     }
