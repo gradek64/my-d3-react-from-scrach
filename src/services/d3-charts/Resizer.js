@@ -39,7 +39,9 @@ class Resizer extends React.Component {
       data:this.props.data,
       type:this.props.type,
       svgWidth:this.props.type!=='bar'?this.state.containerWidth/2:this.state.containerWidth,
-      svgHeight:this.props.type!=='bar'?this.state.containerHeight/2:this.state.containerHeight/2,
+      svgHeight:this.props.type!=='bar'
+        ?this.state.containerHeight/2:
+        this.state.containerHeight/2+this.state.containerHeight/5,
       svgElementsCB:this.props.svgElementsCB
     };
     return (

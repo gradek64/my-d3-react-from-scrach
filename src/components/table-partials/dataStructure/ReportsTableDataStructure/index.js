@@ -7,30 +7,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DropDownMenu from './../../../dropDownMenu';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 //scss
 import './reportsTableDataStructure.scss';
-
-
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    margin: `${theme.spacing.unit * 3}px auto`,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-    width:'100%',
-  },
-  scrollableBody:{
-    display:'block',
-    overflow:'auto',
-    height:'200px',
-    textAlign:'center'
-  }
-});
 
 const TableDataReports = (props) => { 
   const { classes ,pageUpdate, rowsPerPageUpdate, hasHeader=true ,hasFooter=true} = props;
@@ -43,7 +24,27 @@ const TableDataReports = (props) => {
             {hasHeader && columns.map((label,i)=>
               <TableCell component="th" scope="row" key={`labelKey${i}`}>
                 {label}
+                <DropDownMenu 
+                  onMouseEnter={false} 
+                  collapsebleAccordion={true}
+                  multipleOpen={false}
+                  animation={false} >
+                  <div className='verticalAlignment'>
+                    {'label'}
+                  </div>
+                  <div>
+                    <ul>
+                      { props.data.map((item,i)=>
+                        <li component="th" scope="row" key={`dropdown${i}`}>
+                          {item[label]}
+                        </li>:null)
+                      }
+                    </ul>
+                   
+                  </div>
+                </DropDownMenu>
               </TableCell>)}
+           
           </TableRow>
         </TableHead>:null}
         <TableBody >
