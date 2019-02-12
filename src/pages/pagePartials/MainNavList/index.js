@@ -61,6 +61,7 @@ const MainNavList = (props) => {
 
   const { asMobile, multipleOpenPass, page }= props;
   const { location } = history;
+
   const activetab = {
     active: location.pathname==='/'?'true':'false'
   };
@@ -98,13 +99,13 @@ const MainNavList = (props) => {
                 key={`link}${i}`}
                 dropped='false' 
                 dropdownmenuanchor='yes' 
-                onClick={(e)=>{props.callback?props.callback(e):null;}}>
+              >
                 <DropDownMenu 
                   onMouseEnter={asMobile?false:true} 
                   collapsebleAccordion={asMobile?true:false}
                   multipleOpen={multipleOpenPass?multipleOpenPass:false}
                   animation={asMobile?true:false} >
-                  <div className='verticalAlignment'>
+                  <div className='verticalAlignment' onClick={(e)=>{props.callback?props.callback(e):null;}}>
                     <IconComponet  color={icon.color} />
                     <Typography variant="h6" color="secondary" className={props.classes.robotoLight}>
                       {label}

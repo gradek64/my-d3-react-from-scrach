@@ -8,6 +8,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownMenu from './../../../dropDownMenu';
+import TableDataFilter from './../../../table-partials/TableDataFilter';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 //scss
@@ -16,8 +17,9 @@ import './reportsTableDataStructure.scss';
 const TableDataReports = (props) => { 
   const { classes ,pageUpdate, rowsPerPageUpdate, hasHeader=true ,hasFooter=true} = props;
   const columns = ['label','percentage','value'];
+  {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}
   return (
-    <Paper style={{overflowX:'scroll'}}>
+    <Paper>
       <Table className='table-fixed' style={{ minWidth:'860px'}}>
         
         {hasHeader?<TableHead >
@@ -33,19 +35,21 @@ const TableDataReports = (props) => {
                   onMouseEnter={false} 
                   collapsebleAccordion={false}
                   multipleOpen={false}
+                  goesAwayOnContentClick={false}
                   animation={true} >
                   <div className='verticalAlignment' >
                     {label}
                   </div>
                   <div>
                     <Paper>
-                      <ul>
+                      <TableDataFilter items={props.data} accessor={label} />
+                      {/*<ul>
                         { props.data.map((item,i)=>
                           <li component="th" scope="row" key={`dropdown${i}`}>
                             {item[label]}
                           </li>:null)
                         }
-                      </ul>  
+                      </ul> */} 
                     </Paper>            
                   </div>
                 </DropDownMenu>

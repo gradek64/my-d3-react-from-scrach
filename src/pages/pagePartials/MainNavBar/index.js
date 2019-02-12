@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 //custom imports
-import MainNaVList from '../MainNavList';
+import MainNavList from '../MainNavList';
 
 const styles = (theme) => ({
   root: {
@@ -39,7 +39,7 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.sectionDesktop}>
         <Toolbar>
-          <MainNaVList page='cost-overview' />
+          <MainNavList page='cost-overview' />
         </Toolbar>
       </AppBar>
     </div>

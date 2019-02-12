@@ -28,9 +28,15 @@ const MobileNavList = (BaseComponent) => {
       this.updateCrossMinusIcon = this.updateCrossMinusIcon.bind(this);
     }
     updateCrossMinusIcon(event) {
+      /*
+        *@event.currentTarget is the one you click
+        *@event.target is the one click is attached/register to ;)
+      */
+      if(event.target !== event.currentTarget) return;
       const { multipleOpenPass } = this.props;
       let current = event.target.closest('li');
       let previous = this.state.previousOpen;
+
 
       //U dont want below functionility for multiple tabs open
       if(!multipleOpenPass && previous && previous!==current){

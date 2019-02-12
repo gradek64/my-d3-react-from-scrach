@@ -15,6 +15,7 @@ class DropDownMenu extends React.Component {
     previousOpen:null
   };
   anchorEl = React.createRef();
+  dropdownmenuContainer =  React.createRef();
 
   /*
     *@ReactDOM.findDOMNode(this) find DOM element of this so componet <DropDownMenu>
@@ -50,8 +51,13 @@ class DropDownMenu extends React.Component {
       *@which is the same as 'contaoins' then funcioned is returned in if statament so doenst go any further
       *@by if statement if(this.anchorEl.current.contains(event.target)) checking what element is clicked
     */
-
-    console.log('this.anchorEl.current',this.anchorEl.current);
+    
+    //dont or do close inside dropdown content;
+    if (this.dropdownmenuContainer.current.contains(event.target)) {
+      if(!this.props.goesAwayOnContentClick){
+        return;
+      }
+    }
     if (this.anchorEl.current.contains(event.target)) {
       return;
     }
@@ -68,60 +74,58 @@ class DropDownMenu extends React.Component {
     } = this.props;
     const { showDropDownMenu } = this.state;
     return (
-      <ClickAwayListener onClickAway={ this.handleClose }>
 
-        <div 
-          
-          onMouseEnter={this.showDropDown}
-          onMouseLeave={this.hideDropDown}
-        >
-          {/*show ClickAwayListener only when menu is not multipleOpen so close the last one*/}
-          {multipleOpen?
-            <ClickAwayListener onClickAway={ this.handleClose }>
-              <div></div>
-            </ClickAwayListener>:null
-          }
-          {/*show ClickAwayListener only when manu is open*/}
-          <div onClick={this.handleClose}>
-            {React.Children.map(children, (child, i) => {
+      <div 
+        onMouseEnter={this.showDropDown}
+        onMouseLeave={this.hideDropDown}
+      >
+        {/*show ClickAwayListener only when menu is not multipleOpen so close the last one*/}
+        {!multipleOpen?
+          <ClickAwayListener onClickAway={ this.handleClose }>
+            <div></div>
+          </ClickAwayListener>:null
+        }
+        {/*show ClickAwayListener only when manu is open*/}
+        <div onClick={this.handleClose}>
+          {React.Children.map(children, (child, i) => {
 
             /* first child is alway a trigger for mobile Click
             all clicks needs to be set to this element 
             */
           
-              if (i == 0)return <div 
-                ref={this.anchorEl}
-                className='tab-header'
-                onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}>
-                {child}
-              </div>;
+            if (i == 0)return <div 
+              ref={this.anchorEl}
+              className='tab-header'
+              onClick={()=>{this.toggleMenuOpen(showDropDownMenu);}}>
+              {child}
+            </div>;
           
-              /* second child is DropDownMenu Content 
+            /* second child is DropDownMenu Content 
             render element cause <Collapse /> will look after to show it or not
             */
-              if(i==1 /*&& showDropDownMenu*/) {
-                return (
-                  <div style={{
-                    position:collapsebleAccordion?'block':'absolute',
-                    left:0,
-                    minWidth:'160px',
-                    color:'black',
-                    zIndex:'100',
-                    transform: placement==='left'?'translate(-100%)':'translate(0)'
-                  }}
-                  >
-                    {animation?
-                      <Collapse in={showDropDownMenu} >
-                        {child}
-                      </Collapse>:null
-                    }
-                    {!animation && showDropDownMenu?child:null}
-                  </div>);
-              }
-            })}
-          </div>
+            if(i==1 /*&& showDropDownMenu*/) {
+              return (
+                <div style={{
+                  position:collapsebleAccordion?'block':'absolute',
+                  left:0,
+                  minWidth:'160px',
+                  color:'black',
+                  zIndex:'100',
+                  transform: placement==='left'?'translate(-100%)':'translate(0)'
+                }}
+                ref={this.dropdownmenuContainer}
+                >
+                  {animation?
+                    <Collapse in={showDropDownMenu} >
+                      {child}
+                    </Collapse>:null
+                  }
+                  {!animation && showDropDownMenu?child:null}
+                </div>);
+            }
+          })}
         </div>
-      </ClickAwayListener>
+      </div>
 
     );
   }
@@ -130,6 +134,7 @@ class DropDownMenu extends React.Component {
 DropDownMenu.defaultProps = {
   onMouseEnter: true,
   animation:false,
+  goesAwayOnContentClick:true,
   collapsebleAccordion: false,
   multipleOpen: false,
   placement:'right'

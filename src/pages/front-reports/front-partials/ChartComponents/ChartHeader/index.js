@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import DropDownSelectIconList from '../../../../../components/DropDownSelectIconList';
 import Icon from '@material-ui/core/Icon';
 import NavReportButtonGroup from './NavReportButtonGroup';
-import './ChartHeader.scss';
+import './chart.scss';
 
 class ChartHeader extends React.Component {
 

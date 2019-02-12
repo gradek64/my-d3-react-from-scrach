@@ -75,7 +75,7 @@ const  MenuListComposition = (props) => {
                           </MenuItem>
                         );
                       }
-                      return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(),clickAwayHandler(e); }  }>{el}</MenuItem>);
+                      return (<MenuItem key={`drop${key}`} className={classes.menuItem} onClick={ (e)=>{ handler(); }  }>{el}</MenuItem>);
                     })
                   } 
 
