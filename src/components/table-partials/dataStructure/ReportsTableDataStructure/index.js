@@ -22,12 +22,12 @@ class TableDataReports extends React.Component {
   */
   state = {
     data:this.props.data,
+    filterData:this.props.data,
     filterDataSelected:Array.from(Array(this.props.data.length), () => true),
     checkedSelectAll:true,
   }
 
   componentDidMount = () =>{
-    console.log('initially this.props.data', this.props.data);
     //add addtional property:selected to this.state.data 
     const dataSelection = this.state.data.map((data,i)=>{
       data.selected = this.state.filterDataSelected[i];
@@ -42,41 +42,28 @@ class TableDataReports extends React.Component {
   }
 
   updateDataSelected = (updateArray, selectAllButton) => {
-    //update selected in data;
-    const dataSelection2 = this.state.data
+    //update data on new copy;
+    const copyFilteredData = this.state.data
       .map((data,i)=>{
         data.selected = updateArray[i];
         return data;
       })
       .filter(({selected})=>selected);
-    
+
     this.setState(()=>{
       return {
         checkedSelectAll:selectAllButton,
         filterDataSelected:[...updateArray],
-        data:[...dataSelection2]
+        filterData:[...copyFilteredData]
       };
-    },()=>{
-
-      console.log(':::this.state.data ::: ', this.state.data);
-      //filter data based on select inputs;
-      //this.state.data.filter(({selected})=>selected);
     });
   }
 
   render(){
 
     const {  hasHeader=true ,hasFooter=true } = this.props;
-
-    //to do 
-    const cloneData = Object.assign({}, this.props.data);
-
-    console.log('this.props.data', this.props.data);
-    console.log('cloneData', cloneData);
-    const { data, filterDataSelected, checkedSelectAll } = this.state;
+    const { data, filterData, filterDataSelected, checkedSelectAll } = this.state;
     const columns = ['label','percentage','value'];
-
-
 
     {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}
     return (
@@ -118,7 +105,7 @@ class TableDataReports extends React.Component {
             </TableRow>
           </TableHead>:null}
           <TableBody >
-            {data?data.map((item,index) => {
+            {filterData?filterData.map((item,index) => {
               return (
                 <TableRow key={`table-reports${index}`} >
                   { columns.map((column,i)=>Object.keys(item).includes(column)?
