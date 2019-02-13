@@ -95,7 +95,17 @@ class TableDataFilter extends React.Component {
         .toLowerCase()
         .includes( value.toString().toLowerCase() );    
     });
-    this.setState({searchData});
+    console.log('this.state.data',searchData);
+    const checked = searchData.map(({selected})=>selected);
+    console.log('checked',this.state.checked);
+    this.setState(()=>{
+      return {
+        checkedSelectAll:false,
+        checked:[...checked],
+        searchData
+      };
+    });
+
   }
 
   handleChange = index => event => {
