@@ -74,10 +74,19 @@ class TableDataFilter extends React.Component {
      checked:this.props.filterDataSelected,
      atLeastOneChecked:true,
      data:this.cloneData,
-     searchData:this.cloneData
+     searchData:this.cloneData,
+     resetSearch:'',
    }
 
    componentDidUpdate(prevProps) {
+
+    
+     if (this.props.filterBy !== prevProps.filterBy) {
+       if(this.props.filterBy!==this.props.accessor){
+         this.setState({resetSearch:''});
+       }
+       
+     }
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
          checked:this.props.filterDataSelected,
@@ -88,6 +97,8 @@ class TableDataFilter extends React.Component {
 
   handleSearch = event => {
     const { value } = event.target;
+
+    this.setState({resetSearch:value});
   
     const filterData = this.state.data.filter((item,index)=>{
       //keep index of filtered ones:
@@ -124,6 +135,10 @@ class TableDataFilter extends React.Component {
         checked:[...this.state.checked],
         searchData:listFiltered
       };
+    },()=>{
+      const filterBy = this.props.accessor;
+      //update records in ReportsTableDataStructure and selectAll button;
+      this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
     });
 
   }
@@ -141,8 +156,9 @@ class TableDataFilter extends React.Component {
           checked:[...allChecked]
         };
       },()=>{
+        const filterBy = this.props.accessor;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll);
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
       });
  
     }else {
@@ -162,8 +178,9 @@ class TableDataFilter extends React.Component {
         howManyUnselected.length===this.state.checked.length-1?
           this.setState({atLeastOneChecked:false}):
           this.setState({atLeastOneChecked:true});
+        const filterBy = this.props.accessor;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll);
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
       });
     }
 
@@ -185,6 +202,7 @@ class TableDataFilter extends React.Component {
             </div>
             <InputBase
               placeholder="Search…"
+              value={this.state.resetSearch}
               onChange={this.handleSearch}
               classes={{
                 root: classes.inputRoot,

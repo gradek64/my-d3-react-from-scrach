@@ -25,6 +25,7 @@ class TableDataReports extends React.Component {
     filterData:this.props.data,
     filterDataSelected:Array.from(Array(this.props.data.length), () => true),
     checkedSelectAll:true,
+    filterBy:null,
   }
 
   componentDidMount = () =>{
@@ -41,7 +42,7 @@ class TableDataReports extends React.Component {
     });
   }
 
-  updateDataSelected = (updateArray, selectAllButton) => {
+  updateDataSelected = (updateArray, selectAllButton,filterBy) => {
     //update data on new copy;
     const copyFilteredData = this.state.data
       .map((data,i)=>{
@@ -54,7 +55,8 @@ class TableDataReports extends React.Component {
       return {
         checkedSelectAll:selectAllButton,
         filterDataSelected:[...updateArray],
-        filterData:[...copyFilteredData]
+        filterData:[...copyFilteredData],
+        filterBy
       };
     });
   }
@@ -62,7 +64,7 @@ class TableDataReports extends React.Component {
   render(){
 
     const {  hasHeader=true ,hasFooter=true } = this.props;
-    const { data, filterData, filterDataSelected, checkedSelectAll } = this.state;
+    const { data, filterData, filterDataSelected, checkedSelectAll, filterBy } = this.state;
     const columns = ['label','percentage','value'];
 
     {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}
@@ -96,6 +98,7 @@ class TableDataReports extends React.Component {
                           checkedSelectAll={checkedSelectAll}
                           updateRecord={this.updateDataSelected}
                           accessor={label} 
+                          filterBy={filterBy}
                         />
                       </Paper>            
                     </div>
