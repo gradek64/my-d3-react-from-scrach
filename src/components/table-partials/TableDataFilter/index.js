@@ -88,21 +88,41 @@ class TableDataFilter extends React.Component {
 
   handleSearch = event => {
     const { value } = event.target;
-    const searchData = this.state.data.filter((item)=>{
+  
+    const filterData = this.state.data.filter((item,index)=>{
+      //keep index of filtered ones:
+      item.lucky=index;
       const convertedItem = item[this.props.accessor];
       return convertedItem
         .toString()
         .toLowerCase()
-        .includes( value.toString().toLowerCase() );    
+        .includes( value.toString().toLowerCase() );  
     });
-    console.log('this.state.data',searchData);
-    const checked = searchData.map(({selected})=>selected);
+
+    const luckyChosen = filterData
+      .map(({lucky})=>lucky);
+
+    //hide not filtered;
+    const listFiltered = this.state.searchData
+      .map((el,i)=>{
+        el.hide = luckyChosen.includes(i)?false:true;
+        return el;
+      });
+
+    console.log('this.state.searchData',this.state.searchData);
+    console.log('listFiltered',listFiltered);
+    console.log('luckyChosen',luckyChosen);
+
+    const checked = filterData.map(({selected})=>selected);
     console.log('checked',this.state.checked);
+
+    console.log(checked);
+    const ss = [true,false,true,false,false,false,false];
     this.setState(()=>{
       return {
         checkedSelectAll:false,
-        checked:[...checked],
-        searchData
+        checked:[...this.state.checked],
+        searchData:listFiltered
       };
     });
 
@@ -187,21 +207,28 @@ class TableDataFilter extends React.Component {
           <ListItemText primary={'Select All'} />
         </ListItem>
         <Divider />
-        {searchData.map((item,i) => (
-          <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
-            <Checkbox
-              checked={this.state.checked[i]}
-              tabIndex={-1}
-              value="this.state.checked[i]"
-              disableRipple
-              classes={{
-                root: classes.root,
-                checked: classes.checked,
-              }}
-            />
-            <ListItemText primary={item[accessor]} />
-          </ListItem>
-        ))}
+        {
+          searchData.map((item,i) => {
+            if(!item.hide){
+              return (
+                <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
+                  <Checkbox
+                    checked={this.state.checked[i]}
+                    tabIndex={-1}
+                    value="this.state.checked[i]"
+                    disableRipple
+                    classes={{
+                      root: classes.root,
+                      checked: classes.checked,
+                    }}
+                  />
+                  <ListItemText primary={item[accessor]} />
+                </ListItem>);
+            } else {
+              return (null);
+            }
+          })
+        }
       </List>
     );
   }
