@@ -80,7 +80,7 @@ class TableDataFilter extends React.Component {
 
    componentDidUpdate(prevProps) {
 
-    
+     //reset search once you applied a diffrent filter/search
      if (this.props.filterBy !== prevProps.filterBy) {
        if(this.props.filterBy!==this.props.accessor){
          this.setState({resetSearch:''});
@@ -109,7 +109,7 @@ class TableDataFilter extends React.Component {
         .toLowerCase()
         .includes( value.toString().toLowerCase() );  
     });
-
+    //search chosen
     const luckyChosen = filterData
       .map(({lucky})=>lucky);
 
@@ -117,6 +117,8 @@ class TableDataFilter extends React.Component {
     const listFiltered = this.state.searchData
       .map((el,i)=>{
         el.hide = luckyChosen.includes(i)?false:true;
+        //update checked with picked ones;
+        this.state.checked[i] = luckyChosen.includes(i)?true:false;
         return el;
       });
 
@@ -131,7 +133,7 @@ class TableDataFilter extends React.Component {
     const ss = [true,false,true,false,false,false,false];
     this.setState(()=>{
       return {
-        checkedSelectAll:false,
+        checkedSelectAll:true,
         checked:[...this.state.checked],
         searchData:listFiltered
       };
