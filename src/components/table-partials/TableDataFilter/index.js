@@ -99,7 +99,6 @@ class TableDataFilter extends React.Component {
     const { value } = event.target;
 
     this.setState({resetSearch:value});
-  
     const filterData = this.state.data.filter((item,index)=>{
       //keep index of filtered ones:
       item.lucky=index;
@@ -122,10 +121,6 @@ class TableDataFilter extends React.Component {
         return el;
       });
 
-    console.log('this.state.searchData',this.state.searchData);
-    console.log('listFiltered',listFiltered);
-    console.log('luckyChosen',luckyChosen);
-
     this.setState(()=>{
       return {
         checkedSelectAll:true,
@@ -145,7 +140,6 @@ class TableDataFilter extends React.Component {
     if(event.currentTarget.id==='selectAll'){
 
       const { checkedSelectAll } = this.state;
-
       //update selectAll accordig to selection or lack of it;
       this.state.searchData.map((el,i)=>{
         if(el.hide){
@@ -154,6 +148,7 @@ class TableDataFilter extends React.Component {
           this.state.checked[i]= true;
         }
       });
+
       this.setState(()=>{
         return {
           checkedSelectAll:checkedSelectAll===false?true:checkedSelectAll,
@@ -166,32 +161,26 @@ class TableDataFilter extends React.Component {
       });
  
     }else {
-      
-      //make sure that U will update if at least one is selected 
-      if(this.state.atLeastOneChecked || this.state.checked[index]!==true){
-        this.state.checked[index]= !this.state.checked[index];
-      }
-      this.setState(()=>{
-        return {
-          checkedSelectAll:false,
-          checked:[...this.state.checked]
-        };
+      const howManyUnselected = this.state.checked.filter((input)=>input===false);
+      //check how many is unselected to make sure at least one is selected
+      const morethanOne = howManyUnselected.length===this.state.checked.length-1?false:true;
+      this.setState({
+        atLeastOneChecked:morethanOne,
+        checkedSelectAll:false,
+        checked:[...this.state.checked]
       },()=>{
-        const howManyUnselected = this.state.checked.filter((input)=>input===false);
-        //check how many is unselected to make sure at least one is selected
-        howManyUnselected.length===this.state.checked.length-1?
-          this.setState({atLeastOneChecked:false}):
-          this.setState({atLeastOneChecked:true});
+        //make sure that U will update if at least one is selected 
+        if(this.state.atLeastOneChecked || this.state.checked[index]!==true){
+          this.state.checked[index]= !this.state.checked[index];
+        }
+
         const filterBy = this.props.accessor;
         //update records in ReportsTableDataStructure and selectAll button;
         this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
       });
     }
-
-
     /* console.log('Target',event.currentTarget.querySelector('input'));
     console.log('eventCurrentTarget',event.currentTarget);*/
-
   }
 
   render(){ 
