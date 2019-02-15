@@ -126,11 +126,6 @@ class TableDataFilter extends React.Component {
     console.log('listFiltered',listFiltered);
     console.log('luckyChosen',luckyChosen);
 
-    const checked = filterData.map(({selected})=>selected);
-    console.log('checked',this.state.checked);
-
-    console.log(checked);
-    const ss = [true,false,true,false,false,false,false];
     this.setState(()=>{
       return {
         checkedSelectAll:true,
@@ -150,12 +145,19 @@ class TableDataFilter extends React.Component {
     if(event.currentTarget.id==='selectAll'){
 
       const { checkedSelectAll } = this.state;
-      const allChecked = this.state.checked.fill(true);
 
+      //update selectAll accordig to selection or lack of it;
+      this.state.searchData.map((el,i)=>{
+        if(el.hide){
+          this.state.checked[i] = el.hide?false:true;
+        } else {
+          this.state.checked[i]= true;
+        }
+      });
       this.setState(()=>{
         return {
           checkedSelectAll:checkedSelectAll===false?true:checkedSelectAll,
-          checked:[...allChecked]
+          checked:[...this.state.checked]
         };
       },()=>{
         const filterBy = this.props.accessor;
