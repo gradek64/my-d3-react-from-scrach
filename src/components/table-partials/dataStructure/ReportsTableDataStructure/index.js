@@ -9,6 +9,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownMenu from './../../../dropDownMenu';
 import TableDataFilter from './../../../table-partials/TableDataFilter';
+import TableFilter from './../../../table-partials/TableFilter';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 //scss
@@ -26,7 +27,9 @@ class TableDataReports extends React.Component {
     filterDataSelected:Array.from(Array(this.props.data.length), () => true),
     checkedSelectAll:true,
     filterBy:null,
+    tableRef:null,
   }
+  tableDOM = React.createRef()
 
   componentDidMount = () =>{
     //add addtional property:selected to this.state.data 
@@ -37,9 +40,11 @@ class TableDataReports extends React.Component {
     //update state with selected;
     this.setState(()=>{
       return{
-        data:[...dataSelection]
+        data:[...dataSelection],
+        tableRef:document.querySelector('.chart'),
       };
     });
+
   }
 
   updateDataSelected = (updateArray, selectAllButton,filterBy) => {
@@ -63,75 +68,92 @@ class TableDataReports extends React.Component {
 
   render(){
 
-    const {  hasHeader=true ,hasFooter=true } = this.props;
+    const {  hasHeader=false ,hasFooter=false } = this.props;
     const { data, filterData, filterDataSelected, checkedSelectAll, filterBy } = this.state;
     const columns = ['label','percentage','value'];
+  
 
     {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}
     return (
-      <Paper>
-        <Table className='table-fixed' style={{ minWidth:'860px'}}>
+      <Paper  className='structure'>
+
+        {this.state.tableRef?<TableFilter 
+          tableRef={this.state.tableRef}
+          values={['name','percentage','value']}
+          componentClass={'total'}
+        />:null}
+
+        <div ref={ this.tableDOM }>
+          <Table className='table-fixed' style={{ minWidth:'860px'}}>
         
-          {hasHeader?<TableHead >
-            <TableRow>
-              {hasHeader && columns.map((label,i)=>
-                <TableCell component="th" 
-                  scope="row" 
-                  key={`labelKey${i}`} 
-                  dropdownmenuanchor='yes'>
-                  {label}
-                  <DropDownMenu 
-                    key={i}
-                    onMouseEnter={false} 
-                    collapsebleAccordion={false}
-                    multipleOpen={false}
-                    goesAwayOnContentClick={false}
-                    animation={true} >
-                    <div className='verticalAlignment' >
-                      {label}
-                    </div>
-                    <div>
-                      <Paper>
-                        <TableDataFilter 
-                          items={data} 
-                          filterDataSelected={filterDataSelected}
-                          checkedSelectAll={checkedSelectAll}
-                          updateRecord={this.updateDataSelected}
-                          accessor={label} 
-                          filterBy={filterBy}
-                        />
-                      </Paper>            
-                    </div>
-                  </DropDownMenu>
-                </TableCell>)}
-           
-            </TableRow>
-          </TableHead>:null}
-          <TableBody >
-            {filterData?filterData.map((item,index) => {
-              return (
-                <TableRow key={`table-reports${index}`} >
-                  { columns.map((column,i)=>Object.keys(item).includes(column)?
-                    <TableCell component="th" scope="row" key={`tableKey${i}`}>
-                      {item[column]}
-                    </TableCell>:null)
-                  }
-                </TableRow>
-              );
-            }):null}
-          </TableBody>
-          {  hasFooter? (
-            <TableFooter>
+            {hasHeader?<TableHead >
               <TableRow>
-                {columns.map((label,i)=>
-                  <TableCell component="th" scope="row" key={`labelKey${i}`}>
-                    {i===0?'total':null}
-                    {(i+1)===columns.length?'53534545645':null}
+                {hasHeader && columns.map((label,i)=>
+                  <TableCell component="th" 
+                    scope="row" 
+                    key={`labelKey${i}`} 
+                    dropdownmenuanchor='yes'>
+                    {label}
+                    <DropDownMenu 
+                      key={i}
+                      onMouseEnter={false} 
+                      collapsebleAccordion={false}
+                      multipleOpen={false}
+                      goesAwayOnContentClick={false}
+                      animation={true} >
+                      <div className='verticalAlignment' >
+                        {label}
+                      </div>
+                      <div>
+                        <Paper>
+                          <TableDataFilter 
+                            items={data} 
+                            filterDataSelected={filterDataSelected}
+                            checkedSelectAll={checkedSelectAll}
+                            updateRecord={this.updateDataSelected}
+                            accessor={label} 
+                            filterBy={filterBy}
+                          />
+                        </Paper>            
+                      </div>
+                    </DropDownMenu>
                   </TableCell>)}
+           
               </TableRow>
-            </TableFooter>) : null
-          }
-        </Table>
+            </TableHead>:null}
+            <TableBody >
+              {filterData?filterData.map((item,index) => {
+                return (
+                  <TableRow key={`table-reports${index}`} >
+                    { columns.map((column,i)=>Object.keys(item).includes(column)?
+                      <TableCell component="th" scope="row" key={`tableKey${i}`}>
+                        {item[column]}
+                      </TableCell>:null)
+                    }
+                  </TableRow>
+                );
+              }):null}
+            </TableBody>
+            {  hasFooter? (
+              <TableFooter>
+                <TableRow>
+                  {columns.map((label,i)=>
+                    <TableCell component="th" scope="row" key={`labelKey${i}`}>
+                      {i===0?'total':null}
+                      {(i+1)===columns.length?'53534545645':null}
+                    </TableCell>)}
+                </TableRow>
+              </TableFooter>) : null
+            }
+          </Table>
+        </div>
+
+        {this.state.tableRef?<TableFilter 
+          tableRef={this.state.tableRef}
+          values={['total','','35353535353']}
+          componentClass={'total'}
+        />:null}
+         
       </Paper>
     );
   }
