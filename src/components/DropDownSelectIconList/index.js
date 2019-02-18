@@ -17,7 +17,7 @@ const styles = (theme) => ({
     justifyContent:'center',
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius:'4px',
-    padding: '6px'
+    padding: '7.5px'
   },
   iconSpacer:{
     marginRight:'5px'
@@ -76,7 +76,7 @@ class DropDownSelectIconList extends React.Component {
   render(){
 
     const {showDropDownMenu, items ,selected } = this.state;
-    const {   classes  } = this.props;
+    const {   classes, disable  } = this.props;
 
     return (
       <div>
@@ -86,7 +86,7 @@ class DropDownSelectIconList extends React.Component {
             <div></div>
           </ClickAwayListener>:null}
         {/*dropdown trigger from outside=*/}
-        <div onClick={()=>{ this.setState({ showDropDownMenu: true });} } className={classes.container} ref={this.anchorEl}>
+        <div onClick={()=>{ !disable?this.setState({ showDropDownMenu: true }):null;} } className={classes.container} ref={this.anchorEl}>
           {this.props.children } 
         </div>
         <Menu open={showDropDownMenu} anchorEl={this.anchorEl.current}>

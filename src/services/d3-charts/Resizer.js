@@ -44,10 +44,14 @@ class Resizer extends React.Component {
         this.state.containerHeight/2+this.state.containerHeight/5,
       svgElementsCB:this.props.svgElementsCB
     };
-    return (
-      <React.Fragment>
-        {React.cloneElement(this.props.children, {...propsTranform})}
-      </React.Fragment>
+
+    {/*<div className='diagram' style={{
+        width:propsTranform.svgWidth,
+        height :propsTranform.svgWidth
+        }}*/}
+    return (<div className='diagram'>
+      {React.cloneElement(this.props.children, {...propsTranform})}
+    </div>
     );
   }
 }

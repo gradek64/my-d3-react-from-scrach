@@ -24,8 +24,9 @@ const BarChart = (props) => {
   x.domain(data.map(d => d[label]));
   y.domain([0, max(data, d => d[value])]);
   return (
-    <svg width={svgWidth} height={svgHeight}>
-      <g transform={`translate(${margin.left}, ${margin.top})`}>
+    <svg height='100%'
+      width='100%'  viewBox={`0 0 ${svgWidth}  ${svgHeight}`}>
+      <g>
         <g
           className="axis axis--x"
           transform={`translate(0, ${height})`}

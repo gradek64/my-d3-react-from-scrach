@@ -29,8 +29,8 @@ const PieHolder = (props) => {
 
   return (
 
-    <svg height={svgWidth}
-      width={svgWidth}>
+    <svg height='100%'
+      width='100%' viewBox={`0 0 ${svgWidth}  ${svgWidth}`}>
       <g transform={`translate(${svgWidth / 2},${svgWidth / 2})`}>
         { 
           makePie(type).map((d, i) => {

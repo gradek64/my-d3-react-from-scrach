@@ -54,13 +54,16 @@ const Chart = (props) => {
     return a;
   },[]);
 
+  /*  this method is one level up in ChartComponent.js
+
   const onSVGElementClick = (data)=>(e)=>{
     console.log(e);
     console.log('data',data);
-  };
+  };*/
+  
   const svgElementsCB = (svgElement,data) => {
     console.log('svgElement',svgElement,data);
-    if(svgElement) svgElement.addEventListener('click',onSVGElementClick(data));
+    if(svgElement) svgElement.addEventListener('click',props.changeView(data));
 
   };
 
@@ -72,7 +75,7 @@ const Chart = (props) => {
     svgElementsCB
   };
   return (
-    <div>
+    <div className='chart-inner'>
       {params.typeSelected.value!=='table'?
         <Resizer {...resizerProps}>{service}</Resizer>:
         <ReportsTableDataStructure data={resizerProps.data} />
