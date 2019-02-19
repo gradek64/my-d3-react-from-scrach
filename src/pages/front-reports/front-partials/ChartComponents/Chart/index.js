@@ -17,6 +17,8 @@ const Chart = (props) => {
       return <PieChartService/>;
     case 'bar':
       return <BarChartService/>;
+    case 'table':
+      return <ReportsTableDataStructure/>;
     case 'rows':
       return rowsService;
     case 'sunburst':
@@ -76,10 +78,7 @@ const Chart = (props) => {
   };
   return (
     <div className='chart-inner'>
-      {params.typeSelected.value!=='table'?
-        <Resizer {...resizerProps}>{service}</Resizer>:
-        <ReportsTableDataStructure data={resizerProps.data} />
-      }
+      <Resizer {...resizerProps}>{service}</Resizer>
     </div>
   );
 };

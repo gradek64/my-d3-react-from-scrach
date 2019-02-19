@@ -71,6 +71,8 @@ class TableDataReports extends React.Component {
     const {  hasHeader=false ,hasFooter=false } = this.props;
     const { data, filterData, filterDataSelected, checkedSelectAll, filterBy } = this.state;
     const columns = ['label','percentage','value','id'];
+
+    console.log('this.props', this.props);
   
 
     {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}

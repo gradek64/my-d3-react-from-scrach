@@ -40,7 +40,6 @@ class ChartComponents extends React.Component {
 
     const { graphData, params, changeView } = this.state;
 
-    console.log('params', params);
 
     const tableDrillDown = Object.assign({},params);
     tableDrillDown.typeSelected = {
@@ -50,8 +49,6 @@ class ChartComponents extends React.Component {
       selected: true,
       value: 'table',
     };
-
-    console.log('tableDrillDown',tableDrillDown);
 
     return (
       <div className='chart'>
