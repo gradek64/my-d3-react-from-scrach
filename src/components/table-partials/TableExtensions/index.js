@@ -46,7 +46,7 @@ const TableExtensions = (props) => {
           return (
             <div key={`pocketFilter${i}`} className='pocket' style={{width:`${childrenWidth[i]}px`}}>
               <PopUpAnchorDropDown>
-                <div>filter {hasFilterDataSetup.labels[i]}</div>
+                <div>filter {hasFilterDataSetup.labels[i]} {hasFilterDataSetup.filterByValueSet[hasFilterDataSetup.labels[i]]}</div>
                 <div>
                   <TableDataFilter 
                     items={hasFilterDataSetup.data} 
@@ -56,6 +56,7 @@ const TableExtensions = (props) => {
                     accessor={hasFilterDataSetup.labels[i]} 
                     filterBy={hasFilterDataSetup.filterBy}
                     filterByValue={hasFilterDataSetup.filterByValue}
+                    filterByValueSet={hasFilterDataSetup.filterByValueSet}
                   />
                 </div>
               </PopUpAnchorDropDown>

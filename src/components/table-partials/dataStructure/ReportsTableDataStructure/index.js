@@ -21,6 +21,7 @@ class TableDataReports extends React.Component {
     *@U need to keep track what data has been filter for all 
     *@filter applied by <TableDataFilter> component, all selected initially;
   */
+  columns = ['label','percentage','value','id'];
   state = {
     tableRef:null,
     filterDataSetup:{
@@ -28,6 +29,10 @@ class TableDataReports extends React.Component {
       checkedSelectAll:true,
       filterBy:null,
       filterByValue:'',
+      filterByValueSet:this.columns.reduce((a,e)=>{
+        a[e]='';
+        return a;
+      },{}),
       data:this.props.data,
     },
     standardData:this.props.data
@@ -35,9 +40,10 @@ class TableDataReports extends React.Component {
 
   componentDidMount = () => {
     this.setState({tableRef:document.querySelector('.chart')});
+    console.log('filterByValueSet',this.state);
   }
 
-  updateDataSelected = (updateArray, selectAllButton,{filterBy,filterByValue=''}) => {
+  updateDataSelected = (updateArray, selectAllButton,filterByValueSet) => {
     const { filterDataSetup } = this.state;
     //update data on new copy;
     const copyFilteredData = filterDataSetup.data
@@ -52,8 +58,7 @@ class TableDataReports extends React.Component {
           checkedSelectAll:selectAllButton,
           filterDataSelected:[...updateArray],
           data:[...copyFilteredData],
-          filterBy,
-          filterByValue
+          filterByValueSet,
         },
         standardData:copyFilteredData.filter(({selected})=>selected)
       };
@@ -69,8 +74,8 @@ class TableDataReports extends React.Component {
       filterDataSelected, 
       checkedSelectAll,
       filterBy,
+      filterByValueSet,
       filterByValue } = this.state.filterDataSetup;
-    const columns = ['label','percentage','value','id'];
 
     return (
       <Paper  className='structure' style={{ overflowY:'auto'}}>
@@ -85,10 +90,11 @@ class TableDataReports extends React.Component {
                   data,
                   filterBy,
                   filterByValue,
-                  labels:columns,
+                  filterByValueSet,
+                  labels:this.columns,
                 }
               }
-              values={columns}
+              values={this.columns}
               tableRef={tableRef}
             />:null}
           <div className='tableContainer'>
@@ -133,7 +139,7 @@ class TableDataReports extends React.Component {
                 {standardData.length!==0?standardData.map((item,index) => {
                   return (
                     <TableRow key={`table-reports${index}`} >
-                      { columns.map((column,i)=>Object.keys(item).includes(column)?
+                      { this.columns.map((column,i)=>Object.keys(item).includes(column)?
                         <TableCell component="th" scope="row" key={`tableKey${i}`}>
                           {item[column]}
                         </TableCell>:null)

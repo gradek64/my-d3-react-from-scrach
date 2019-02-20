@@ -68,25 +68,29 @@ const styles =  theme => ({
 class TableDataFilter extends React.Component {
 
    //here U need clone of items since it will affect original once filtering
-   cloneData = this.props.items.slice(0);
+   cloneData = this.props.items.slice();
    state = {
      checkedSelectAll:this.props.checkedSelectAll,
      checked:this.props.filterDataSelected,
      atLeastOneChecked:true,
      data:this.cloneData,
      searchData:this.cloneData,
-     lastSearchValue:this.props.filterByValue,
+     lastSearchValue:{...this.props.filterByValueSet}
    }
 
    componentDidUpdate(prevProps) {
 
      //reset search once you applied a diffrent filter/search
 
-     if (this.props.filterBy !== prevProps.filterBy) {
+     /* if (this.props.filterBy !== prevProps.filterBy) {
        console.log('prevProps',prevProps);
        console.log(this.props);
        if(this.props.filterBy!==this.props.accessor){
-         this.setState({resetSearch:''});
+         this.setState({
+           lastSearchValue:{
+             [this.props.accessor]:''
+           }
+         });
        }
        
      }
@@ -95,7 +99,7 @@ class TableDataFilter extends React.Component {
        
 
        this.setState({data:this.props.items}); 
-     }
+     }*/
 
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
@@ -108,7 +112,16 @@ class TableDataFilter extends React.Component {
   handleSearch = event => {
     const { value } = event.target;
 
-    this.setState({lastSearchValue:value});
+    //set last used search input;
+    Object.keys(this.state.lastSearchValue).map((key)=>{
+      this.state.lastSearchValue[key] = key===this.props.accessor ? value: '';
+    });
+
+    this.setState(()=>{
+      return {
+        lastSearchValue:{...this.state.lastSearchValue}
+      };
+    });
 
     const filterData = this.state.data.filter((item,index)=>{
       //keep index of filtered ones:
@@ -140,16 +153,16 @@ class TableDataFilter extends React.Component {
       };
     },()=>{
       const filterBy = this.props.accessor;
-      const filterByValue = this.state.lastSearchValue;
+      const searchLabel = this.state.lastSearchValue;
+      const filterByValue = this.state.lastSearchValue[this.props.accessor];
       const filterByData = {filterBy,filterByValue};
       //update records in ReportsTableDataStructure and selectAll button;
-      this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterByData);
+      this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
     });
 
   }
 
   handleChange = index => event => {
-    console.log('lastSearchValue',this.state.lastSearchValue);
 
       
     if(event.currentTarget.id==='selectAll'){
@@ -171,8 +184,9 @@ class TableDataFilter extends React.Component {
         };
       },()=>{
         const filterBy = this.props.accessor;
+        const searchLabel = this.state.lastSearchValue;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,{filterBy});
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
       });
  
     }else {
@@ -190,8 +204,9 @@ class TableDataFilter extends React.Component {
         }
 
         const filterBy = this.props.accessor;
+        const searchLabel = this.state.lastSearchValue;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,{filterBy});
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
       });
     }
     /* console.log('Target',event.currentTarget.querySelector('input'));
@@ -201,6 +216,9 @@ class TableDataFilter extends React.Component {
   render(){ 
     const { classes, accessor } = this.props;
     const { searchData } = this.state;
+    console.log('this.props.filterByValueSet',this.props.filterByValueSet);
+    console.log('lastSearchValue',this.state.lastSearchValue);
+
     return (
       <React.Fragment>
         <List dense className={classes.root}>
@@ -211,7 +229,7 @@ class TableDataFilter extends React.Component {
               </div>
               <InputBase
                 placeholder="Search…"
-                value={this.state.lastSearchValue}
+                value={this.state.lastSearchValue[this.props.accessor]}
                 onChange={this.handleSearch}
                 classes={{
                   root: classes.inputRoot,
