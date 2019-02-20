@@ -75,18 +75,28 @@ class TableDataFilter extends React.Component {
      atLeastOneChecked:true,
      data:this.cloneData,
      searchData:this.cloneData,
-     resetSearch:'',
+     lastSearchValue:this.props.filterByValue,
    }
 
    componentDidUpdate(prevProps) {
 
      //reset search once you applied a diffrent filter/search
+
      if (this.props.filterBy !== prevProps.filterBy) {
+       console.log('prevProps',prevProps);
+       console.log(this.props);
        if(this.props.filterBy!==this.props.accessor){
          this.setState({resetSearch:''});
        }
        
      }
+     //update data;
+     if (this.props.items !== prevProps.items) {
+       
+
+       this.setState({data:this.props.items}); 
+     }
+
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
          checked:this.props.filterDataSelected,
@@ -98,7 +108,8 @@ class TableDataFilter extends React.Component {
   handleSearch = event => {
     const { value } = event.target;
 
-    this.setState({resetSearch:value});
+    this.setState({lastSearchValue:value});
+
     const filterData = this.state.data.filter((item,index)=>{
       //keep index of filtered ones:
       item.lucky=index;
@@ -129,13 +140,17 @@ class TableDataFilter extends React.Component {
       };
     },()=>{
       const filterBy = this.props.accessor;
+      const filterByValue = this.state.lastSearchValue;
+      const filterByData = {filterBy,filterByValue};
       //update records in ReportsTableDataStructure and selectAll button;
-      this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
+      this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterByData);
     });
 
   }
 
   handleChange = index => event => {
+    console.log('lastSearchValue',this.state.lastSearchValue);
+
       
     if(event.currentTarget.id==='selectAll'){
 
@@ -157,7 +172,7 @@ class TableDataFilter extends React.Component {
       },()=>{
         const filterBy = this.props.accessor;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,{filterBy});
       });
  
     }else {
@@ -176,7 +191,7 @@ class TableDataFilter extends React.Component {
 
         const filterBy = this.props.accessor;
         //update records in ReportsTableDataStructure and selectAll button;
-        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,filterBy);
+        this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,{filterBy});
       });
     }
     /* console.log('Target',event.currentTarget.querySelector('input'));
@@ -187,60 +202,65 @@ class TableDataFilter extends React.Component {
     const { classes, accessor } = this.props;
     const { searchData } = this.state;
     return (
-      <List dense className={classes.root}>
-        <ListItem>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+      <React.Fragment>
+        <List dense className={classes.root}>
+          <ListItem>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                value={this.state.lastSearchValue}
+                onChange={this.handleSearch}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              value={this.state.resetSearch}
-              onChange={this.handleSearch}
+          </ListItem>
+          <ListItem role={undefined} dense button onClick={this.handleChange(null)} id='selectAll'>
+            <Checkbox
+              checked={this.state.checkedSelectAll}
+              tabIndex={-1}
+              value="this.state.checkedSelectAll"
+              disableRipple
               classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
+                root: classes.root,
+                checked: classes.checked,
               }}
             />
-          </div>
-        </ListItem>
-        <ListItem role={undefined} dense button onClick={this.handleChange(null)} id='selectAll'>
-          <Checkbox
-            checked={this.state.checkedSelectAll}
-            tabIndex={-1}
-            value="this.state.checkedSelectAll"
-            disableRipple
-            classes={{
-              root: classes.root,
-              checked: classes.checked,
-            }}
-          />
-          <ListItemText primary={'Select All'} />
-        </ListItem>
-        <Divider />
-        {
-          searchData.map((item,i) => {
-            if(!item.hide){
-              return (
-                <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
-                  <Checkbox
-                    checked={this.state.checked[i]}
-                    tabIndex={-1}
-                    value="this.state.checked[i]"
-                    disableRipple
-                    classes={{
-                      root: classes.root,
-                      checked: classes.checked,
-                    }}
-                  />
-                  <ListItemText primary={item[accessor]} />
-                </ListItem>);
-            } else {
-              return (null);
-            }
-          })
-        }
-      </List>
+            <ListItemText primary={'Select All'} />
+          </ListItem>
+          <Divider/>
+        </List>
+        
+        <List dense style={{maxHeight:'200px',overflow:'auto'}}>
+          {
+            searchData.map((item,i) => {
+              if(!item.hide){
+                return (
+                  <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
+                    <Checkbox
+                      checked={this.state.checked[i]}
+                      tabIndex={-1}
+                      value="this.state.checked[i]"
+                      disableRipple
+                      classes={{
+                        root: classes.root,
+                        checked: classes.checked,
+                      }}
+                    />
+                    <ListItemText primary={item[accessor]} />
+                  </ListItem>);
+              } else {
+                return (null);
+              }
+            })
+          }
+        </List>
+      </React.Fragment>
     );
   }
 }

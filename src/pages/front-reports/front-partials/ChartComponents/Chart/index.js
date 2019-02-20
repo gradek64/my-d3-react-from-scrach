@@ -20,7 +20,7 @@ const Chart = (props) => {
     case 'table':
       return <ReportsTableDataStructure/>;
     case 'rows':
-      return rowsService;
+      return <ReportsTableDataStructure/>;
     case 'sunburst':
       return sunburstService;
     case 'sankey':
@@ -78,7 +78,8 @@ const Chart = (props) => {
   };
   return (
     <div className='chart-inner'>
-      <Resizer {...resizerProps}>{service}</Resizer>
+      {
+        <Resizer {...resizerProps}>{service}</Resizer>      }
     </div>
   );
 };

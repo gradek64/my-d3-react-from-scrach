@@ -8,8 +8,8 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownMenu from './../../../dropDownMenu';
-import TableDataFilter from './../../../table-partials/TableDataFilter';
-import TableFilter from './../../../table-partials/TableFilter';
+import TableDataFilter from './../../../table-partials/TableDataFilter/TableDataFilter';
+import TableExtensions from './../../../table-partials/TableExtensions';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 //scss
@@ -22,72 +22,79 @@ class TableDataReports extends React.Component {
     *@filter applied by <TableDataFilter> component, all selected initially;
   */
   state = {
-    data:this.props.data,
-    filterData:this.props.data,
-    filterDataSelected:Array.from(Array(this.props.data.length), () => true),
-    checkedSelectAll:true,
-    filterBy:null,
     tableRef:null,
-  }
-  tableDOM = React.createRef()
-
-  componentDidMount = () =>{
-    //add addtional property:selected to this.state.data 
-    const dataSelection = this.state.data.map((data,i)=>{
-      data.selected = this.state.filterDataSelected[i];
-      return data;
-    });
-    //update state with selected;
-    this.setState(()=>{
-      return{
-        data:[...dataSelection],
-        tableRef:document.querySelector('.chart'),
-      };
-    });
-
+    filterDataSetup:{
+      filterDataSelected:Array.from(Array(this.props.data.length), () => true),
+      checkedSelectAll:true,
+      filterBy:null,
+      filterByValue:'',
+      data:this.props.data,
+    },
+    standardData:this.props.data
   }
 
-  updateDataSelected = (updateArray, selectAllButton,filterBy) => {
+  componentDidMount = () => {
+    this.setState({tableRef:document.querySelector('.chart')});
+  }
+
+  updateDataSelected = (updateArray, selectAllButton,{filterBy,filterByValue=''}) => {
+    const { filterDataSetup } = this.state;
     //update data on new copy;
-    const copyFilteredData = this.state.data
+    const copyFilteredData = filterDataSetup.data
       .map((data,i)=>{
         data.selected = updateArray[i];
         return data;
-      })
-      .filter(({selected})=>selected);
+      });
 
     this.setState(()=>{
       return {
-        checkedSelectAll:selectAllButton,
-        filterDataSelected:[...updateArray],
-        filterData:[...copyFilteredData],
-        filterBy
+        filterDataSetup:{
+          checkedSelectAll:selectAllButton,
+          filterDataSelected:[...updateArray],
+          data:[...copyFilteredData],
+          filterBy,
+          filterByValue
+        },
+        standardData:copyFilteredData.filter(({selected})=>selected)
       };
     });
   }
 
-  render(){
+  render = () => {
 
     const {  hasHeader=false ,hasFooter=false } = this.props;
-    const { data, filterData, filterDataSelected, checkedSelectAll, filterBy } = this.state;
+    const { tableRef, standardData } = this.state;
+    const { 
+      data ,
+      filterDataSelected, 
+      checkedSelectAll,
+      filterBy,
+      filterByValue } = this.state.filterDataSetup;
     const columns = ['label','percentage','value','id'];
 
-    console.log('this.props', this.props);
-  
-
-    {/* <Paper style={{overflowX:'scroll',overflowY:'initial'}}>*/}
     return (
       <Paper  className='structure' style={{ overflowY:'auto'}}>
         <div className='overallContainer'>
-          {this.state.tableRef?<TableFilter 
-            tableRef={this.state.tableRef}
-            values={['name','percentage','value','score']}
-            componentClass={'total'}
-          />:null}
-          <div ref={ this.tableDOM } className='tableContainer'>
+          {/*apply seperate props for Filter Data */}
+          {this.state.tableRef?
+            <TableExtensions 
+              hasFilterDataSetup = {
+                { filterDataSelected,
+                  checkedSelectAll,
+                  curryUpdateTableData:this.updateDataSelected,
+                  data,
+                  filterBy,
+                  filterByValue,
+                  labels:columns,
+                }
+              }
+              values={columns}
+              tableRef={tableRef}
+            />:null}
+          <div className='tableContainer'>
             <Table className='table-fixed'>
           
-              {hasHeader?<TableHead >
+              {/*hasHeader?<TableHead >
                 <TableRow>
                   {hasHeader && columns.map((label,i)=>
                     <TableCell component="th" 
@@ -108,7 +115,7 @@ class TableDataReports extends React.Component {
                         <div>
                           <Paper>
                             <TableDataFilter 
-                              items={data} 
+                              data={data} 
                               filterDataSelected={filterDataSelected}
                               checkedSelectAll={checkedSelectAll}
                               updateRecord={this.updateDataSelected}
@@ -121,9 +128,9 @@ class TableDataReports extends React.Component {
                     </TableCell>)}
            
                 </TableRow>
-              </TableHead>:null}
+              </TableHead>:null*/}
               <TableBody >
-                {filterData?filterData.map((item,index) => {
+                {standardData.length!==0?standardData.map((item,index) => {
                   return (
                     <TableRow key={`table-reports${index}`} >
                       { columns.map((column,i)=>Object.keys(item).includes(column)?
@@ -133,9 +140,15 @@ class TableDataReports extends React.Component {
                       }
                     </TableRow>
                   );
-                }):null}
+                }):
+                  <TableRow >
+                    <TableCell component="th" scope="row">
+                      {'no data'}
+                    </TableCell>
+                  </TableRow>
+                }
               </TableBody>
-              {  hasFooter? (
+              {/*  hasFooter? (
                 <TableFooter>
                   <TableRow>
                     {columns.map((label,i)=>
@@ -145,14 +158,12 @@ class TableDataReports extends React.Component {
                       </TableCell>)}
                   </TableRow>
                 </TableFooter>) : null
-              }
+              */}
             </Table>
           </div>
-
-          {this.state.tableRef?<TableFilter 
-            tableRef={this.state.tableRef}
-            values={['total','','','35353535353']}
-            componentClass={'total'}
+          {this.state.tableRef?<TableExtensions 
+            tableRef={tableRef}
+            values={['total','','','535353535']}
           />:null}
         </div>
       </Paper>
