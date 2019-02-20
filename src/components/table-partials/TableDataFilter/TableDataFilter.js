@@ -152,10 +152,7 @@ class TableDataFilter extends React.Component {
         searchData:listFiltered
       };
     },()=>{
-      const filterBy = this.props.accessor;
       const searchLabel = this.state.lastSearchValue;
-      const filterByValue = this.state.lastSearchValue[this.props.accessor];
-      const filterByData = {filterBy,filterByValue};
       //update records in ReportsTableDataStructure and selectAll button;
       this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
     });
@@ -183,7 +180,6 @@ class TableDataFilter extends React.Component {
           checked:[...this.state.checked]
         };
       },()=>{
-        const filterBy = this.props.accessor;
         const searchLabel = this.state.lastSearchValue;
         //update records in ReportsTableDataStructure and selectAll button;
         this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
@@ -203,7 +199,6 @@ class TableDataFilter extends React.Component {
           this.state.checked[index]= !this.state.checked[index];
         }
 
-        const filterBy = this.props.accessor;
         const searchLabel = this.state.lastSearchValue;
         //update records in ReportsTableDataStructure and selectAll button;
         this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
@@ -216,8 +211,6 @@ class TableDataFilter extends React.Component {
   render(){ 
     const { classes, accessor } = this.props;
     const { searchData } = this.state;
-    console.log('this.props.filterByValueSet',this.props.filterByValueSet);
-    console.log('lastSearchValue',this.state.lastSearchValue);
 
     return (
       <React.Fragment>

@@ -54,8 +54,6 @@ const TableExtensions = (props) => {
                     checkedSelectAll={hasFilterDataSetup.checkedSelectAll}
                     updateRecord={hasFilterDataSetup.curryUpdateTableData}
                     accessor={hasFilterDataSetup.labels[i]} 
-                    filterBy={hasFilterDataSetup.filterBy}
-                    filterByValue={hasFilterDataSetup.filterByValue}
                     filterByValueSet={hasFilterDataSetup.filterByValueSet}
                   />
                 </div>

@@ -73,9 +73,7 @@ class TableDataReports extends React.Component {
       data ,
       filterDataSelected, 
       checkedSelectAll,
-      filterBy,
-      filterByValueSet,
-      filterByValue } = this.state.filterDataSetup;
+      filterByValueSet } = this.state.filterDataSetup;
 
     return (
       <Paper  className='structure' style={{ overflowY:'auto'}}>
@@ -88,8 +86,6 @@ class TableDataReports extends React.Component {
                   checkedSelectAll,
                   curryUpdateTableData:this.updateDataSelected,
                   data,
-                  filterBy,
-                  filterByValue,
                   filterByValueSet,
                   labels:this.columns,
                 }
