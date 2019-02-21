@@ -7,8 +7,17 @@ import reportDataServiceMock from './../../../../services/reports-cost-data-mock
 class ChartComponents extends React.Component {
   state = {
     graphData:null,
-    changeView:false
+    changeView:false,
+    drillDownData:null,
   }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.userID !== prevProps.userID) {
+      this.fetchData(this.props.userID);
+    }
+  }
+
   getData = async (params) => {
     const data = await reportDataServiceMock.getAll();
     this.setState({
@@ -25,8 +34,16 @@ class ChartComponents extends React.Component {
   }
 
   onSVGElementClick = (data)=>(e)=>{
-    this.setState({changeView:true});
     //shrink currrent chart;
+   
+
+    this.setState({
+      changeView:true,
+      drillDownData:[data],
+    },()=>{
+      console.log('data......',this.state.drillDownData);
+    });
+
     const currentChart = document.querySelector('.chart-inner');
     currentChart.classList.add('shrink');
   };
@@ -38,7 +55,7 @@ class ChartComponents extends React.Component {
     const groubByButtons = { [tabActive]:  confCurrentTab['groupByButtons']};
     const chartTypes = { [tabActive]: confCurrentTab['types'] };
 
-    const { graphData, params, changeView } = this.state;
+    const { graphData, drillDownData, params, changeView } = this.state;
 
 
     const tableDrillDown = Object.assign({},params);
@@ -66,7 +83,7 @@ class ChartComponents extends React.Component {
           <Chart data={graphData} params={params} changeView={this.onSVGElementClick} />
           :null}
         {changeView?
-          <Chart data={graphData} params={tableDrillDown}  />
+          <Chart data={drillDownData} params={tableDrillDown}  />
           :null}
       </div>
     );

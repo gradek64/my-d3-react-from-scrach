@@ -7,9 +7,6 @@ import Resizer from '../../../../../services/d3-charts/Resizer';
 const Chart = (props) => {
 
   const { data, params } = props;
-
-  console.log(params);
-
   const getService = (type) => {
     switch (type) {
     case 'pie':
@@ -64,18 +61,17 @@ const Chart = (props) => {
   };*/
   
   const svgElementsCB = (svgElement,data) => {
-    console.log('svgElement',svgElement,data);
     if(svgElement) svgElement.addEventListener('click',props.changeView(data));
-
   };
 
   const service = getService(params.typeSelected.value);
-  console.log('service', service);
   const resizerProps = {
     data:prepareData(data),
     type:params.typeSelected.value,
     svgElementsCB
   };
+
+  console.log('resizerProps',resizerProps);
   return (
     <div className='chart-inner'>
       {
