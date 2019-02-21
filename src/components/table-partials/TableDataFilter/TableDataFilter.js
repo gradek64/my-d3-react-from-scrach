@@ -256,15 +256,17 @@ class TableDataFilter extends React.Component {
         <List dense style={{maxHeight:'200px',overflow:'auto'}}>
           {
             searchData.map((item,i) => {
-              //if(searchData[i].hide) {
-              const nodata = Boolean(searchData.find(({hide})=>!hide) && searchData.find(({hide})=>!hide).length===6 
-                || !searchData.find(({hide})=>!hide));
 
-              console.log('nodata',nodata);
-              console.log(searchData.find(({hide})=>!hide));
+              const allHidden = searchData.find(({hide})=>!hide);
+              const nodata = Boolean(allHidden 
+                && allHidden.length===searchData.length-1 
+                || !allHidden);
+
               if(nodata && i===searchData.length-1) {
-              //if(item.hide) {
-                return 'no data  ';
+                return (
+                  <ListItem key={`valuenoData${i}`} role={undefined} dense>
+                    <ListItemText primary={'no results found'} />
+                  </ListItem>);
               }
               if(!item.hide){
                 return (
@@ -284,13 +286,6 @@ class TableDataFilter extends React.Component {
               } 
                       
             })
-          }
-        </List>
-        <List>
-          {searchData?
-            <ListItem  role={undefined} dense>
-              <ListItemText primary={searchData.length} />
-            </ListItem>:null
           }
         </List>
       </React.Fragment>

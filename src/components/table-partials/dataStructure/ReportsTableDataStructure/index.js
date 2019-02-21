@@ -40,7 +40,6 @@ class TableDataReports extends React.Component {
 
   componentDidMount = () => {
     this.setState({tableRef:document.querySelector('.chart')});
-    console.log('filterByValueSet',this.state);
   }
 
   updateDataSelected = (updateArray, selectAllButton,filterByValueSet) => {
@@ -52,8 +51,6 @@ class TableDataReports extends React.Component {
         return data;
       });
 
-    console.log('copyFilteredData', copyFilteredData);
-
     this.setState(()=>{
       return {
         filterDataSetup:{
@@ -64,8 +61,6 @@ class TableDataReports extends React.Component {
         },
         standardData:copyFilteredData.filter(({selected})=>selected)
       };
-    },()=>{
-      console.log('standardData', this.state.standardData);
     });
   }
 
