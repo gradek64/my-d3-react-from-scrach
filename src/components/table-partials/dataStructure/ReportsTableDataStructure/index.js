@@ -52,6 +52,8 @@ class TableDataReports extends React.Component {
         return data;
       });
 
+    console.log('copyFilteredData', copyFilteredData);
+
     this.setState(()=>{
       return {
         filterDataSetup:{
@@ -62,6 +64,8 @@ class TableDataReports extends React.Component {
         },
         standardData:copyFilteredData.filter(({selected})=>selected)
       };
+    },()=>{
+      console.log('standardData', this.state.standardData);
     });
   }
 
@@ -142,14 +146,22 @@ class TableDataReports extends React.Component {
                       }
                     </TableRow>
                   );
-                }):
-                  <TableRow >
-                    <TableCell component="th" scope="row">
-                      {'no data'}
-                    </TableCell>
-                  </TableRow>
-                }
+                }):null}
               </TableBody>
+              {/*<TableRow style={{'paddingLeft':'24px'}}>
+                    { this.columns.map((column,i)=>
+                      <TableCell component="td"  
+                        scope="row"
+                        className='pocket' 
+                        key={`tableKeyNoData${i}`} 
+                        style={{
+                          width:`${this.tdWidth[i]}px`,
+                          padding:'4px 0 0 0'
+                        }}>
+                        {'no data'}
+                      </TableCell>:null)
+                    }
+                  </TableRow>*/}  
               {/*  hasFooter? (
                 <TableFooter>
                   <TableRow>

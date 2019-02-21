@@ -153,6 +153,9 @@ class TableDataFilter extends React.Component {
       };
     },()=>{
       const searchLabel = this.state.lastSearchValue;
+
+      //dont report back if there is not selected ones;
+      if( !this.state.checked.some((e)=>e) ) return;
       //update records in ReportsTableDataStructure and selectAll button;
       this.props.updateRecord(this.state.checked, this.state.checkedSelectAll,searchLabel);
     });
@@ -163,6 +166,9 @@ class TableDataFilter extends React.Component {
 
       
     if(event.currentTarget.id==='selectAll'){
+
+      //dont report back if there is not selected ones;
+      if( !this.state.checked.some((e)=>e) ) return;
 
       const { checkedSelectAll } = this.state;
       //update selectAll accordig to selection or lack of it;
@@ -250,6 +256,16 @@ class TableDataFilter extends React.Component {
         <List dense style={{maxHeight:'200px',overflow:'auto'}}>
           {
             searchData.map((item,i) => {
+              //if(searchData[i].hide) {
+              const nodata = Boolean(searchData.find(({hide})=>!hide) && searchData.find(({hide})=>!hide).length===6 
+                || !searchData.find(({hide})=>!hide));
+
+              console.log('nodata',nodata);
+              console.log(searchData.find(({hide})=>!hide));
+              if(nodata && i===searchData.length-1) {
+              //if(item.hide) {
+                return 'no data  ';
+              }
               if(!item.hide){
                 return (
                   <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
@@ -265,10 +281,16 @@ class TableDataFilter extends React.Component {
                     />
                     <ListItemText primary={item[accessor]} />
                   </ListItem>);
-              } else {
-                return (null);
-              }
+              } 
+                      
             })
+          }
+        </List>
+        <List>
+          {searchData?
+            <ListItem  role={undefined} dense>
+              <ListItemText primary={searchData.length} />
+            </ListItem>:null
           }
         </List>
       </React.Fragment>
