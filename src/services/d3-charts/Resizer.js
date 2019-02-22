@@ -8,8 +8,8 @@ class Resizer extends React.Component {
       *@to prevent d3 comlain about not receive any dememntions;
     */
     this.state = {
-      containerWidth: window.innerWidth,
-      containerHeight: window.innerHeight
+      containerWidth: null,
+      containerHeight: null
     };
     this.resizeWindow = this.resizeWindow.bind(this);
 
@@ -27,14 +27,16 @@ class Resizer extends React.Component {
       containerHeight: document.querySelector('.chart').clientHeight
     });
 
-    window.addEventListener('resize', this.resizeWindow,false);
+    //window.addEventListener('resize', this.resizeWindow,false);
   }
 
   componentWillUnmount(){
-    window.removeEventListener('resize', this.resizeWindow,false);
+    // window.removeEventListener('resize', this.resizeWindow,false);
   }
 
   render() {
+
+    
     const propsTranform = {
       data:this.props.data,
       type:this.props.type,
@@ -45,12 +47,16 @@ class Resizer extends React.Component {
       svgElementsCB:this.props.svgElementsCB
     };
 
+    console.log('Resizer render');
+
     {/*<div className='diagram' style={{
         width:propsTranform.svgWidth,
         height :propsTranform.svgWidth
         }}*/}
     return (<div className='diagram'>
-      {React.cloneElement(this.props.children, {...propsTranform})}
+      {
+        this.state.containerWidth? React.cloneElement(this.props.children, {...propsTranform}):null
+      }
     </div>
     );
   }

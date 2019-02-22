@@ -9,20 +9,17 @@ class ChartComponents extends React.Component {
     graphData:null,
     changeView:false,
     drillDownData:null,
+    hasData:false
   }
-
-  componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
-    if (this.props.userID !== prevProps.userID) {
-      this.fetchData(this.props.userID);
-    }
-  }
-
+  drill = (data)=>data?data:null;
   getData = async (params) => {
     const data = await reportDataServiceMock.getAll();
     this.setState({
       graphData:data.data,
+      hasData:true,
       params
+    },()=>{
+      console.log('graphData is called');
     });
   }
 
@@ -36,7 +33,7 @@ class ChartComponents extends React.Component {
   onSVGElementClick = (data)=>(e)=>{
     //shrink currrent chart;
    
-
+    
     this.setState({
       changeView:true,
       drillDownData:[data],
@@ -44,8 +41,12 @@ class ChartComponents extends React.Component {
       console.log('data......',this.state.drillDownData);
     });
 
+    console.log('data from click',data);
+
     const currentChart = document.querySelector('.chart-inner');
     currentChart.classList.add('shrink');
+    this.drill(data);
+
   };
 
   render(){
@@ -55,7 +56,9 @@ class ChartComponents extends React.Component {
     const groubByButtons = { [tabActive]:  confCurrentTab['groupByButtons']};
     const chartTypes = { [tabActive]: confCurrentTab['types'] };
 
-    const { graphData, drillDownData, params, changeView } = this.state;
+    const { graphData, drillDownData, params, changeView , hasData} = this.state;
+
+    console.log('rendering....');
 
 
     const tableDrillDown = Object.assign({},params);
@@ -73,18 +76,17 @@ class ChartComponents extends React.Component {
           tabActive={tabActive}
           chartTypes={chartTypes} 
           page={page} 
-          onChartInnerClose={this.onChartInnerClose}
-          changeView={changeView}
+          onChartInnerClose={()=>{return this.onChartInnerClose;}}
+          changeView={null}
           getData={this.getData}
           isVariance={isVariance}/>
 
         {/* display once data is received*/}
-        {graphData?
-          <Chart data={graphData} params={params} changeView={this.onSVGElementClick} />
-          :null}
-        {changeView?
-          <Chart data={drillDownData} params={tableDrillDown}  />
-          :null}
+        {
+          <Chart data={graphData} params={params} hasData={hasData} changeView={this.onSVGElementClick} />
+        }
+        {
+          <Chart data={this.drill()} params={tableDrillDown}  />}
       </div>
     );
   }

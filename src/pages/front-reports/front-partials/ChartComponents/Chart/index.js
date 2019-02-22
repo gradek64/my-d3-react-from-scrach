@@ -4,10 +4,9 @@ import PieChartService from '../../../../../services/d3-charts/PieChart';
 import ReportsTableDataStructure from '../../../../../components/table-partials/dataStructure/ReportsTableDataStructure';
 import Resizer from '../../../../../services/d3-charts/Resizer';
 
-const Chart = (props) => {
-
-  const { data, params } = props;
-  const getService = (type) => {
+class Chart extends React.Component {
+  state={dataChanged:false}
+  getService = (type) => {
     switch (type) {
     case 'pie':
     case 'donut':
@@ -15,8 +14,6 @@ const Chart = (props) => {
     case 'bar':
       return <BarChartService/>;
     case 'table':
-      return <ReportsTableDataStructure/>;
-    case 'rows':
       return <ReportsTableDataStructure/>;
     case 'sunburst':
       return sunburstService;
@@ -33,25 +30,37 @@ const Chart = (props) => {
     default:
       return null;
     }
-  };
+  }
 
-  const prepareData = data => data.reduce((a,e,i)=>{
+  componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+
+
+
+    console.log('prevProps',prevProps);
+    console.log('this.props',this.props);
+    if (this.props.hasData !== prevProps.hasData) {
+      this.setState({dataChanged:true});
+    }
+  }
+
+ prepareData = data => data.reduce((a,e,i)=>{
       
-    a[i]= e;
-    a[i]['value'] = e['amount'];
-    //label and genre;
-    a[i]['id'].split(',').forEach((el,index,arr)=>{
-      //remove empty spaces and extra charaters
-      a[i]['genre']=arr[0]
-        .trim()
-        .replace(';','');
-      a[i]['label']=arr[1]
-        .trim()
-        .replace(';','');
-    });
+   a[i]= e;
+   a[i]['value'] = e['amount'];
+   //label and genre;
+   a[i]['id'].split(',').forEach((el,index,arr)=>{
+     //remove empty spaces and extra charaters
+     a[i]['genre']=arr[0]
+       .trim()
+       .replace(';','');
+     a[i]['label']=arr[1]
+       .trim()
+       .replace(';','');
+   });
 
-    return a;
-  },[]);
+   return a;
+ },[])
 
   /*  this method is one level up in ChartComponent.js
 
@@ -60,32 +69,33 @@ const Chart = (props) => {
     console.log('data',data);
   };*/
   
-  const svgElementsCB = (svgElement,data) => {
+  svgElementsCB = (svgElement,data) => {
 
-    console.log('svgElement',svgElement);
+    console.log('svgElement ONCE',svgElement);
 
-    if(svgElement) {
-      console.log('is once set');
-      console.log('resizerProps',resizerProps);
+    svgElement.addEventListener('click',this.props.changeView(data));
 
-      svgElement.addEventListener('click',props.changeView(data));
 
-    }
   };
 
-  const service = getService(params.typeSelected.value);
-  const resizerProps = {
-    data:prepareData(data),
-    type:params.typeSelected.value,
-    svgElementsCB
-  };
+  render(){
+    const { data, params } = this.props;
+    const { dataChanged } = this.state;
 
-  return (
-    <div className='chart-inner'>
-      {
-        <Resizer {...resizerProps}>{service}</Resizer>      }
-    </div>
-  );
-};
+    const service = params?this.getService(params.typeSelected.value):null;
+    const resizerProps = {
+      data:data?this.prepareData(data):null,
+      type:params?params.typeSelected.value:null,
+      svgElementsCB:dataChanged?this.svgElementsCB:()=>{},
+    };
+
+    return (
+      <div className='chart-inner'>
+        {data&&params?
+          <Resizer {...resizerProps}>{service}</Resizer>:null     }
+      </div>
+    );
+  }
+}
 
 export default Chart;
