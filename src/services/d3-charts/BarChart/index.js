@@ -53,7 +53,7 @@ const BarChart = (props) => {
             */
             ref={ (ref) => {
               let currentRef = svgElements[i] = ref;
-              svgElementsCB(currentRef,d);
+              if(currentRef) svgElementsCB(currentRef,d);
             } }
             x={x(d[label])}
             y={y(d[value])}

@@ -21,7 +21,6 @@ const PieHolder = (props) => {
   };
   // define event handlers on the parent holder component
   const onMouseOver = (e) => {
-    console.log('hello');
   };
   const onMouseOut = (e) => {
     
@@ -43,7 +42,7 @@ const PieHolder = (props) => {
                 */
                 ref={ (ref) => {
                   let currentRef = svgElements[i] = ref;
-                  svgElementsCB(currentRef,data[i]);
+                  if(currentRef) svgElementsCB(currentRef,data[i]);
                 } }
                 onMouseOut={onMouseOut}
                 onMouseOver={onMouseOver}

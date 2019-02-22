@@ -61,7 +61,16 @@ const Chart = (props) => {
   };*/
   
   const svgElementsCB = (svgElement,data) => {
-    if(svgElement) svgElement.addEventListener('click',props.changeView(data));
+
+    console.log('svgElement',svgElement);
+
+    if(svgElement) {
+      console.log('is once set');
+      console.log('resizerProps',resizerProps);
+
+      svgElement.addEventListener('click',props.changeView(data));
+
+    }
   };
 
   const service = getService(params.typeSelected.value);
@@ -71,7 +80,6 @@ const Chart = (props) => {
     svgElementsCB
   };
 
-  console.log('resizerProps',resizerProps);
   return (
     <div className='chart-inner'>
       {
