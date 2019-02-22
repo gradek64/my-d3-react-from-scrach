@@ -33,6 +33,9 @@ const MobileNavList = (BaseComponent) => {
         *@event.target is the one click is attached/register to ;)
       */
       if(event.target !== event.currentTarget) return;
+
+      console.log('event.target',event.target);
+      console.log('event.currentTarget',event.currentTarget);
       const { multipleOpenPass } = this.props;
       let current = event.target.closest('li');
       let previous = this.state.previousOpen;

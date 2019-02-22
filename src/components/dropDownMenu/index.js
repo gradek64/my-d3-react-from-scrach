@@ -54,14 +54,18 @@ class DropDownMenu extends React.Component {
     
     //dont or do close inside dropdown content;
     if (this.dropdownmenuContainer.current.contains(event.target)) {
-      if(!this.props.goesAwayOnContentClick){
-        return;
+      if(this.props.goesAwayOnContentClick){
+        let dalay = setTimeout(()=>{
+          clearTimeout(dalay);
+          this.setState({ showDropDownMenu:false });
+        },0);
+      }
+    }else {
+      if(!this.anchorEl.current.contains(event.target)) {
+        this.setState({ showDropDownMenu:false });
       }
     }
-    if (this.anchorEl.current.contains(event.target)) {
-      return;
-    }
-    this.setState({ showDropDownMenu:false });
+    
   };
 
   render() {

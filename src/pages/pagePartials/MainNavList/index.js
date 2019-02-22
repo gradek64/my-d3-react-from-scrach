@@ -103,6 +103,7 @@ const MainNavList = (props) => {
                 <DropDownMenu 
                   onMouseEnter={asMobile?false:true} 
                   collapsebleAccordion={asMobile?true:false}
+                  goesAwayOnContentClick={false}
                   multipleOpen={multipleOpenPass?multipleOpenPass:false}
                   animation={asMobile?true:false} >
                   <div className='verticalAlignment' onClick={(e)=>{props.callback?props.callback(e):null;}}>
