@@ -38,7 +38,10 @@ class Chart extends React.Component {
   componentDidUpdate(prevProps) {
   // Typical usage (don't forget to compare props):
 
-    if (this.props.hasData !== prevProps.hasData) {
+    if (this.props.data !== prevProps.data) {
+
+      console.log('this.props', this.props.data);
+      console.log('prev', prevProps.data);
       this.setState({dataChanged:true});
     }
   }
