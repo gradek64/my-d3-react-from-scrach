@@ -55,6 +55,7 @@ class DropDownMenu extends React.Component {
     //dont or do close inside dropdown content;
     if (this.dropdownmenuContainer.current.contains(event.target)) {
       if(this.props.goesAwayOnContentClick){
+        //give time to inner/nested component to react to its content before closing dropdown
         let dalay = setTimeout(()=>{
           clearTimeout(dalay);
           this.setState({ showDropDownMenu:false });

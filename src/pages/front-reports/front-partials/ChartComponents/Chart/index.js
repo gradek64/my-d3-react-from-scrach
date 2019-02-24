@@ -5,7 +5,10 @@ import ReportsTableDataStructure from '../../../../../components/table-partials/
 import Resizer from '../../../../../services/d3-charts/Resizer';
 
 class Chart extends React.Component {
-  state={dataChanged:false}
+  state={
+    dataChanged:false,
+    listenerAdded:false
+  }
   getService = (type) => {
     switch (type) {
     case 'pie':
@@ -35,13 +38,13 @@ class Chart extends React.Component {
   componentDidUpdate(prevProps) {
   // Typical usage (don't forget to compare props):
 
-
-
-    console.log('prevProps',prevProps);
-    console.log('this.props',this.props);
     if (this.props.hasData !== prevProps.hasData) {
       this.setState({dataChanged:true});
     }
+  }
+
+  componentDidMount(){
+    this.setState({listenerAdded:true});
   }
 
  prepareData = data => data.reduce((a,e,i)=>{
@@ -71,10 +74,12 @@ class Chart extends React.Component {
   
   svgElementsCB = (svgElement,data) => {
 
-    console.log('svgElement ONCE',svgElement);
-
-    svgElement.addEventListener('click',this.props.changeView(data));
-
+    if(this.state.listenerAdded){
+      console.log('svgElement ONCE',svgElement);
+      svgElement.addEventListener('click',this.props.changeView(data));
+      this.setState({listenerAdded:false});
+    } 
+   
 
   };
 

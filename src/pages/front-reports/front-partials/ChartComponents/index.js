@@ -45,7 +45,6 @@ class ChartComponents extends React.Component {
 
     const currentChart = document.querySelector('.chart-inner');
     currentChart.classList.add('shrink');
-    this.drill(data);
 
   };
 
@@ -85,8 +84,8 @@ class ChartComponents extends React.Component {
         {
           <Chart data={graphData} params={params} hasData={hasData} changeView={this.onSVGElementClick} />
         }
-        {
-          <Chart data={this.drill()} params={tableDrillDown}  />}
+        {/*<DrillDownChart data={this.state.drillDownData} params={tableDrillDown} />*/}
+      
       </div>
     );
   }
