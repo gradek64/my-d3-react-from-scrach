@@ -35,22 +35,22 @@ class Chart extends React.Component {
       return null;
     }
   }
-
   componentDidUpdate(prevProps) {
   // Typical usage (don't forget to compare props):
-
     if (this.props.data !== prevProps.data) {
 
-      console.log('this.props', this.props.data);
-      console.log('prev', prevProps.data);
+      console.log('this.props Chart !!!!', this.props.data);
+      console.log('prev Chart !!!!!', prevProps.data);
       this.setState({
         dataChanged:true,
         dataState:this.props.data,
       });
+
     }
   }
 
   componentDidMount(){
+    console.log('componentDidMount');
     this.setState({listenerAdded:true});
   }
 
@@ -81,24 +81,31 @@ class Chart extends React.Component {
   
   svgElementsCB = (svgElement,data) => {
 
+    if(!this.state.listenerAdded){
+      //svgElement.removeEventListener('click',this.props.changeView(data));
+    }
     if(this.state.listenerAdded){
-      console.log('svgElement ONCE',svgElement);
-      svgElement.addEventListener('click',this.props.changeView(data));
+
+      svgElement.addEventListener('click',(data));
       this.setState({listenerAdded:false});
-    } 
+    }
    
 
   };
 
   render(){
-    const { data, params } = this.props;
+    const { params } = this.props;
     const { dataChanged, dataState } = this.state;
+
+
+    console.log('Chart props', this.props);
 
     const service = params?this.getService(params.typeSelected.value):null;
     const resizerProps = {
       data:dataState?this.prepareData(dataState):null,
       type:params?params.typeSelected.value:null,
       svgElementsCB:dataChanged?this.svgElementsCB:()=>{},
+      svgElementsClick:this.props.changeViewClick,
     };
 
     console.log('resizerProps',resizerProps);

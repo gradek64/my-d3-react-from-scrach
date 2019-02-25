@@ -47,13 +47,17 @@ const BarChart = (props) => {
           <rect
             key={i}
             key={d[label]}
+            onClick={props.svgElementsClick(d)}
             className="bar"
             /* U need to store refference for every <rect> element and expose it outside 
                to chart.js for mouseover, click etc...
             */
             ref={ (ref) => {
               let currentRef = svgElements[i] = ref;
-              if(currentRef) svgElementsCB(currentRef,d);
+              //if(currentRef) svgElementsCB(currentRef,d);
+              console.log('BarChart props.......', props);
+              //if(currentRef)   currentRef.addEventListener('click',props.svgElementsClick(d));
+
             } }
             x={x(d[label])}
             y={y(d[value])}

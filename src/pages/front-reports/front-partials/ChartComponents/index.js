@@ -43,7 +43,7 @@ class ChartComponents extends React.Component {
       console.log('data......',this.state.drillDownData);
     });
 
-    console.log('data from click',data);
+    console.log('data from click..............',data);
 
     const currentChart = document.querySelector('.chart-inner');
     currentChart.classList.add('shrink');
@@ -84,7 +84,9 @@ class ChartComponents extends React.Component {
 
         {/* display once data is received*/}
         {
-          <Chart data={graphData} params={params} hasData={hasData} changeView={this.onSVGElementClick} />
+          <Chart data={graphData} params={params} hasData={hasData} 
+            changeViewClick={this.onSVGElementClick} 
+          />
         }
         {
           changeView?<Chart data={drillDownData} params={tableDrillDown}/>:null
