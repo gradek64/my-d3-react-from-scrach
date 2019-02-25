@@ -12,7 +12,7 @@ class ChartComponents extends React.Component {
     hasData:false
   }
   drill = (data)=>data?data:null;
-  
+
   getData = async (params) => {
     const data = await reportDataServiceMock.getAll();
     this.setState({
@@ -25,6 +25,7 @@ class ChartComponents extends React.Component {
   }
 
   onChartInnerClose = (e) => {
+    console.log('here');
     this.setState({changeView:false});
     //enlarge currrent chart;
     const currentChart = document.querySelector('.chart-inner');
@@ -76,8 +77,8 @@ class ChartComponents extends React.Component {
           tabActive={tabActive}
           chartTypes={chartTypes} 
           page={page} 
-          onChartInnerClose={()=>{return this.onChartInnerClose;}}
-          changeView={null}
+          onChartInnerClose={this.onChartInnerClose}
+          changeView={changeView}
           getData={this.getData}
           isVariance={isVariance}/>
 
