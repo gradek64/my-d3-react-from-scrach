@@ -44,7 +44,7 @@ const CostOverview = (props) => {
         <Typography variant="h5" gutterBottom color='secondary'>
           {'Chart showing total IT costs allocated to the departed per selected attribute contained in the General Ledger input data.'}
         </Typography>
-        {/*chart compoents for rednering*/}
+        {/*chart components for rednering*/}
         <ChartComponents 
           config={ pageConfiguration } 
           className='chart-componet'
