@@ -1,5 +1,16 @@
 import React from 'react';
 
+
+
+/**********************************************************************
+
+
+  this class Component is resposible for getting the size of SVG container and 
+  also for keeping track if data has changed in props in componentDidUpdate method
+  so it will update data accordingly
+
+/**********************************************************************/
+
 class Resizer extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +43,10 @@ class Resizer extends React.Component {
     });
     //window.addEventListener('resize', this.resizeWindow,false);
   }
-
+  /*
+    *@data has changed rerender nested components by
+    *@sending new props to them;
+  */
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
       this.setState({
@@ -42,13 +56,16 @@ class Resizer extends React.Component {
     }
   }
 
+  /*
+    *@remember to cancel DOM events once U dont need it anymore
+  */
   componentWillUnmount(){
     // window.removeEventListener('resize', this.resizeWindow,false);
   }
 
   render() {
 
-    const { dataChange, typeChange, containerWidth, containerHeight  } = this.state;
+    const { dataChange, typeChange, containerWidth, containerHeight } = this.state;
     const { type } = this.props;
 
     const propsTranform = {
@@ -60,6 +77,8 @@ class Resizer extends React.Component {
       changeViewClick:this.props.changeViewClick,
     };
 
+
+    //@render actual service below
     return (<div className='diagram'>
       {
         /*this.state.containerWidth||dataChange ? React.cloneElement(this.props.children, {data:dataChange,type:typeChange,...propsTranform}):null*/
