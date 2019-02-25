@@ -24,6 +24,7 @@ class TableDataReports extends React.Component {
   columns = ['label','percentage','value','id'];
   state = {
     tableRef:null,
+    dataHasChanged:false,
     filterDataSetup:{
       filterDataSelected:Array.from(Array(this.props.data.length), () => true),
       checkedSelectAll:true,
@@ -51,6 +52,17 @@ class TableDataReports extends React.Component {
 
       this.setState({
         standardData:this.props.data,
+        filterDataSetup:{
+          filterDataSelected:Array.from(Array(this.props.data.length), () => true),
+          checkedSelectAll:true,
+          filterBy:null,
+          filterByValue:'',
+          filterByValueSet:this.columns.reduce((a,e)=>{
+            a[e]='';
+            return a;
+          },{}),
+          data:this.props.data,
+        },
       });
     }
   }
@@ -80,7 +92,7 @@ class TableDataReports extends React.Component {
   render = () => {
 
     const {  hasHeader=false ,hasFooter=false } = this.props;
-    const { tableRef, standardData } = this.state;
+    const { tableRef, standardData  } = this.state;
     const { 
       data ,
       filterDataSelected, 
@@ -91,7 +103,7 @@ class TableDataReports extends React.Component {
       <Paper  className='structure' style={{ overflowY:'auto'}}>
         <div className='overallContainer'>
           {/*apply seperate props for Filter Data */}
-          {this.state.tableRef?
+          {tableRef?
             <TableExtensions 
               hasFilterDataSetup = {
                 { filterDataSelected,

@@ -79,28 +79,6 @@ class TableDataFilter extends React.Component {
    }
 
    componentDidUpdate(prevProps) {
-
-     //reset search once you applied a diffrent filter/search
-
-     /* if (this.props.filterBy !== prevProps.filterBy) {
-       console.log('prevProps',prevProps);
-       console.log(this.props);
-       if(this.props.filterBy!==this.props.accessor){
-         this.setState({
-           lastSearchValue:{
-             [this.props.accessor]:''
-           }
-         });
-       }
-       
-     }
-     //update data;
-     if (this.props.items !== prevProps.items) {
-       
-
-       this.setState({data:this.props.items}); 
-     }*/
-
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
          checked:this.props.filterDataSelected,
