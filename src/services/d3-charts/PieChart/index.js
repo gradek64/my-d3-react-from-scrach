@@ -3,10 +3,7 @@ import * as d3 from 'd3';
 
 const PieHolder = (props) => {
 
-  const { svgWidth ,data, svgElementsCB, type } = props;
-
-  console.log('Pie props', props);
-
+  const { svgWidth ,data, type } = props;
 
   const svgElements = [];
   const colors = ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'];
@@ -38,17 +35,18 @@ const PieHolder = (props) => {
         { 
           makePie(type).map((d, i) => {
             return (
-              <path key={i} onClick={props.svgElementsClick(data[i])}
+              <path key={i} 
+                //changeViewClick is pass function from ChartComponents
+                onClick={props.changeViewClick(data[i])}
                 d={d}
                 id={i}
                 /* U need to store refference for every <rect> element and expose it outside 
                 to chart.js for mouseover, click etc...
+                actually U dont need to cause react does better job to assign listener here just fount out;
                 */
                 ref={ (ref) => {
                   let currentRef = svgElements[i] = ref;
                   //if(currentRef) svgElementsCB(currentRef,data[i]);
-                  //if(currentRef)   currentRef.addEventListener('click',props.svgElementsClick(data[i]));
-
                 } }
                 onMouseOut={onMouseOut}
                 onMouseOver={onMouseOver}

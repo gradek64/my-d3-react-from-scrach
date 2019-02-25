@@ -6,7 +6,7 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 
 const BarChart = (props) => {
-  const { svgWidth, svgHeight, data, svgElementsCB } = props;
+  const { svgWidth, svgHeight, data } = props;
   let svgElements = [];
   
   //Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
@@ -47,15 +47,15 @@ const BarChart = (props) => {
           <rect
             key={i}
             key={d[label]}
-            onClick={props.svgElementsClick(d)}
+            //changeViewClick is pass function from ChartComponents
+            onClick={props.changeViewClick(d)}
             className="bar"
             /* U need to store refference for every <rect> element and expose it outside 
-               to chart.js for mouseover, click etc...
-            */
+              to chart.js for mouseover, click etc...
+              actually U dont need to cause react does better job to assign listener here just fount out;*/
             ref={ (ref) => {
               let currentRef = svgElements[i] = ref;
               //if(currentRef) svgElementsCB(currentRef,d);
-              console.log('BarChart props.......', props);
               //if(currentRef)   currentRef.addEventListener('click',props.svgElementsClick(d));
 
             } }

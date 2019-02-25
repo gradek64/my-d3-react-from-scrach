@@ -57,7 +57,7 @@ class Resizer extends React.Component {
         ?containerHeight/2:
         containerHeight/2+containerHeight/5,
       //below is pass function from ChartComponents
-      svgElementsClick:this.props.changeViewClick,
+      changeViewClick:this.props.changeViewClick,
     };
 
     return (<div className='diagram'>
