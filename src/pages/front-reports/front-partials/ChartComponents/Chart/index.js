@@ -68,7 +68,7 @@ const Chart = (props) => {
     data:prepareData(data),
     type:params.typeSelected.value,
     //below is pass function from ChartComponents
-    svgElementsClick:props.changeViewClick,
+    changeViewClick:props.changeViewClick,
   };
   return (
     <div className='chart-inner'>
