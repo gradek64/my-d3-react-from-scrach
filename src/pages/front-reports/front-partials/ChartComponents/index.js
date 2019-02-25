@@ -37,6 +37,8 @@ class ChartComponents extends React.Component {
     *@all way down to d3 services charts;
   */
   onSVGElementClick = (data)=>(e)=>{
+
+    console.log('data after click', data);
     //shrink currrent chart; 
     this.setState({
       changeView:true,
@@ -78,8 +80,12 @@ class ChartComponents extends React.Component {
 
         {/* display once data is received*/}
         {graphData?<Chart data={graphData} params={params} changeViewClick={this.onSVGElementClick} />:null}
+
         {/*drilldown graph */}
-        {changeView?<Chart data={drillDownData} params={tableDrillDown}/>:null}
+        {/*changeView?<Chart data={drillDownData} params={params}  changeViewClick={this.onSVGElementClick}/>:null*/}
+
+        {/*for now U want only table*/}
+        {changeView?<Chart data={drillDownData} params={tableDrillDown}  />:null}
       
       </div>
     );
