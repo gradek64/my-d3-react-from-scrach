@@ -1,7 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import ReportsMenuSubLinks from '../front-partials/ReportsMenuSubLinks';
-import ChartDiscription from '../front-partials/ChartDiscription';
 import ChartComponents  from '../front-partials/ChartComponents/';
 
 
@@ -37,7 +36,6 @@ const CostOverview = (props) => {
         configuration={ pageConfiguration } 
         /* just for science experiment assing already set prop to stop them from reasigning links*/
       />
-      <ChartDiscription config={ pageConfiguration } tabActive={activeTab?activeTab:'general-ledger'}/>
       {/* chart info*/}
       <div className='page-content'>
         <Typography variant="h3" gutterBottom>
@@ -46,6 +44,7 @@ const CostOverview = (props) => {
         <Typography variant="h5" gutterBottom color='secondary'>
           {'Chart showing total IT costs allocated to the departed per selected attribute contained in the General Ledger input data.'}
         </Typography>
+        {/*chart compoents for rednering*/}
         <ChartComponents 
           config={ pageConfiguration } 
           className='chart-componet'
