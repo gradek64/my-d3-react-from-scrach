@@ -7,6 +7,7 @@ import Resizer from '../../../../../services/d3-charts/Resizer';
 class Chart extends React.Component {
   state={
     dataChanged:false,
+    dataState:this.props.data,
     listenerAdded:false
   }
   getService = (type) => {
@@ -42,7 +43,10 @@ class Chart extends React.Component {
 
       console.log('this.props', this.props.data);
       console.log('prev', prevProps.data);
-      this.setState({dataChanged:true});
+      this.setState({
+        dataChanged:true,
+        dataState:this.props.data,
+      });
     }
   }
 
@@ -88,18 +92,20 @@ class Chart extends React.Component {
 
   render(){
     const { data, params } = this.props;
-    const { dataChanged } = this.state;
+    const { dataChanged, dataState } = this.state;
 
     const service = params?this.getService(params.typeSelected.value):null;
     const resizerProps = {
-      data:data?this.prepareData(data):null,
+      data:dataState?this.prepareData(dataState):null,
       type:params?params.typeSelected.value:null,
       svgElementsCB:dataChanged?this.svgElementsCB:()=>{},
     };
 
+    console.log('resizerProps',resizerProps);
+
     return (
       <div className='chart-inner'>
-        {data&&params?
+        {dataState?
           <Resizer {...resizerProps}>{service}</Resizer>:null     }
       </div>
     );

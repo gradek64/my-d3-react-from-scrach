@@ -12,6 +12,7 @@ class ChartComponents extends React.Component {
     hasData:false
   }
   drill = (data)=>data?data:null;
+  
   getData = async (params) => {
     const data = await reportDataServiceMock.getAll();
     this.setState({

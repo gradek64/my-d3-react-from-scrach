@@ -41,6 +41,19 @@ class TableDataReports extends React.Component {
   componentDidMount = () => {
     this.setState({tableRef:document.querySelector('.chart')});
   }
+  componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+
+    if (this.props.data !== prevProps.data) {
+
+      console.log('this.props reportsTableDataStructure', this.props.data);
+      console.log('prev reportsTableDataStructure', prevProps.data);
+
+      this.setState({
+        standardData:this.props.data,
+      });
+    }
+  }
 
   updateDataSelected = (updateArray, selectAllButton,filterByValueSet) => {
     const { filterDataSetup } = this.state;

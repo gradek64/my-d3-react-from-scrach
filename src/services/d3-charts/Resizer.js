@@ -9,7 +9,9 @@ class Resizer extends React.Component {
     */
     this.state = {
       containerWidth: null,
-      containerHeight: null
+      containerHeight: null,
+      dataChange:this.props.data,
+      typeChange:this.props.type,
     };
     this.resizeWindow = this.resizeWindow.bind(this);
 
@@ -30,16 +32,31 @@ class Resizer extends React.Component {
     //window.addEventListener('resize', this.resizeWindow,false);
   }
 
+  componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+
+    if (this.props.data !== prevProps.data) {
+
+      console.log('this.props Resizer', this.props.data);
+      console.log('prev Resizer', prevProps.data);
+
+      this.setState({
+        dataChange:this.props.data,
+        typeChange:this.props.type,
+      });
+    }
+  }
+
   componentWillUnmount(){
     // window.removeEventListener('resize', this.resizeWindow,false);
   }
 
   render() {
 
-    
+    const { dataChange, typeChange } = this.state;
     const propsTranform = {
-      data:this.props.data,
-      type:this.props.type,
+      /* data:this.props.data,
+      type:this.props.type,*/
       svgWidth:this.props.type!=='bar'?this.state.containerWidth/2:this.state.containerWidth,
       svgHeight:this.props.type!=='bar'
         ?this.state.containerHeight/2:
@@ -47,7 +64,7 @@ class Resizer extends React.Component {
       svgElementsCB:this.props.svgElementsCB
     };
 
-    console.log('Resizer render');
+    console.log('dataChange',dataChange);
 
     {/*<div className='diagram' style={{
         width:propsTranform.svgWidth,
@@ -55,7 +72,8 @@ class Resizer extends React.Component {
         }}*/}
     return (<div className='diagram'>
       {
-        this.state.containerWidth? React.cloneElement(this.props.children, {...propsTranform}):null
+        /*this.state.containerWidth||dataChange ? React.cloneElement(this.props.children, {data:dataChange,type:typeChange,...propsTranform}):null*/
+        React.cloneElement(this.props.children, {data:dataChange,type:typeChange,...propsTranform})
       }
     </div>
     );
