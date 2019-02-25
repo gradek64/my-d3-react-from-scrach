@@ -84,9 +84,9 @@ class ChartComponents extends React.Component {
 
         {/* display once data is received*/}
         {
-          <Chart data={graphData} params={params} hasData={hasData} 
+          graphData?<Chart data={graphData} params={params} hasData={hasData} 
             changeViewClick={this.onSVGElementClick} 
-          />
+          />:null
         }
         {
           changeView?<Chart data={drillDownData} params={tableDrillDown}/>:null
