@@ -1,68 +1,81 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PopUpAnchorDropDown from './../../PopUpAnchorDropDown';
-//custom
+// custom
 import TableDataFilter from '../TableDataFilter/TableDataFilter';
 import './tableFilter.scss';
 
-/************************************
+/** **********************************
 
-  *@this functional component is resposible to adding responsive header and footer 
-  *@to the table and passing data to the FilterData Class Component 
+  *@this functional component is resposible to adding responsive header and footer
+  *@to the table and passing data to the FilterData Class Component
 
-*************************************/
+************************************ */
 
 
 const TableExtensions = (props) => {
-  
-  const { 
+  const {
     hasFilterDataSetup,
     tableRef,
     values,
   } = props;
 
-  //access <tr> for the table from tableRef DOM element
+  // access <tr> for the table from tableRef DOM element
   const trDOM = Array.from(tableRef.querySelector('table tbody tr').children);
-  const childrenWidth = trDOM.reduce((a,e,i)=>{
-    a[i]=e.clientWidth;
+  const childrenWidth = trDOM.reduce((a, e, i) => {
+    const accumulator = a;
+    accumulator[i] = e.clientWidth;
     return a;
-  },[]);
+  }, []);
 
-    //position of dropdown filter;
-  let translatePositions=[];
-  childrenWidth.reduce((total,num,i)=>{
-    translatePositions[i]= (total+num)-num;
-    return total+num;
-  },0);
+    // position of dropdown filter;
+  const translatePositions = [];
+  childrenWidth.reduce((total, num, i) => {
+    translatePositions[i] = (total + num) - num;
+    return total + num;
+  }, 0);
 
   return (
     <React.Fragment>
-      <div className='tableFilterContainer'>
-        {trDOM.map((el,i)=>{
-          return (<div key={`pocket${i}`} className='pocket' style={{width:`${childrenWidth[i]}px`}}>{values[i]}</div>);
-        })}
+      <div className="tableFilterContainer">
+        {trDOM.map((el, i) => (<div key={`pocket${i}`} className="pocket" style={{ width: `${childrenWidth[i]}px` }}>{values[i]}</div>))}
       </div>
-      {hasFilterDataSetup?<div className='tableFilterContainer'>
-        {trDOM.map((el,i)=>{
-          return (
-            <div key={`pocketFilter${i}`} className='pocket' style={{width:`${childrenWidth[i]}px`}}>
+      {hasFilterDataSetup ?
+        <div className="tableFilterContainer">
+          {trDOM.map((el, i) => (
+            <div key={`pocketFilter${i}`} className="pocket" style={{ width: `${childrenWidth[i]}px` }}>
               <PopUpAnchorDropDown>
-                <div>filter {hasFilterDataSetup.labels[i]} {hasFilterDataSetup.filterByValueSet[hasFilterDataSetup.labels[i]]}</div>
+                <div>filter {hasFilterDataSetup.labels[i]}
+                  {hasFilterDataSetup.filterByValueSet[hasFilterDataSetup.labels[i]]}
+                </div>
                 <div>
-                  <TableDataFilter 
-                    items={hasFilterDataSetup.data} 
+                  <TableDataFilter
+                    items={hasFilterDataSetup.data}
                     filterDataSelected={hasFilterDataSetup.filterDataSelected}
                     checkedSelectAll={hasFilterDataSetup.checkedSelectAll}
                     updateRecord={hasFilterDataSetup.curryUpdateTableData}
-                    accessor={hasFilterDataSetup.labels[i]} 
+                    accessor={hasFilterDataSetup.labels[i]}
                     filterByValueSet={hasFilterDataSetup.filterByValueSet}
                   />
                 </div>
               </PopUpAnchorDropDown>
-            </div>);
-        })}
-      </div>:null}
+            </div>))}
+        </div> : null}
     </React.Fragment>
   );
+};
+
+TableExtensions.defaultProps = {
+  values: [],
+  tableRef: {},
+  hasFilterDataSetup: null,
+};
+
+TableExtensions.propTypes = {
+  values: PropTypes.instanceOf(Array),
+  tableRef: PropTypes.instanceOf(Object),
+  hasFilterDataSetup: PropTypes.instanceOf(Object),
+
 };
 
 export default TableExtensions;
