@@ -72,29 +72,34 @@ class TableDataFilter extends React.Component {
    state = {
      checkedSelectAll: this.props.checkedSelectAll,
      checked: this.props.filterDataSelected,
-     atLeastOneChecked: true,
+     // atLeastOneChecked: true,
      data: this.props.items.slice(),
      searchData: this.props.items.slice(),
      lastSearchValue: { ...this.props.filterByValueSet },
    }
 
-   /* componentWillReceiveProps(nextProps) {
+   /*
+     *@U dont need eiher componentWillReceiveProps or
+     *@componentDidUpdate cause U always use full data array copy this.props.items.slice()
+   */
+
+  /* componentWillReceiveProps(nextProps) {
      if (this.props.filterDataSelected !== nextProps.filterDataSelected) {
-       this.setState({
+        this.setState({
          checked: this.props.filterDataSelected,
          checkedSelectAll: this.props.checkedSelectAll,
        });
      }
    } */
 
-   componentDidUpdate(prevProps) {
+  /* componentDidUpdate(prevProps) {
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
          checked: this.props.filterDataSelected,
          checkedSelectAll: this.props.checkedSelectAll,
        });
      }
-   }
+   } */
 
   handleSearch = (event) => {
     const { value } = event.target;
@@ -137,10 +142,9 @@ class TableDataFilter extends React.Component {
       checked: [...this.state.checked],
       searchData: listFiltered,
     }), () => {
-      const searchLabel = this.state.lastSearchValue;
-
       // dont report back if there is not selected ones;
       if (!this.state.checked.some(e => e)) return;
+      const searchLabel = this.state.lastSearchValue;
       // update records in ReportsTableDataStructure and selectAll button;
       this.props.updateRecord(this.state.checked, this.state.checkedSelectAll, searchLabel);
     });
@@ -173,16 +177,16 @@ class TableDataFilter extends React.Component {
       const howManyUnselected = this.state.checked.filter(input => input === false);
       // check how many is unselected to make sure at least one is selected
       const morethanOne = howManyUnselected.length !== this.state.checked.length - 1;
+      // make sure that U will update if at least one is selected
+      if (morethanOne || this.state.checked[index] !== true) {
+        this.state.checked[index] = !this.state.checked[index];
+      }
       this.setState({
-        atLeastOneChecked: morethanOne,
         checkedSelectAll: false,
         checked: [...this.state.checked],
       }, () => {
-        // make sure that U will update if at least one is selected
-        if (this.state.atLeastOneChecked || this.state.checked[index] !== true) {
-          this.state.checked[index] = !this.state.checked[index];
-        }
-
+        // dont report back if there is not selected ones;
+        if (!this.state.checked.some(e => e)) return;
         const searchLabel = this.state.lastSearchValue;
         // update records in ReportsTableDataStructure and selectAll button;
         this.props.updateRecord(this.state.checked, this.state.checkedSelectAll, searchLabel);
@@ -233,7 +237,6 @@ class TableDataFilter extends React.Component {
 
         <List dense style={{ maxHeight: '200px', overflow: 'auto' }}>
           {
-
             searchData.map((item, i) => {
               const allHidden = searchData.find(({ hide }) => !hide);
               const nodata = Boolean((allHidden

@@ -31,10 +31,7 @@
                 "args": "none"
             }
         ],
-        "consistent-return": ["error",
-        {
-            "treatUndefinedAsUnspecified": true
-        }],
+        "react/no-array-index-key": 1,
         "react/jsx-filename-extension": [1,
         {
             "extensions": [".js", ".jsx"]
