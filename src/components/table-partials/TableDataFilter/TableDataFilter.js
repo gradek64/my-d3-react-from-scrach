@@ -77,23 +77,23 @@ class TableDataFilter extends React.Component {
      lastSearchValue: { ...this.props.filterByValueSet },
    }
 
-   componentWillReceiveProps(nextProps) {
+   /* componentWillReceiveProps(nextProps) {
      if (this.props.filterDataSelected !== nextProps.filterDataSelected) {
        this.setState({
          checked: this.props.filterDataSelected,
          checkedSelectAll: this.props.checkedSelectAll,
        });
      }
-   }
+   } */
 
-   /* componentDidUpdate(prevProps) {
+   componentDidUpdate(prevProps) {
      if (this.props.filterDataSelected !== prevProps.filterDataSelected) {
        this.setState({
          checked: this.props.filterDataSelected,
          checkedSelectAll: this.props.checkedSelectAll,
        });
      }
-   } */
+   }
 
   handleSearch = (event) => {
     const { value } = event.target;
