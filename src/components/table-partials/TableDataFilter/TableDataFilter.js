@@ -108,8 +108,9 @@ class TableDataFilter extends React.Component {
     }));
 
     const filterData = this.state.data.filter((item, index) => {
+      const itemArg = item;
       // keep index of filtered ones:
-      item.lucky = index;
+      itemArg.lucky = index;
       const convertedItem = item[this.props.accessor];
       return convertedItem
         .toString()
@@ -123,7 +124,8 @@ class TableDataFilter extends React.Component {
     // hide not filtered;
     const listFiltered = this.state.searchData
       .map((el, i) => {
-        el.hide = !luckyChosen.includes(i);
+        const elArg = el;
+        elArg.hide = !luckyChosen.includes(i);
         // update checked with picked ones;
         this.state.checked[i] = !!luckyChosen.includes(i);
         return el;
@@ -230,6 +232,7 @@ class TableDataFilter extends React.Component {
 
         <List dense style={{ maxHeight: '200px', overflow: 'auto' }}>
           {
+
             searchData.map((item, i) => {
               const allHidden = searchData.find(({ hide }) => !hide);
               const nodata = Boolean(allHidden
@@ -238,13 +241,19 @@ class TableDataFilter extends React.Component {
 
               if (nodata && i === searchData.length - 1) {
                 return (
-                  <ListItem key={`valuenoData${i}`} role={undefined} dense>
+                  <ListItem key={item.id} role={undefined} dense>
                     <ListItemText primary="no results found" />
                   </ListItem>);
               }
               if (!item.hide) {
                 return (
-                  <ListItem key={`value${i}`} role={undefined} dense button onClick={this.handleChange(i)}>
+                  <ListItem
+                    key={item.id}
+                    role={undefined}
+                    dense
+                    button
+                    onClick={this.handleChange(i)}
+                  >
                     <Checkbox
                       checked={this.state.checked[i]}
                       tabIndex={-1}
