@@ -31,6 +31,10 @@
                 "args": "none"
             }
         ],
+        "consistent-return": ["error",
+        {
+            "treatUndefinedAsUnspecified": true
+        }],
         "react/jsx-filename-extension": [1,
         {
             "extensions": [".js", ".jsx"]

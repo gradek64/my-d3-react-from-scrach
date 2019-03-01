@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import PropTypes from 'prop-types';
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -67,13 +68,13 @@ const styles = theme => ({
 
 class TableDataFilter extends React.Component {
    // here U need clone of items since it will affect original once filtering
-   cloneData = this.props.items.slice();
+   // cloneData = this.props.items.slice();
    state = {
      checkedSelectAll: this.props.checkedSelectAll,
      checked: this.props.filterDataSelected,
      atLeastOneChecked: true,
-     data: this.cloneData,
-     searchData: this.cloneData,
+     data: this.props.items.slice(),
+     searchData: this.props.items.slice(),
      lastSearchValue: { ...this.props.filterByValueSet },
    }
 
@@ -99,7 +100,7 @@ class TableDataFilter extends React.Component {
     const { value } = event.target;
 
     // set last used search input;
-    Object.keys(this.state.lastSearchValue).map((key) => {
+    Object.keys(this.state.lastSearchValue).forEach((key) => {
       this.state.lastSearchValue[key] = key === this.props.accessor ? value : '';
     });
 
@@ -152,7 +153,7 @@ class TableDataFilter extends React.Component {
 
       const { checkedSelectAll } = this.state;
       // update selectAll accordig to selection or lack of it;
-      this.state.searchData.map((el, i) => {
+      this.state.searchData.forEach((el, i) => {
         if (el.hide) {
           this.state.checked[i] = !el.hide;
         } else {
@@ -235,8 +236,8 @@ class TableDataFilter extends React.Component {
 
             searchData.map((item, i) => {
               const allHidden = searchData.find(({ hide }) => !hide);
-              const nodata = Boolean(allHidden
-                && allHidden.length === searchData.length - 1
+              const nodata = Boolean((allHidden
+                && allHidden.length === searchData.length - 1)
                 || !allHidden);
 
               if (nodata && i === searchData.length - 1) {
@@ -267,6 +268,9 @@ class TableDataFilter extends React.Component {
                     <ListItemText primary={item[accessor]} />
                   </ListItem>);
               }
+              /* temporary fix to the eslint
+              error:expected to return a value at the end of arrow function */
+              return '';
             })
           }
         </List>
@@ -274,5 +278,24 @@ class TableDataFilter extends React.Component {
     );
   }
 }
+TableDataFilter.defaultProps = {
+  items: [],
+  classes: {},
+  filterDataSelected: [],
+  accessor: '',
+  checkedSelectAll: true,
+  filterByValueSet: {},
+  updateRecord: () => {},
+};
+
+TableDataFilter.propTypes = {
+  items: PropTypes.instanceOf(Array),
+  classes: PropTypes.instanceOf(Object),
+  filterDataSelected: PropTypes.instanceOf(Array),
+  accessor: PropTypes.string,
+  checkedSelectAll: PropTypes.bool,
+  filterByValueSet: PropTypes.instanceOf(Object),
+  updateRecord: PropTypes.instanceOf(Function),
+};
 
 export default withStyles(styles)(TableDataFilter);
