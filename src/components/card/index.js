@@ -2,20 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
     minWidth: 275,
   },
-  position:{
-    display:'flex',
-    justifyContent:'center',
-    minHeight:'70vh',
-    alignItems:'center',
+  position: {
+    display: 'flex',
+    justifyContent: 'center',
+    minHeight: '70vh',
+    alignItems: 'center',
   },
   bullet: {
     display: 'inline-block',
@@ -32,11 +29,10 @@ const styles = {
 
 function SimpleCard(props) {
   const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div className={props.center?classes.position:''}>
-      <Card className={classes.card}  /*style={{maxWidth:props.maxWidth}}*/ >
+    <div className={props.center ? classes.position : ''}>
+      <Card className={classes.card} /* style={{maxWidth:props.maxWidth}} */ >
         <CardContent>
           {props.children}
         </CardContent>
@@ -46,7 +42,17 @@ function SimpleCard(props) {
 }
 
 SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  center: PropTypes.bool,
+  children: PropTypes.instanceOf(Array),
+};
+
+SimpleCard.defaultProps = {
+  children: [],
+  center: true,
+};
+
+SimpleCard.propTypes = {
+  classes: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default withStyles(styles)(SimpleCard);

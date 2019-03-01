@@ -46,10 +46,10 @@ class TableDataReports extends React.Component {
   // Typical usage (don't forget to compare props):
 
     if (this.props.data !== prevProps.data) {
-
-      console.log('this.props reportsTableDataStructure', this.props.data);
-      console.log('prev reportsTableDataStructure', prevProps.data);
-
+      /*
+        *@You need to update all those props for the nested components
+        *@to render with new props;
+      */
       this.setState({
         standardData:this.props.data,
         filterDataSetup:{
