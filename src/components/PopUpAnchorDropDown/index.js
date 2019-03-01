@@ -10,22 +10,25 @@ function RenderPropsMenu(props) {
     <WithState>
       {({ anchorEl, updateAnchorEl }) => {
         const open = Boolean(anchorEl);
-        const handleClose = () => {
+        /* const handleClose = () => {
           updateAnchorEl(null);
-        };
+        }; */
 
         return (
           <React.Fragment>
-            {React.Children.map(props.children,(child, i) => {
-              if (i == 0){
-                return <div 
-                  style={{position:'relative'}}                
-                  onClick={event => {
-                    updateAnchorEl(event.currentTarget);}}>
+            {React.Children.map(props.children, (child, i) => {
+              if (i === 0) {
+                return (<div
+                  style={{ position: 'relative' }}
+                  onClick={(event) => {
+                    updateAnchorEl(event.currentTarget);
+                  }}
+                >
                   {child}
-                </div>;}
-              if (i == 1){
-                return <Popover
+                        </div>);
+              }
+              if (i == 1) {
+                return (<Popover
                   id="render-props-popover"
                   open={open}
                   anchorEl={anchorEl}
@@ -42,12 +45,11 @@ function RenderPropsMenu(props) {
                   }}
                 >
                   {child}
-                </Popover>;
-              
+                        </Popover>);
               }
             })
             }
-            {/*<Button
+            {/* <Button
               aria-owns={open ? 'render-props-menu' : undefined}
               aria-haspopup="true"
               onClick={event => {
@@ -60,7 +62,7 @@ function RenderPropsMenu(props) {
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
               <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>*/}
+            </Menu> */}
           </React.Fragment>
         );
       }}

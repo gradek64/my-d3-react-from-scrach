@@ -4,9 +4,9 @@ const validationRules = {
   costModelName: new Schema({
     costModelName: {
       required: true,
-      message: 'CostModel Name is required.'
+      message: 'CostModel Name is required.',
     },
-  })
+  }),
 };
 
-export {validationRules};
+export { validationRules };
