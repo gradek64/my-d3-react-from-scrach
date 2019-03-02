@@ -24,6 +24,12 @@
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "react/jsx-uses-vars": 2,
+        "max-len": [2,
+        {
+            "code": 120,
+            "tabWidth": 4,
+            "ignoreUrls": true
+        }],
         "no-unused-vars": [
             "error",
             {

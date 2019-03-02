@@ -151,7 +151,12 @@ render() {
         <Typography component="h4" variant="h4" gutterBottom>
                   Costpots
         </Typography>
-        <Button variant="contained" color="primary" onClick={() => { events.emit('OPEN_MODAL'); }} >Create CostModel</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => { events.emit('OPEN_MODAL'); }}
+        >Create CostModel
+        </Button>
       </div>
 
       {/* display table here */}
@@ -176,8 +181,21 @@ render() {
               <Typography component="h3" variant="h3" gutterBottom style={{ textAlign: 'center' }}>
                   are you sure U want to delete { selectedCostPot }?
               </Typography>
-              <Button variant="contained" color="primary" className="buttonConfirm" onClick={() => { this.onDelete(this.state.selectedCostPotID); }}>Delete</Button>
-              <Button variant="contained" color="primary" className="buttonCancel" onClick={() => { events.emit('CLOSE_MODAL'); }}>Cancel</Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="buttonConfirm"
+                onClick={() => { this.onDelete(this.state.selectedCostPotID); }}
+              >
+              Delete
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="buttonCancel"
+                onClick={() => { events.emit('CLOSE_MODAL'); }}
+              >Cancel
+              </Button>
             </ModalCustom>
 
           </div>

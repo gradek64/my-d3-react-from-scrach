@@ -145,14 +145,28 @@ class UploadForm extends React.Component {
             </div>
             <FormControl aria-describedby="component-error-text" className="row">
               <InputLabel htmlFor="component-error">CostModel Name</InputLabel>
-              <Input id="component-costModelName" name="costModelName" error={submitted && Boolean(errorsSet.costModelName)} onChange={this.handleChange} />
-              {submitted && errorsSet.costModelName ? <FormHelperText id="component-error-text" error >({submitted && errorsSet.costModelName})</FormHelperText> : null}
+              <Input
+                id="component-costModelName"
+                name="costModelName"
+                error={submitted && Boolean(errorsSet.costModelName)}
+                onChange={this.handleChange}
+              />
+              {submitted && errorsSet.costModelName ?
+                <FormHelperText id="component-error-text" error >
+                ({submitted && errorsSet.costModelName})
+                </FormHelperText> : null}
             </FormControl>
           </div>
         </div>
         <div className="modal-footer">
           <Button variant="contained" color="primary" className="buttonConfirm" onClick={this.submit} >Create</Button>
-          <Button variant="contained" color="primary" className="buttonCancel" onClick={() => { events.emit('CLOSE_MODAL'); }} >Cancel</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            className="buttonCancel"
+            onClick={() => { events.emit('CLOSE_MODAL'); }}
+          >Cancel
+          </Button>
         </div>
       </form>
     );

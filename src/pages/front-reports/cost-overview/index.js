@@ -1,11 +1,10 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import ReportsMenuSubLinks from '../front-partials/ReportsMenuSubLinks';
-import ChartComponents from '../front-partials/ChartComponents/';
-
-
+import PropTypes from 'prop-types';
 // page Configuration;
 import { pageConfiguration } from './cost-overview-config';
+import ReportsMenuSubLinks from '../front-partials/ReportsMenuSubLinks';
+import ChartComponents from '../front-partials/ChartComponents/';
 import './page-content.scss';
 
 
@@ -18,15 +17,15 @@ const CostOverview = (props) => {
   const page = 'cost-overwiew';
   const isVariance = false;
   const { activeTab } = props;
-  const adjustReportLinks = ({ reportsMenuSubLinks }) =>
-    // adjust links for a page;
-    // reportsMenuSubLinks.map((link) => link.href = '/'.concat(link.href));
-    // listen for routes changes; it takes (location, action) if needed
+  // const adjustReportLinks = ({ reportsMenuSubLinks }) =>
+  // adjust links for a page;
+  // reportsMenuSubLinks.map((link) => link.href = '/'.concat(link.href));
+  // listen for routes changes; it takes (location, action) if needed
 
-    /*
+  /*
      adjustReportLinks is used every single time navLink is called
      so this method is not being used as intended with map */
-    reportsMenuSubLinks;
+  //   reportsMenuSubLinks;
   return (
     <div>
       <ReportsMenuSubLinks
@@ -53,6 +52,14 @@ const CostOverview = (props) => {
       </div>
     </div>
   );
+};
+
+CostOverview.propTypes = {
+  activeTab: PropTypes.string,
+};
+
+CostOverview.defaultProps = {
+  activeTab: 'general-ledger',
 };
 
 export default CostOverview;

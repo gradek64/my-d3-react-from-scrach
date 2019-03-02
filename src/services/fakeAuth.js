@@ -1,76 +1,71 @@
-import {firebase, googleAuthProvider, facebookAuthProvider } from '../firebase/firebase';
+import { firebase, googleAuthProvider, facebookAuthProvider } from '../firebase/firebase';
 
 
-const AuthenticatedUser= {
-  username:'matt',
-  password:'matt',
+const AuthenticatedUser = {
+  username: 'matt',
+  password: 'matt',
 };
 
 
 const fakeAuth = {
   isAuthenticated: false,
-  authenticate({username,password}={},byProvider){
-
-
-    switch(byProvider) {
+  authenticate({ username, password } = {}, byProvider) {
+    switch (byProvider) {
     case 'internal':
-      return new Promise((resolve)=>{
-        if(username===AuthenticatedUser.username && password===AuthenticatedUser.password)  {
-
+      return new Promise((resolve) => {
+        if (username === AuthenticatedUser.username && password === AuthenticatedUser.password) {
           this.isAuthenticated = true;
           resolve({
-            data:{
+            data: {
               username,
               password,
-              byProvider
+              byProvider,
             },
           });
-
         }
-        //not authorized 
+        // not authorized
         else {
           this.isAuthenticated = false;
           resolve({
-            data:{username:null},
+            data: { username: null },
           });
         }
       });
     case 'gmail':
-      return firebase.auth().signInWithPopup(googleAuthProvider).then((user)=>{
+      return firebase.auth().signInWithPopup(googleAuthProvider).then((user) => {
         const { displayName } = user.user;
         return {
           data: {
-            username:displayName,
-            byProvider}
+            username: displayName,
+            byProvider,
+          },
         };
       });
     case 'facebook':
-      return firebase.auth().signInWithPopup(facebookAuthProvider).then((user)=>{
+      return firebase.auth().signInWithPopup(facebookAuthProvider).then((user) => {
         const { displayName } = user.user;
 
-        console.log('facebook response',user);
-        return {data:{username:null}};
+        console.log('facebook response', user);
+        return { data: { username: null } };
         return {
           data: {
-            username:displayName,
-            byProvider}
+            username: displayName,
+            byProvider,
+          },
         };
       });
 
     default:
-
     }
-
-    
   },
-  signout(fromProvider='internal') {
+  signout(fromProvider = 'internal') {
     this.isAuthenticated = false;
 
     let loggedOut;
-    switch(fromProvider) {
+    switch (fromProvider) {
     case 'internal':
       loggedOut = true;
-      return loggedOut;  
+      return loggedOut;
     case 'gmail':
       console.log('loggedOut from gmail');
       return firebase.auth().signOut();
@@ -79,8 +74,8 @@ const fakeAuth = {
 
     /* setTimeout(()=>{
       return loggedOut;
-    },5000);*/
-  }
+    },5000); */
+  },
 };
 
 export { fakeAuth };
