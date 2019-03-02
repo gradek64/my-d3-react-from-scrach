@@ -6,11 +6,11 @@ const validationRules = {
       required: true,
     },
   }),
-  select: new Schema({ 
+  select: new Schema({
     select: {
       required: true,
-    }
+    },
   }),
 };
 
-export {validationRules};
+export { validationRules };

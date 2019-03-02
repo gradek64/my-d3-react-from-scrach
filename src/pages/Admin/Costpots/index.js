@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
-
 // import ModalCustom from '../../../components/modal';
 // import resourceTypeMockService from '../../../services/resource-types-mock';
 

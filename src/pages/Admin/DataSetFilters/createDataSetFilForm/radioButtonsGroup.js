@@ -4,16 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormLabel from '@material-ui/core/FormLabel';
 
 
 const styles = {
-  container:{
-    display:'flex',
-    justifyContent:'center'
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   root: {
     color: green[600],
@@ -22,9 +22,9 @@ const styles = {
     },
   },
   checked: {},
-  group:{
-    flexDirection:'row'
-  }
+  group: {
+    flexDirection: 'row',
+  },
 };
 
 class RadioButtons extends React.Component {
@@ -32,7 +32,7 @@ class RadioButtons extends React.Component {
     value: 'none',
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ value: event.target.value });
   };
 
@@ -47,29 +47,29 @@ class RadioButtons extends React.Component {
             name="gender1"
             className={classes.group}
             value={this.state.value}
-            onChange={(event)=>{ this.handleChange(event); actionAll(event.target.value); }}
+            onChange={(event) => { this.handleChange(event); actionAll(event.target.value); }}
           >
             {
-              items.map(({label,value},key)=> 
-                ( 
-                  <FormControlLabel 
+              items.map(({ label, value }, key) =>
+                (
+                  <FormControlLabel
                     key={`radio${key}`}
-                    value={value} 
-                    control={<Radio />} label={label} 
+                    value={value}
+                    control={<Radio />}
+                    label={label}
                   />
-                )
-              )
+                ))
             }
-            
+
           </RadioGroup>
         </FormControl>
 
         {
-          /*items.map(({label,value,action},key)=> 
-            ( 
+          /* items.map(({label,value,action},key)=>
+            (
               <div  key={`radio${key}`}>
                 <label>{label}</label>
-                <Radio 
+                <Radio
                   checked={this.state.selectedValue === value}
                   onChange={(event)=>{ this.handleChange(event);action(); }}
                   value={value}
@@ -82,9 +82,9 @@ class RadioButtons extends React.Component {
                 />
               </div>
             )
-          )*/
+          ) */
         }
-        {/*<Radio
+        {/* <Radio
           checked={this.state.selectedValue === 'a'}
           onChange={this.handleChange}
           value="a"
@@ -128,14 +128,22 @@ class RadioButtons extends React.Component {
           aria-label="E"
           icon={<RadioButtonUncheckedIcon fontSize="small" />}
           checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
-        />*/}
+        /> */}
       </div>
     );
   }
 }
 
 RadioButtons.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.instanceOf(Object),
+  items: PropTypes.instanceOf(Array),
+  actionAll: PropTypes.instanceOf(Function),
+};
+
+RadioButtons.defaultProps = {
+  classes: {},
+  items: [],
+  actionAll: () => {},
 };
 
 export default withStyles(styles)(RadioButtons);

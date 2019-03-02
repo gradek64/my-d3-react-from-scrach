@@ -83,13 +83,23 @@ const CostPotBox = (props) => {
 };
 
 CostPotBox.propTypes = {
-  selectDropdownDataFixed: PropTypes.instanceOf(Array),
-  onSubmit: PropTypes.instanceOf(Function),
+  classes: PropTypes.instanceOf(Object),
+  name: PropTypes.string,
+  heroIcon: PropTypes.string,
+  hideDelete: PropTypes.bool,
+  hideAndroid: PropTypes.bool,
+  actionIcons: PropTypes.instanceOf(Object),
+  iconColor: PropTypes.string,
 };
 
 CostPotBox.defaultProps = {
-  selectDropdownDataFixed: [],
-  onSubmit: () => {},
+  classes: {},
+  name: '',
+  heroIcon: '',
+  hideDelete: false,
+  hideAndroid: false,
+  actionIcons: {},
+  iconColor: '',
 };
 
 export default withStyles(styles)(CostPotBox);
