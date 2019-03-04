@@ -14,9 +14,13 @@ class Resizer extends React.Component {
   constructor(props) {
     super(props);
 
+    /*
+      *@containerHeight is 0 at the very begining since it empty
+      *@the solution is only play with width which is knows from page containers
+    */
     this.state = {
       containerWidth: document.querySelector('.chart').clientWidth,
-      containerHeight: document.querySelector('.chart').clientHeight,
+      containerHeight: document.querySelector('.chart').clientWidth / 2,
       dataChange: props.data,
       typeChange: props.type,
     };
@@ -30,13 +34,15 @@ class Resizer extends React.Component {
     *@there is no need to implement that anymore;
   */
 
+  /*
+    *@last update you need to implement resize event for table filters
+    *@which are update based on <td> width so match row width;
+  */
+
   componentDidMount() {
-    this.setState({
-      containerWidth: document.querySelector('.chart').clientWidth,
-      containerHeight: document.querySelector('.chart').clientHeight,
-    });
-    // window.addEventListener('resize', this.resizeWindow,false);
+    window.addEventListener('resize', this.resizeWindow, false);
   }
+
   /*
     *@data has changed rerender nested components by
     *@sending new props to them;
@@ -60,13 +66,18 @@ class Resizer extends React.Component {
     *@remember to cancel DOM events once U dont need it anymore
   */
   componentWillUnmount() {
-    // window.removeEventListener('resize', this.resizeWindow,false);
+    window.removeEventListener('resize', this.resizeWindow, false);
   }
 
+  /*
+      *@containerHeight is 0 at the very begining since it empty
+      *@the solution is only play with width which is knows from page containers
+      *@ on resizing you need to continues what you started in constructor for consistency
+    */
   resizeWindow() {
     this.setState({
       containerWidth: document.querySelector('.chart').clientWidth,
-      containerHeight: document.querySelector('.chart').clientHeight,
+      containerHeight: document.querySelector('.chart').clientWidth / 2,
     });
   }
 
@@ -74,13 +85,11 @@ class Resizer extends React.Component {
     const {
       dataChange, typeChange, containerWidth, containerHeight,
     } = this.state;
-    const { type } = this.props;
 
     const propsTranform = {
-      svgWidth: type !== 'bar' ? containerWidth / 2 : containerWidth,
-      svgHeight: type !== 'bar'
-        ? containerHeight / 2 :
-        (containerHeight / 2) + (containerHeight / 5),
+      svgWidth: containerWidth,
+      svgHeight: containerHeight,
+      // (containerHeight / 2) + (containerHeight / 5),
       // below is pass function from ChartComponents
       changeViewClick: this.props.changeViewClick,
     };

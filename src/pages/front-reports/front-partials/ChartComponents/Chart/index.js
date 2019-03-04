@@ -63,9 +63,6 @@ const Chart = (props) => {
   }; */
 
   const { data, params } = props;
-
-  console.log('params.....', params);
-
   const service = params ? getService(params.typeSelected.value) : null;
   const resizerProps = {
     data: prepareData(data),

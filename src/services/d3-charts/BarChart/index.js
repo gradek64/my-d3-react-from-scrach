@@ -7,10 +7,12 @@ import { select } from 'd3-selection';
 
 const BarChart = (props) => {
   const { svgWidth, svgHeight, data } = props;
-  let svgElements = [];
-  
-  //Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
-  const margin = { top: 20, right: 20, bottom: 30, left: 40 },
+  const svgElements = [];
+
+  // Note: getting width and height from a variable rather than the elements attribute e.g. svg.attr("width")
+  const margin = {
+      top: 20, right: 20, bottom: 30, left: 40,
+    },
     width = svgWidth - margin.left - margin.right,
     height = svgHeight - margin.top - margin.bottom;
   const label = 'label';
@@ -24,8 +26,11 @@ const BarChart = (props) => {
   x.domain(data.map(d => d[label]));
   y.domain([0, max(data, d => d[value])]);
   return (
-    <svg height='100%'
-      width='100%'  viewBox={`0 0 ${svgWidth}  ${svgHeight}`}>
+    <svg
+      height="100%"
+      width="100%"
+      viewBox={`0 0 ${svgWidth}  ${svgHeight}`}
+    >
       <g>
         <g
           className="axis axis--x"
@@ -34,10 +39,10 @@ const BarChart = (props) => {
         />
         <g className="axis axis--y">
           <g ref={node => select(node).call(axisLeft(y).ticks(10, '%'))} />
-          {/* Note: In the actual example 'Frequency' is a child of the above 'g' and it doesn't render. 
+          {/* Note: In the actual example 'Frequency' is a child of the above 'g' and it doesn't render.
           * Changing it to a sibiling allows it to render and having the axis as an empty 'g' means that it will also play nicer with react:
           * "The easiest way to avoid conflicts is to prevent the React component from updating. You can do this by rendering elements that React has no reason to update, like an empty <div />."
-          * https://reactjs.org/docs/integrating-with-other-libraries.html 
+          * https://reactjs.org/docs/integrating-with-other-libraries.html
           */}
           <text transform="rotate(-90)" y="6" dy="0.71em" textAnchor="end">
             Frequency
@@ -47,18 +52,17 @@ const BarChart = (props) => {
           <rect
             key={i}
             key={d[label]}
-            //changeViewClick is pass function from ChartComponents
+            // changeViewClick is pass function from ChartComponents
             onClick={props.changeViewClick(d)}
             className="bar"
-            /* U need to store refference for every <rect> element and expose it outside 
+            /* U need to store refference for every <rect> element and expose it outside
               to chart.js for mouseover, click etc...
-              actually U dont need to cause react does better job to assign listener here just fount out;*/
-            ref={ (ref) => {
-              let currentRef = svgElements[i] = ref;
-              //if(currentRef) svgElementsCB(currentRef,d);
-              //if(currentRef)   currentRef.addEventListener('click',props.svgElementsClick(d));
-
-            } }
+              actually U dont need to cause react does better job to assign listener here just fount out; */
+            ref={(ref) => {
+              const currentRef = svgElements[i] = ref;
+              // if(currentRef) svgElementsCB(currentRef,d);
+              // if(currentRef)   currentRef.addEventListener('click',props.svgElementsClick(d));
+            }}
             x={x(d[label])}
             y={y(d[value])}
             width={x.bandwidth()}

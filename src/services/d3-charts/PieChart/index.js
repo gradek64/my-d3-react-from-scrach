@@ -4,8 +4,6 @@ import * as d3 from 'd3';
 const PieHolder = (props) => {
   const { svgWidth, data, type } = props;
 
-  console.log('pie chart ', type);
-
   const svgElements = [];
   const colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628'];
 

@@ -41,7 +41,6 @@ class ChartComponents extends React.Component {
   }
   // get data;
   getData = async (params) => {
-    console.log('getData params', params);
     const data = await reportDataServiceMock.getAll();
     this.setState({
       graphData: data.data,
