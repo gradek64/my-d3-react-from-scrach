@@ -35,12 +35,16 @@ class ChartHeader extends React.Component {
     *@componentDidUpdate is neccessary to keep track between prevProps and updated Props
     *@React wont update props once they sent, to change them U need use state for your changes
   */
+  /*
+    *@componentWillReceiveProps it is correct life cycle event to update new props;
+    *@
+  */
   componentWillReceiveProps(nextProps) {
     const {
-      chartTypes,
-      groubByButtons,
-      tabActive,
-      changeView,
+      chartTypes: nextTypes,
+      groubByButtons: nextButtons,
+      tabActive: nextTab,
+      changeView: nextView,
     } = nextProps;
     const {
       chartTypes: prevTypes,
@@ -53,37 +57,37 @@ class ChartHeader extends React.Component {
       *@selected it doenst live on props it gets created from chartTypes array by selected property
       *@thefore you need listen for changes by looking for array change and then selecting;
     */
-    const selected = chartTypes[tabActive].find(({ selected }) => selected);
+    const selectedType = nextTypes[nextTab].find(({ selected }) => selected);
     const prevSelected = prevTypes[previousTab].find(({ selected }) => selected);
     // change view
 
-    if (changeView !== prevChangeView) {
+    if (nextView !== prevChangeView) {
       this.setState({
-        changeViewState: changeView,
+        changeViewState: nextView,
       });
     }
     // charTypes has changed
-    if (chartTypes[tabActive] !== prevTypes[previousTab]) {
+    if (nextTypes[nextTab] !== prevTypes[previousTab]) {
       this.setState({
-        chartTypes: chartTypes[tabActive],
-        iconDownload: selected.value === 'table',
+        chartTypes: nextTypes[nextTab],
+        iconDownload: selectedType.value === 'table',
       });
     }
     // selected type changed important for changing tab
-    if (selected !== prevSelected) {
+    if (selectedType !== prevSelected) {
       this.setState({
-        typeSelected: selected,
+        typeSelected: selectedType,
       });
     }
     /*
       *@menu for reports has changed thefore select groubBybutton has changed;
       *@therefore tabActive has change so once all complited render chart as callback
     */
-    if (groubByButtons[tabActive] !== prevButtons[previousTab]) {
+    if (nextButtons[nextTab] !== prevButtons[previousTab]) {
       this.setState({
-        groubByButtons: groubByButtons[tabActive],
-        groubByButtonSelected: this.props.groubByButtons[tabActive] ?
-          this.props.groubByButtons[tabActive].find(({ selected }) => selected).value :
+        groubByButtons: nextButtons[nextTab],
+        groubByButtonSelected: this.props.groubByButtons[nextTab] ?
+          this.props.groubByButtons[nextTab].find(({ selected }) => selected).value :
           'none',
       }, this.renderChart);
     }
