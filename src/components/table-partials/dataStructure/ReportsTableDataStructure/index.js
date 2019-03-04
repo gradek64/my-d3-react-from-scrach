@@ -48,18 +48,21 @@ class TableDataReports extends React.Component {
     *@componenWillReceiveProps should be used for props update not
     *@componentDidUpdate
   */
-  componenWillReceiveProps(nextProps) {
-  // Typical usage (don't forget to compare props):
+  componentWillReceiveProps(nextProps) {
+    /*
+      *@for future comparison of object I will use some external libray as lodash
+      *@as it is much more acureate and it is part of functional programming;
+    */
 
-    if (this.props.data !== nextProps.data) {
+    if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
       /*
         *@You need to update all those props for the nested components
         *@to render with new props;
       */
-      this.setState({
-        standardData: this.props.data,
+      this.setState(() => ({
+        standardData: nextProps.data,
         filterDataSetup: {
-          filterDataSelected: Array.from(Array(this.props.data.length), () => true),
+          filterDataSelected: Array.from(Array(nextProps.data.length), () => true),
           checkedSelectAll: true,
           filterBy: null,
           filterByValue: '',
@@ -68,9 +71,9 @@ class TableDataReports extends React.Component {
             acumulator[e] = '';
             return a;
           }, {}),
-          data: this.props.data,
+          data: nextProps.data,
         },
-      });
+      }));
     }
   }
 

@@ -39,6 +39,7 @@ const CostOverview = (props) => {
           {`Breakdown by ${activeTab}`}
         </Typography>
         <Typography variant="h5" gutterBottom color="secondary">
+          {/* eslint-disable-next-line max-len */}
           {'Chart showing total IT costs allocated to the departed per selected attribute contained in the General Ledger input data.'}
         </Typography>
         {/* chart components for rednering */}
