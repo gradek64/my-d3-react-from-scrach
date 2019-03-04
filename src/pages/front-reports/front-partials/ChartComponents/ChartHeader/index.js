@@ -1,7 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import DropDownSelectIconList from '../../../../../components/DropDownSelectIconList';
+import PropTypes from 'prop-types';
 import Icon from '@material-ui/core/Icon';
+
+import DropDownSelectIconList from '../../../../../components/DropDownSelectIconList';
 import NavReportButtonGroup from './NavReportButtonGroup';
 import './chart.scss';
 
@@ -82,19 +84,6 @@ class ChartHeader extends React.Component {
     }
   }
 
-  renderChart() {
-    console.log(
-      '\n\n.....ONCE.......\n\n',
-      'typeSelected::: ', this.state.typeSelected.value, 'page::: ', this.props.page,
-      'tabActive:: ', this.props.tabActive,
-      'groubByButtonSelected:: ', this.state.groubByButtonSelected, '\n\n.....ONCE.......\n\n',
-    );
-
-    // notify outside componets;
-    this.props.getData(this.state);
-  // border:!changeViewState?`1px solid ${disableColor} !important`:'null'
-  }
-
   onSelectType = (typeSelected) => {
     const iconDownload = typeSelected.value === 'table';
     this.setState({
@@ -106,6 +95,19 @@ class ChartHeader extends React.Component {
   onGroupButtonClick = ({ value }) => {
     // asign groubByButtonSelected;
     this.setState({ groubByButtonSelected: value }, this.renderChart);
+  }
+
+  renderChart() {
+    console.log(
+      '\n\n.....ONCE.......\n\n',
+      'typeSelected::: ', this.state.typeSelected.value, 'page::: ', this.props.page,
+      'tabActive:: ', this.props.tabActive,
+      'groubByButtonSelected:: ', this.state.groubByButtonSelected, '\n\n.....ONCE.......\n\n',
+    );
+
+    // notify outside componets;
+    this.props.getData(this.state);
+  // border:!changeViewState?`1px solid ${disableColor} !important`:'null'
   }
 
   render() {
@@ -129,6 +131,7 @@ class ChartHeader extends React.Component {
           {/* <!-- chart drill down close button--> */}
           {
             <div className="close-button chart-controls">
+              {/* eslint-disable-next-line max-len */}
               {this.state.changeViewState ? <Button variant="outlined" onClick={this.props.onChartInnerClose}><Icon>close</Icon></Button> : null}
             </div>
           }
@@ -154,5 +157,26 @@ class ChartHeader extends React.Component {
     );
   }
 }
+
+ChartHeader.propTypes = {
+  getData: PropTypes.instanceOf(Function),
+  chartTypes: PropTypes.instanceOf(Object),
+  groubByButtons: PropTypes.instanceOf(Object),
+  page: PropTypes.string,
+  tabActive: PropTypes.string,
+  changeView: PropTypes.bool,
+  onChartInnerClose: PropTypes.instanceOf(Function),
+
+};
+
+ChartHeader.defaultProps = {
+  getData: () => {},
+  chartTypes: {},
+  groubByButtons: {},
+  page: 'general-ledger',
+  tabActive: 'general-ledger',
+  changeView: false,
+  onChartInnerClose: () => {},
+};
 
 export default ChartHeader;
