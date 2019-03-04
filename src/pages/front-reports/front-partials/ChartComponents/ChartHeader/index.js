@@ -35,14 +35,19 @@ class ChartHeader extends React.Component {
     *@componentDidUpdate is neccessary to keep track between prevProps and updated Props
     *@React wont update props once they sent, to change them U need use state for your changes
   */
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     const {
-      chartTypes, groubByButtons, tabActive, changeView,
-    } = this.props;
+      chartTypes,
+      groubByButtons,
+      tabActive,
+      changeView,
+    } = nextProps;
     const {
-      chartTypes: prevTypes, groubByButtons: prevButtons, tabActive: previousTab,
+      chartTypes: prevTypes,
+      groubByButtons: prevButtons,
+      tabActive: previousTab,
       changeView: prevChangeView,
-    } = prevProps;
+    } = this.props;
 
     /*
       *@selected it doenst live on props it gets created from chartTypes array by selected property
