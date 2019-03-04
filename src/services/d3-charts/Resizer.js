@@ -52,7 +52,8 @@ class Resizer extends React.Component {
       *@as it is much more acureate and it is part of functional programming;
     */
 
-    if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
+    if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)
+      || JSON.stringify(this.props.type) !== JSON.stringify(nextProps.type)) {
       this.setState(() => ({
         dataChange: nextProps.data,
         typeChange: nextProps.type,
