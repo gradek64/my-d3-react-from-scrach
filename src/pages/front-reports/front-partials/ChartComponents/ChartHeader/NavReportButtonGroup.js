@@ -1,15 +1,16 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-//third-party library for tracking simple state;
+import PropTypes from 'prop-types';
+
+// third-party library for tracking simple state;
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
 
 const NavReportButtonGroup = (props) => {
-
   const { groubByButtonsList, selectedGroupByValue, actionCb } = props;
 
-  //pick selected by value kept on the state for update in parent component 
-  const initialSelected = groubByButtonsList.findIndex(({value})=>value===selectedGroupByValue);
+  // pick selected by value kept on the state for update in parent component
+  const initialSelected = groubByButtonsList.findIndex(({ value }) => value === selectedGroupByValue);
 
   /*
     *@using third-party library for simple state change for selecting active button;
@@ -20,40 +21,54 @@ const NavReportButtonGroup = (props) => {
       const MainStartComponet(props) => {
 
         return (
-           <AnyStateComponent>{ 
-             ()=>{ 
-                  return {<base start component structure>} 
-              } 
+           <AnyStateComponent>{
+             ()=>{
+                  return {<base start component structure>}
+              }
            }</AnyStateComponent>
         )
 
       }
   */
-  const StateWithPropstoRenderProps = toRenderProps( withState('selectedState', 'setActive', initialSelected) );
+  const StateWithPropstoRenderProps = toRenderProps(withState('selectedState', 'setActive', initialSelected));
 
   return (
     <StateWithPropstoRenderProps>{
-      //body of StateWithPropstoRenderProps expects a function;
-      (withStateObject)=>{
-        let { setActive, selectedState } = withStateObject;
-    
-        return (<div className='button-group'>
-          { groubByButtonsList.map(({ label, value }, buttonIndex) => {
-            return (<Button 
-              className='groubByButton'
-              key={`button${buttonIndex}`}
-              variant="outlined"
-              color={buttonIndex===selectedState?'primary':'default'}
-              onClick={ ()=>{ setActive( ()=>buttonIndex ); actionCb({value});} }
-            >
-              {label}
-            </Button>);
-          })
-          }
-        </div>);
+      // body of StateWithPropstoRenderProps expects a function;
+      (withStateObject) => {
+        const { setActive, selectedState } = withStateObject;
+
+        return (
+          <div className="button-group">
+            { groubByButtonsList.map(({ label, value }, buttonIndex) => (
+              <Button
+                className="groubByButton"
+                key={`button${buttonIndex}`}
+                variant="outlined"
+                color={buttonIndex === selectedState ? 'primary' : 'default'}
+                onClick={() => { setActive(() => buttonIndex); actionCb({ value }); }}
+              >
+                {label}
+              </Button>))
+            }
+          </div>);
       }
 
-    }</StateWithPropstoRenderProps>
-  );};
+    }
+    </StateWithPropstoRenderProps>
+  );
+};
+
+
+NavReportButtonGroup.propTypes = {
+  groubByButtonsList: PropTypes.instanceOf(Array).isRequired,
+  selectedGroupByValue: PropTypes.string.isRequired,
+  actionCb: PropTypes.instanceOf(Function),
+
+};
+
+NavReportButtonGroup.defaultProps = {
+  actionCb: () => {},
+};
 
 export default NavReportButtonGroup;
