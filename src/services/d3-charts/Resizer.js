@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 /** ********************************************************************
 
@@ -15,19 +15,14 @@ class Resizer extends React.Component {
     super(props);
 
     this.state = {
-      containerWidth: null,
-      containerHeight: null,
-      dataChange: this.props.data,
-      typeChange: this.props.type,
+      containerWidth: document.querySelector('.chart').clientWidth,
+      containerHeight: document.querySelector('.chart').clientHeight,
+      dataChange: props.data,
+      typeChange: props.type,
     };
     this.resizeWindow = this.resizeWindow.bind(this);
   }
-  resizeWindow() {
-    this.setState({
-      containerWidth: document.querySelector('.chart').clientWidth,
-      containerHeight: document.querySelector('.chart').clientHeight,
-    });
-  }
+
 
   /*
     *@Initially this componet has window event attached onResize for svg to resize
@@ -68,6 +63,13 @@ class Resizer extends React.Component {
     // window.removeEventListener('resize', this.resizeWindow,false);
   }
 
+  resizeWindow() {
+    this.setState({
+      containerWidth: document.querySelector('.chart').clientWidth,
+      containerHeight: document.querySelector('.chart').clientHeight,
+    });
+  }
+
   render() {
     const {
       dataChange, typeChange, containerWidth, containerHeight,
@@ -78,19 +80,33 @@ class Resizer extends React.Component {
       svgWidth: type !== 'bar' ? containerWidth / 2 : containerWidth,
       svgHeight: type !== 'bar'
         ? containerHeight / 2 :
-        containerHeight / 2 + containerHeight / 5,
+        (containerHeight / 2) + (containerHeight / 5),
       // below is pass function from ChartComponents
       changeViewClick: this.props.changeViewClick,
     };
     return (
       <div className="diagram">
         {
+        // eslint-disable-next-line max-len
         /* this.state.containerWidth||dataChange ? React.cloneElement(this.props.children, {data:dataChange,type:typeChange,...propsTranform}):null */
+        // eslint-disable-next-line max-len
           React.cloneElement(this.props.children, { data: dataChange, type: typeChange, ...propsTranform })
         }
       </div>
     );
   }
 }
+
+
+Resizer.propTypes = {
+  data: PropTypes.instanceOf(Array).isRequired,
+  type: PropTypes.string.isRequired,
+  children: PropTypes.instanceOf(Object).isRequired,
+  changeViewClick: PropTypes.instanceOf(Function),
+};
+
+Resizer.defaultProps = {
+  changeViewClick: () => {},
+};
 
 export default Resizer;
