@@ -11,7 +11,7 @@ const RowsChart = (props) => {
     svgWidth, svgHeight, data, changeViewClick,
   } = props;
   console.log('styles.chartColors', styles.chartColors);
-
+  /* eslint-disable-next-line no-eval */
   const chartColorsSass = eval(`[${styles.chartColors}]`);
   // calcuate 20% or original heith you need height after shrink added
 

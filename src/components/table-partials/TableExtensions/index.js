@@ -22,13 +22,14 @@ const TableExtensions = (props) => {
 
   // access <tr> for the table from tableRef DOM element
   const trDOM = Array.from(tableRef.querySelector('table tbody tr').children);
-  const childrenWidth = trDOM.reduce((a, e, i) => {
-    const accumulator = a;
-    accumulator[i] = e.clientWidth;
-    return a;
-  }, []);
+  // childrenWidth  = Array(...Array(trDOM.length)).map((e, n) => trDOM[n].clientWidth)
+  const childrenWidth = trDOM.map(e => e.clientWidth);
+  /*
+    *@U can use experimental method
+    *@const childrenWidth  = Array(...Array(trDOM.length)).map((e, n) => trDOM[n].clientWidth);
+  */
 
-    // position of dropdown filter;
+  // position of dropdown filter;
   const translatePositions = [];
   childrenWidth.reduce((total, num, i) => {
     translatePositions[i] = (total + num) - num;
@@ -38,7 +39,10 @@ const TableExtensions = (props) => {
   return (
     <React.Fragment>
       <div className="tableFilterContainer">
-        {trDOM.map((el, i) => (<div key={`pocket${i}`} className="pocket" style={{ width: `${childrenWidth[i]}px` }}>{values[i]}</div>))}
+        {trDOM.map((el, i) => (
+          <div key={`pocket${i}`} className="pocket" style={{ width: `${childrenWidth[i]}px` }}>
+            {values[i]}
+          </div>))}
       </div>
       {hasFilterDataSetup ?
         <div className="tableFilterContainer">
