@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BarChartService from '../../../../../services/d3-charts/BarChart';
 import PieChartService from '../../../../../services/d3-charts/PieChart';
+import RowsService from '../../../../../services/d3-charts/RowsChart';
 // eslint-disable-next-line max-len
 import ReportsTableDataStructure from '../../../../../components/table-partials/dataStructure/ReportsTableDataStructure';
 import Resizer from '../../../../../services/d3-charts/Resizer';
@@ -16,9 +17,9 @@ const Chart = (props) => {
       return <BarChartService />;
     case 'table':
       return <ReportsTableDataStructure />;
-    /* case 'sunburst':
-      return sunburstService;
-    case 'sankey':
+    case 'rows':
+      return <RowsService />;
+      /* case 'sankey':
       return sankeyService;
     case 'chord':
       return chordService;

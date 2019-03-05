@@ -1,33 +1,32 @@
 import costModels from './mocks/costModels';
 import database from '../firebase/firebase';
 import _ from '../utils/misc';
+
 'use strict';
 
-const costModelsMockService = ()=> {
-     
-
+const costModelsMockService = () => {
   const sort = (costModels, params) => {
     if (_.def(params.predicate)) {
       costModels.sort(_.compareFactory(params.predicate, params.reverse));
     }
   };
-  const populate= () => {
-    //just drop entiere array in set method for firebase db
+  const populate = () => {
+    // just drop entiere array in set method for firebase db
     database
       .ref('costModels')
       .set(costModels);
   };
-  const update = (id,item) => database.ref(`costModels/${id}`).update(item);
+  const update = (id, item) => database.ref(`costModels/${id}`).update(item);
 
-  //this is one is insted of delete 
-  const override = (array) =>  database.ref('costModels').set(array);
-  
+  // this is one is insted of delete
+  const override = array => database.ref('costModels').set(array);
+
   const prop = (prop, obj) => obj && obj[prop];
 
-  const sortParams = (params) => prop('sort', params) || {};
+  const sortParams = params => prop('sort', params) || {};
 
-  const pagParams = (params) =>
-    prop('pagination', params) || {start: 0, number: 200};
+  const pagParams = params =>
+    prop('pagination', params) || { start: 0, number: 200 };
 
   const prepare = (costModels, params) => {
     const res = _.copy(costModels);
@@ -55,7 +54,7 @@ const costModelsMockService = ()=> {
     getAll,
     update,
     override,
-    populate
+    populate,
   };
 };
 export default costModelsMockService();

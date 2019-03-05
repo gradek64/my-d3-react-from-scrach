@@ -69,6 +69,15 @@ class ChartComponents extends React.Component {
       value: 'table',
     };
 
+    const rowsDrillDown = Object.assign({}, params);
+    rowsDrillDown.typeSelected = {
+      id: 1,
+      label: 'Rows',
+      materialIcon: 'grid_on',
+      selected: true,
+      value: 'rows',
+    };
+
     return (
       <div className="chart">
         <ChartHeader
@@ -82,12 +91,18 @@ class ChartComponents extends React.Component {
           isVariance={isVariance}
         />
 
-        {/* display once data is received */}
-        {graphData ? <Chart data={graphData} params={params} changeViewClick={this.onSVGElementClick} /> : null}
 
-        {/* drilldown graph */}
-        {/* changeView?<Chart data={drillDownData} params={params}  changeViewClick={this.onSVGElementClick}/>:null */}
+        <div className="topCharts">
+          {/* display once data is received */}
+          {graphData ?
+            <Chart data={graphData} params={params} changeViewClick={this.onSVGElementClick} />
+            : null}
 
+          {/* drilldown graph */}
+          {changeView ?
+            <Chart data={graphData} params={rowsDrillDown} changeViewClick={this.onSVGElementClick} />
+            : null}
+        </div>
         {/* for now U want only table */}
         {changeView ? <Chart data={drillDownData} params={tableDrillDown} /> : null}
 

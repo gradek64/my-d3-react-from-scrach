@@ -28,6 +28,16 @@
         }
     }
 
+    .topCharts {
+        display: flex;
+        flex-direction: row;
+
+        .firstChart,
+        .secondChart {
+            width: 50%;
+        }
+    }
+
     .chart-inner {
         width: 100%;
         height: 100%;

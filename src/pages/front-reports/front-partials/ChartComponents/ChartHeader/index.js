@@ -5,7 +5,7 @@ import Icon from '@material-ui/core/Icon';
 
 import DropDownSelectIconList from '../../../../../components/DropDownSelectIconList';
 import NavReportButtonGroup from './NavReportButtonGroup';
-import './chart.scss';
+import '../chartComponents.scss';
 
 class ChartHeader extends React.Component {
   state = {
