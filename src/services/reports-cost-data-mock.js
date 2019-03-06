@@ -1,6 +1,5 @@
 
 const reporsCostDataMock = () => {
-
   const mapFilters = items =>
     items.reduce((a, e) => {
       a.push({ resource: e.name, value: e.value, column: 'name' });
@@ -13,7 +12,7 @@ const reporsCostDataMock = () => {
       return a;
     }, []);
 
-  const mapParams = params => {
+  const mapParams = (params) => {
     const defaults = {};
 
     if (!params) {
@@ -37,44 +36,44 @@ const reporsCostDataMock = () => {
       id: 'SOURCE_LEGAL_ENTITY,LE07;',
       SOURCE_LEGAL_ENTITY: 'LE07',
       amount: 422611.11123333336,
-      percentage: 9.066638063167977
+      percentage: 9.066638063167977,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE06;',
       SOURCE_LEGAL_ENTITY: 'LE06',
       amount: 422611.11123333336,
-      percentage: 9.066638063167977
+      percentage: 9.066638063167977,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE05;',
       SOURCE_LEGAL_ENTITY: 'LE05',
       amount: 422611.11123333336,
-      percentage: 9.066638063167977
+      percentage: 9.066638063167977,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE02;',
       SOURCE_LEGAL_ENTITY: 'LE02',
       amount: 575166.6667,
-      percentage: 12.339543032242807
+      percentage: 12.339543032242808,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE04;',
       SOURCE_LEGAL_ENTITY: 'LE04',
       amount: 940833.3333699999,
-      percentage: 20.18450316305084
+      percentage: 20.18450316305084,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE01;',
       SOURCE_LEGAL_ENTITY: 'LE01',
       amount: 938666.6667,
-      percentage: 20.138019807601218
+      percentage: 20.138019807601218,
     },
     {
       id: 'SOURCE_LEGAL_ENTITY,LE03;',
       SOURCE_LEGAL_ENTITY: 'LE03',
       amount: 938666.6667,
-      percentage: 20.138019807601218
-    }
+      percentage: 20.138019807601218,
+    },
   ];
 
   const getAll = (configId, levelId, params) => {
@@ -83,16 +82,16 @@ const reporsCostDataMock = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          data: items
+          data: items,
         });
       }, 20);
     });
   };
 
   return {
-    getAll
+    getAll,
   };
 };
 
 export default reporsCostDataMock();
-  
+

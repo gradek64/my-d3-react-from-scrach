@@ -40,7 +40,7 @@ class Resizer extends React.Component {
   */
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow, false);
+    // window.addEventListener('resize', this.resizeWindow, false);
   }
 
   /*
@@ -52,7 +52,6 @@ class Resizer extends React.Component {
       *@for future comparison of object I will use some external libray as lodash
       *@as it is much more acureate and it is part of functional programming;
     */
-
     if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)
       || JSON.stringify(this.props.type) !== JSON.stringify(nextProps.type)) {
       this.setState(() => ({
@@ -66,7 +65,7 @@ class Resizer extends React.Component {
     *@remember to cancel DOM events once U dont need it anymore
   */
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow, false);
+    // window.removeEventListener('resize', this.resizeWindow, false);
   }
 
   /*
@@ -75,6 +74,7 @@ class Resizer extends React.Component {
       *@ on resizing you need to continues what you started in constructor for consistency
     */
   resizeWindow() {
+    console.log('resizing');
     this.setState({
       containerWidth: document.querySelector('.chart').clientWidth,
       containerHeight: document.querySelector('.chart').clientWidth / 2,

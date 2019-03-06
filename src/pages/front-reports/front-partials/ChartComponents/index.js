@@ -32,12 +32,14 @@ class ChartComponents extends React.Component {
   onSVGElementClick = data => (e) => {
     console.log('data after click', data);
     // shrink currrent chart;
+
+    const currentChart = document.querySelector('.chart-inner');
+    if (!currentChart.classList.contains('shrink')) currentChart.classList.add('shrink');
+
     this.setState({
       changeView: true,
       drillDownData: [data],
     });
-    const currentChart = document.querySelector('.chart-inner');
-    currentChart.classList.add('shrink');
   }
   // get data;
   getData = async (params) => {

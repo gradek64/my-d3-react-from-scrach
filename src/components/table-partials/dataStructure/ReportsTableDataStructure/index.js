@@ -56,25 +56,40 @@ class TableDataReports extends React.Component {
     */
 
     if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
-      /*
-        *@You need to update all those props for the nested components
-        *@to render with new props;
-      */
-      this.setState(() => ({
-        standardData: nextProps.data,
-        filterDataSetup: {
-          filterDataSelected: Array.from(Array(nextProps.data.length), () => true),
-          checkedSelectAll: true,
-          filterBy: null,
-          filterByValue: '',
-          filterByValueSet: this.props.columns.reduce((a, e) => {
-            const acumulator = a;
-            acumulator[e] = '';
-            return a;
-          }, {}),
-          data: nextProps.data,
-        },
-      }));
+      const trDOM = Array.from(document.querySelector('table tbody tr').children);
+
+      const childrenWidth = trDOM.map(el => el.clientWidth);
+
+      console.log('click........', childrenWidth);
+      const delay = setTimeout(() => {
+        clearTimeout(delay);
+        // access <tr> for the table from tableRef DOM element
+
+
+        /*
+          *@You need to update all those props for the nested components
+          *@to render with new props;
+        */
+        this.setState(() => ({
+          tableRef: document.querySelector('.chart'),
+          standardData: nextProps.data,
+          filterDataSetup: {
+            filterDataSelected: Array.from(Array(nextProps.data.length), () => true),
+            checkedSelectAll: true,
+            filterBy: null,
+            filterByValue: '',
+            filterByValueSet: this.props.columns.reduce((a, e) => {
+              const acumulator = a;
+              acumulator[e] = '';
+              return a;
+            }, {}),
+            data: nextProps.data,
+          },
+        }));
+
+
+      // console.log('childrenWidth afer 1 sec delay and click....', childrenWidth);
+      }, 0);
     }
   }
 
@@ -109,7 +124,7 @@ class TableDataReports extends React.Component {
     switch (this.mapDataFormat[format]) {
     case 'alphabetic':
       return chartDataFormat.kFormatter(value);
-    case 'percentage':
+    case 'percentages':
       return chartDataFormat.formatPercentage(value);
     case 'numeric':
       return `£${chartDataFormat.formatCurrency(value)}`;
