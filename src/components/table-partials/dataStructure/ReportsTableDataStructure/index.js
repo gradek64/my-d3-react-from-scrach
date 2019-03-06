@@ -14,6 +14,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownMenu from './../../../dropDownMenu';
 import TableDataFilter from './../../../table-partials/TableDataFilter/TableDataFilter' */
 import TableExtensions from './../../../table-partials/TableExtensions';
+import chartDataFormat from '../../../../services/charts-support/ChartFormatData';
 
 // scss
 import './reportsTableDataStructure.scss';
@@ -98,6 +99,26 @@ class TableDataReports extends React.Component {
     }));
   }
 
+  mapDataFormat = {
+    label: 'alphabetic',
+    percentage: 'percentage',
+    value: 'numeric',
+  }
+
+  picFormatService = (format, value) => {
+    switch (this.mapDataFormat[format]) {
+    case 'alphabetic':
+      return chartDataFormat.kFormatter(value);
+    case 'percentage':
+      return chartDataFormat.formatPercentage(value);
+    case 'numeric':
+      return `£${chartDataFormat.formatCurrency(value)}`;
+    default:
+    }
+
+    return null;
+  }
+
   render = () => {
     const { tableRef, standardData } = this.state;
     const {
@@ -169,7 +190,7 @@ class TableDataReports extends React.Component {
                   <TableRow key={`table-reports${index}`} >
                     { this.props.columns.map((column, i) => (Object.keys(item).includes(column) ?
                       <TableCell component="th" scope="row" key={`tableKey${i}`}>
-                        {item[column]}
+                        {this.picFormatService(column, item[column]) || item[column]}
                       </TableCell> : null))
                     }
                   </TableRow>
