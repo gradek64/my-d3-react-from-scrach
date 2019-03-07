@@ -108,7 +108,7 @@ class TableDataReports extends React.Component {
     switch (this.mapDataFormat[format]) {
     case 'alphabetic':
       return chartDataFormat.kFormatter(value);
-    case 'percentages':
+    case 'percentage':
       return chartDataFormat.formatPercentage(value);
     case 'numeric':
       return `£${chartDataFormat.formatCurrency(value)}`;

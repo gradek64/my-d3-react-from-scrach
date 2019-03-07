@@ -41,15 +41,20 @@ class ChartComponents extends React.Component {
       clearTimeout(delay);
       if (!document.querySelector('table tbody tr')) return;
 
-      /* const trDOM1 = Array.from(document.querySelector('table tbody tr').children);
-      const childrenWidth1 = trDOM1.map(el => el.clientWidth);
-      console.log('\n\n\n\n......childrenWidth delay.....childrenWidth1', childrenWidth1); */
+      /*
+       *@this state is called again after 100 milisecond and it will register any changes to
+       *@the real DOM so it will update our columns width for filters accoring to the Dom Table
+     */
       this.setState({
         changeView: true,
         drillDownData: [data],
       });
     }, 100);
 
+    /*
+      *@ this standard State called straigt away no waiting for real dom changes
+      *@ simply doesnt register them cause it happens to quickly;
+    */
     this.setState({
       changeView: true,
       drillDownData: [data],
