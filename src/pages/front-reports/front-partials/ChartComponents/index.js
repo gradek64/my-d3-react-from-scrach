@@ -17,6 +17,7 @@ class ChartComponents extends React.Component {
     graphData: null,
     changeView: false,
     drillDownData: null,
+    columnWidths: null,
   }
 
   onChartInnerClose = (e) => {
@@ -35,6 +36,19 @@ class ChartComponents extends React.Component {
 
     const currentChart = document.querySelector('.chart-inner');
     if (!currentChart.classList.contains('shrink')) currentChart.classList.add('shrink');
+
+    const delay = setTimeout(() => {
+      clearTimeout(delay);
+      if (!document.querySelector('table tbody tr')) return;
+
+      /* const trDOM1 = Array.from(document.querySelector('table tbody tr').children);
+      const childrenWidth1 = trDOM1.map(el => el.clientWidth);
+      console.log('\n\n\n\n......childrenWidth delay.....childrenWidth1', childrenWidth1); */
+      this.setState({
+        changeView: true,
+        drillDownData: [data],
+      });
+    }, 100);
 
     this.setState({
       changeView: true,
@@ -59,7 +73,7 @@ class ChartComponents extends React.Component {
     const chartTypes = { [tabActive]: confCurrentTab.types };
 
     const {
-      graphData, drillDownData, params, changeView,
+      graphData, drillDownData, params, changeView, columnWidths,
     } = this.state;
 
     const tableDrillDown = Object.assign({}, params);
@@ -102,7 +116,12 @@ class ChartComponents extends React.Component {
 
           {/* drilldown graph */}
           {changeView ?
-            <Chart data={graphData} params={rowsDrillDown} changeViewClick={this.onSVGElementClick} />
+            <Chart
+              data={graphData}
+              columnWidths={columnWidths}
+              params={rowsDrillDown}
+              changeViewClick={this.onSVGElementClick}
+            />
             : null}
         </div>
         {/* for now U want only table */}

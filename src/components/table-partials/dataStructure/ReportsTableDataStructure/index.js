@@ -14,6 +14,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DropDownMenu from './../../../dropDownMenu';
 import TableDataFilter from './../../../table-partials/TableDataFilter/TableDataFilter' */
 import TableExtensions from './../../../table-partials/TableExtensions';
+import GetColumnsWidthClass from './../../../table-partials/TableExtensions/GetColumnsWidthClass';
 import chartDataFormat from '../../../../services/charts-support/ChartFormatData';
 
 // scss
@@ -55,41 +56,24 @@ class TableDataReports extends React.Component {
       *@as it is much more acureate and it is part of functional programming;
     */
 
+
     if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
-      const trDOM = Array.from(document.querySelector('table tbody tr').children);
-
-      const childrenWidth = trDOM.map(el => el.clientWidth);
-
-      console.log('click........', childrenWidth);
-      const delay = setTimeout(() => {
-        clearTimeout(delay);
-        // access <tr> for the table from tableRef DOM element
-
-
-        /*
-          *@You need to update all those props for the nested components
-          *@to render with new props;
-        */
-        this.setState(() => ({
-          tableRef: document.querySelector('.chart'),
-          standardData: nextProps.data,
-          filterDataSetup: {
-            filterDataSelected: Array.from(Array(nextProps.data.length), () => true),
-            checkedSelectAll: true,
-            filterBy: null,
-            filterByValue: '',
-            filterByValueSet: this.props.columns.reduce((a, e) => {
-              const acumulator = a;
-              acumulator[e] = '';
-              return a;
-            }, {}),
-            data: nextProps.data,
-          },
-        }));
-
-
-      // console.log('childrenWidth afer 1 sec delay and click....', childrenWidth);
-      }, 0);
+      this.setState(() => ({
+        tableRef: document.querySelector('.chart'),
+        standardData: nextProps.data,
+        filterDataSetup: {
+          filterDataSelected: Array.from(Array(nextProps.data.length), () => true),
+          checkedSelectAll: true,
+          filterBy: null,
+          filterByValue: '',
+          filterByValueSet: this.props.columns.reduce((a, e) => {
+            const acumulator = a;
+            acumulator[e] = '';
+            return a;
+          }, {}),
+          data: nextProps.data,
+        },
+      }));
     }
   }
 
@@ -145,6 +129,14 @@ class TableDataReports extends React.Component {
 
     return (
       <Paper className="structure" style={{ overflowY: 'auto' }}>
+        {/* <div>
+          {tableRef ? <GetColumnsWidthClass render={(columnsWidth, isLoading) => {
+            console.log('\n\ncolumnsWidth.......', columnsWidth);
+            return isLoading ? 'Iam here ' : 'not ready yet';
+          }}
+          /> : null}
+        </div> */}
+
         <div className="overallContainer">
           {/* apply seperate props for Filter Data */}
           {tableRef ?

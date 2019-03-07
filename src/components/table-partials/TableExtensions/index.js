@@ -29,26 +29,9 @@ const TableExtensions = (props) => {
     *@U can use experimental method
     *@const childrenWidth  = Array(...Array(trDOM.length)).map((e, n) => trDOM[n].clientWidth);
   */
-
-  console.log('no delay and click....', childrenWidth);
-
-  console.log('once', childrenWidth);
-
-  const delay = setTimeout(() => {
-    clearTimeout(delay);
-    // access <tr> for the table from tableRef DOM element
-    const trDOM1 = Array.from(document.querySelector('table tbody tr').children);
-
-    // childrenWidth  = Array(...Array(trDOM.length)).map((e, n) => trDOM[n].clientWidth)
-    const childrenWidth1 = trDOM1.map(el => el.clientWidth);
-
-    console.log('delay and click....', childrenWidth1);
-  }, 1000);
-
   // position of dropdown filter;
   const translatePositions = [];
   childrenWidth.reduce((total, num, i) => {
-    console.log('cell width', num);
     translatePositions[i] = (total + num) - num;
     return total + num;
   }, 0);
