@@ -30,6 +30,7 @@ const BarChart = (props) => {
       height="100%"
       width="100%"
       viewBox={`0 0 ${svgWidth}  ${svgHeight}`}
+      className="BarChart"
     >
       <g>
         <g

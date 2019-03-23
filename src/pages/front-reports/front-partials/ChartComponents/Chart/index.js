@@ -72,10 +72,8 @@ const Chart = (props) => {
     changeViewClick: props.changeViewClick,
   };
   return (
-    <div className="chart-inner">
-      {data ?
-        <Resizer {...resizerProps}>{service}</Resizer> : null }
-    </div>
+    data ?
+      <Resizer {...resizerProps}>{service}</Resizer> : null
   );
 };
 

@@ -25,6 +25,9 @@ class Resizer extends React.Component {
       typeChange: props.type,
     };
     this.resizeWindow = this.resizeWindow.bind(this);
+
+
+    console.log('this.state', this.state);
   }
 
 
@@ -94,7 +97,7 @@ class Resizer extends React.Component {
       changeViewClick: this.props.changeViewClick,
     };
     return (
-      <div className="diagram">
+      <div className={`${this.props.type} diagram`}>
         {
         // eslint-disable-next-line max-len
         /* this.state.containerWidth||dataChange ? React.cloneElement(this.props.children, {data:dataChange,type:typeChange,...propsTranform}):null */

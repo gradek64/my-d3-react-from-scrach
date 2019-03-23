@@ -23,7 +23,7 @@ class ChartComponents extends React.Component {
   onChartInnerClose = (e) => {
     this.setState({ changeView: false });
     // enlarge currrent chart;
-    const currentChart = document.querySelector('.chart-inner');
+    const currentChart = document.querySelector('.diagram');
     currentChart.classList.remove('shrink');
   }
   /*
@@ -34,7 +34,7 @@ class ChartComponents extends React.Component {
     console.log('data after click', data);
     // shrink currrent chart;
 
-    const currentChart = document.querySelector('.chart-inner');
+    const currentChart = document.querySelector('.diagram');
     if (!currentChart.classList.contains('shrink')) currentChart.classList.add('shrink');
 
     const delay = setTimeout(() => {
@@ -116,7 +116,7 @@ class ChartComponents extends React.Component {
         <div className="topCharts">
           {/* display once data is received */}
           {graphData ?
-            <Chart data={graphData} params={params} changeViewClick={this.onSVGElementClick} />
+            <Chart data={graphData} params={params} className="main-chart" changeViewClick={this.onSVGElementClick} />
             : null}
 
           {/* drilldown graph */}

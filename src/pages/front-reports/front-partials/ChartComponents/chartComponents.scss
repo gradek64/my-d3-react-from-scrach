@@ -28,24 +28,45 @@
         }
     }
 
-    .topCharts {
-        display: flex;
-        flex-direction: row;
-
-        .firstChart,
-        .secondChart {
-            width: 50%;
+    .main-chart {
+        .chart-inner {
+            margin: 0 auto;
         }
     }
 
-    .chart-inner {
-        width: 100%;
-        height: 100%;
+    .topCharts {
+        display: flex;
+        flex-direction: row;
+        margin: 0px 0px 24px 0px;
+
+        div:nth-child(1) {
+            margin: 0 auto;
+        }
+
+        .diagram {
+            &.bar {
+                width: 100%;
+            }
+
+            &.donut {
+                width: inherit;
+            }
+
+            &.shrink {
+                width: 20%;
+                transition: width 200ms cubic-bezier(0.4, 0, 0.6, 1);
+            }
+        }
+
+        div:nth-child(2) {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
     }
 
-    .shrink {
-        width: 20%;
-        transition: width 200ms cubic-bezier(0.4, 0, 0.6, 1);
+    .rowsChart {
+        height: 100%;
+        width: 100%;
     }
 
     //svg postion
