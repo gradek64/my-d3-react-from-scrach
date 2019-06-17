@@ -39,6 +39,8 @@ class uploadForm extends React.Component {
 
   onKeyPress = (event) => {
     // submit form also on enter key press;
+
+    console.log('key addEventListener');
     if (event.keyCode === 13) {
       this.submit();
     }
